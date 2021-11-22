@@ -12,6 +12,7 @@
     <class>com.downstreammedia.sandbar.entities.User</class>
     <class>com.downstreammedia.sandbar.entities.Trip</class>
     <class>com.downstreammedia.sandbar.entities.Expenses</class>
+    <class>com.downstreammedia.sandbar.entities.Location</class>
     <!-- end entities -->
 
     <properties>

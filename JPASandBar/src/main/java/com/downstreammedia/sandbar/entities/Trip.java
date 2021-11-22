@@ -1,6 +1,7 @@
 package com.downstreammedia.sandbar.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -42,6 +44,12 @@ public class Trip {
 	
 	@OneToMany(mappedBy = "trip")
 	private Set<Expense> expenses;
+	
+	@ManyToMany
+	@JoinTable(name = "trip_has_location", 
+		joinColumns = @JoinColumn(name = "location_id"), 
+		inverseJoinColumns = @JoinColumn(name = "trip_id"))
+	private List<Location> locations;
 
 	
 	//METHODS
@@ -49,6 +57,14 @@ public class Trip {
 	
 	public int getId() {
 		return id;
+	}
+
+	public List<Location> getLocations() {
+		return locations;
+	}
+
+	public void setLocations(List<Location> locations) {
+		this.locations = locations;
 	}
 
 	public Set<Expense> getExpenses() {
