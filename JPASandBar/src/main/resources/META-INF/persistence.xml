@@ -11,8 +11,8 @@
     <class>com.downstreammedia.sandbar.entities.User</class>
 
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sandbardb?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=MST" />
-      <property name="javax.persistence.jdbc.user" value="sandbardbuser"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/confluencedb?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=MST" />
+      <property name="javax.persistence.jdbc.user" value="confluenceuser"/>
       <property name="javax.persistence.jdbc.password" value="userpw" />
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
 

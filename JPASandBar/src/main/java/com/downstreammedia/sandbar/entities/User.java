@@ -1,7 +1,9 @@
 package com.downstreammedia.sandbar.entities;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,9 +11,10 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
+	
+	//FIELDS
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//Fields
 	private int id;
 	
 	private String username;
@@ -22,13 +25,20 @@ public class User {
 	
 	private String role;
 	
-	private boolean enabled;
+	private boolean active;
 	
-	private String imageurl;
+	@Column(name="img_url")
+	private String imageUrl;
+	
+	@Column(name="date_updated")
+	private LocalDateTime dateUpdated;
+
+	@Column(name="date_start")
+	private LocalDateTime dateStart;
+
 	
 	
 	//METHODS
-	
 	public int getId() {
 		return id;
 	}
@@ -69,25 +79,41 @@ public class User {
 		this.role = role;
 	}
 
-	public boolean isEnabled() {
-		return enabled;
+	public boolean isActive() {
+		return active;
 	}
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
-	public String getImageurl() {
-		return imageurl;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setImageurl(String imageurl) {
-		this.imageurl = imageurl;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public LocalDateTime getDateUpdated() {
+		return dateUpdated;
+	}
+
+	public void setDateUpdated(LocalDateTime dateUpdated) {
+		this.dateUpdated = dateUpdated;
+	}
+
+	public LocalDateTime getDateStart() {
+		return dateStart;
+	}
+
+	public void setDateStart(LocalDateTime dateStart) {
+		this.dateStart = dateStart;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, enabled, id, imageurl, password, role, username);
+		return Objects.hash(active, dateStart, dateUpdated, email, id, imageUrl, password, role, username);
 	}
 
 	@Override
@@ -99,9 +125,11 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(email, other.email) && enabled == other.enabled && id == other.id
-				&& Objects.equals(imageurl, other.imageurl) && Objects.equals(password, other.password)
-				&& Objects.equals(role, other.role) && Objects.equals(username, other.username);
+		return active == other.active && Objects.equals(dateStart, other.dateStart)
+				&& Objects.equals(dateUpdated, other.dateUpdated) && Objects.equals(email, other.email)
+				&& id == other.id && Objects.equals(imageUrl, other.imageUrl)
+				&& Objects.equals(password, other.password) && Objects.equals(role, other.role)
+				&& Objects.equals(username, other.username);
 	}
 
 	@Override
@@ -117,28 +145,40 @@ public class User {
 		builder.append(email);
 		builder.append(", role=");
 		builder.append(role);
-		builder.append(", enabled=");
-		builder.append(enabled);
-		builder.append(", imageurl=");
-		builder.append(imageurl);
+		builder.append(", active=");
+		builder.append(active);
+		builder.append(", imageUrl=");
+		builder.append(imageUrl);
+		builder.append(", dateUpdated=");
+		builder.append(dateUpdated);
+		builder.append(", dateStart=");
+		builder.append(dateStart);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	public User(int id, String username, String password, String email, String role, boolean enabled, String imageurl) {
+	public User(int id, String username, String password, String email, String role, boolean active, String imageUrl,
+			LocalDateTime dateUpdated, LocalDateTime dateStart) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.role = role;
-		this.enabled = enabled;
-		this.imageurl = imageurl;
+		this.active = active;
+		this.imageUrl = imageUrl;
+		this.dateUpdated = dateUpdated;
+		this.dateStart = dateStart;
 	}
 
 	public User() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
+
+	
+	
+	
 	
 
 }

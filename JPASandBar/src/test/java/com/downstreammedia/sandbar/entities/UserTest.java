@@ -45,10 +45,10 @@ class UserTest {
 		assertNotNull(user);
 		assertEquals("firstUser", user.getUsername());
 		assertEquals("firstUser", user.getPassword());
-		assertEquals("firstuser@email.com", user.getEmail());
-		assertEquals(true , user.isEnabled());
-		assertEquals("someimge.com", user.getImageurl());
-		assertEquals("admin", user.getRole());
+		assertEquals("user@user", user.getEmail());
+		assertEquals(true , user.isActive());
+		assertEquals("someurl.com", user.getImageUrl());
+		assertEquals("user", user.getRole());
 	}
 
 }
