@@ -53,12 +53,25 @@ public class User {
 		joinColumns = @JoinColumn(name = "trip_id"), 
 		inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<Trip> trips;
+	
+	@OneToMany(mappedBy = "creator")
+	private Set<Expense> expenses;
 
 
 	//METHODS
 	
+	
+	
 	public int getId() {
 		return id;
+	}
+
+	public Set<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(Set<Expense> expenses) {
+		this.expenses = expenses;
 	}
 
 	public List<Trip> getCreatedTrips() {

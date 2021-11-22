@@ -13,11 +13,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TripTest {
-
+public class ExpenseTest {
+	
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Trip trip;
+	private Expense expense;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -32,24 +32,25 @@ public class TripTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		trip = em.find(Trip.class, 1);
+		expense = em.find(Expense.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		trip = null;
+		expense = null;
 	}
 
 	@Test
 	void test() {
-		assertNotNull(trip);
-		assertEquals("Gates of Lodore", trip.getName());
+		assertNotNull(expense);
+		assertEquals("Gas to putin", expense.getName());
 	}
 	
 	@Test
 	void relationTest() {
-		assertEquals("firstUser", trip.getCreator().getUsername());
-		assertEquals(1, trip.getExpenses().size());
+		assertEquals("firstUser", expense.getCreator().getUsername());
+		assertEquals("Gates of Lodore", expense.getTrip().getName());
 	}
+
 }

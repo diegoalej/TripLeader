@@ -54,6 +54,7 @@ class UserTest {
 	@Test
 	void relationTest() {
 		assertEquals(1, user.getCreatedTrips().size());
+		assertEquals(1, user.getExpenses().size());
 	}
 
 }

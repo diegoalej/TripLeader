@@ -10,9 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Trip {
@@ -40,9 +40,23 @@ public class Trip {
 	@JoinColumn(name="user_id")
 	private User creator;
 	
+	@OneToMany(mappedBy = "trip")
+	private Set<Expense> expenses;
+
+	
 	//METHODS
+	
+	
 	public int getId() {
 		return id;
+	}
+
+	public Set<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(Set<Expense> expenses) {
+		this.expenses = expenses;
 	}
 
 	public void setId(int id) {
