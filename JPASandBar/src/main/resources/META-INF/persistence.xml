@@ -8,7 +8,10 @@
     <provider>org.hibernate.jpa.HibernatePersistenceProvider
     </provider>
     
+    <!-- entities -->
     <class>com.downstreammedia.sandbar.entities.User</class>
+    <class>com.downstreammedia.sandbar.entities.Trip</class>
+    <!-- end entities -->
 
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/confluencedb?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=MST" />

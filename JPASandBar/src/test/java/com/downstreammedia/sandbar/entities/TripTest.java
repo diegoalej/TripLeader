@@ -1,6 +1,7 @@
 package com.downstreammedia.sandbar.entities;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,11 +13,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class UserTest {
-	
+public class TripTest {
+
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private User user;
+	private Trip trip;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -31,29 +32,23 @@ class UserTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		user = em.find(User.class, 1);
+		trip = em.find(Trip.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		user = null;
+		trip = null;
 	}
 
 	@Test
 	void test() {
-		assertNotNull(user);
-		assertEquals("firstUser", user.getUsername());
-		assertEquals("firstUser", user.getPassword());
-		assertEquals("user@user", user.getEmail());
-		assertEquals(true , user.isActive());
-		assertEquals("someurl.com", user.getImageUrl());
-		assertEquals("user", user.getRole());
+		assertNotNull(trip);
+		assertEquals("Gates of Lodore", trip.getName());
 	}
 	
 	@Test
 	void relationTest() {
-		assertEquals(1, user.getCreatedTrips().size());
+		assertEquals("firstUser", trip.getCreator().getUsername());
 	}
-
 }

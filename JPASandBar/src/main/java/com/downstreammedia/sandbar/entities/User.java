@@ -1,13 +1,20 @@
 package com.downstreammedia.sandbar.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+
 
 @Entity
 public class User {
@@ -35,12 +42,31 @@ public class User {
 
 	@Column(name="date_start")
 	private LocalDateTime dateStart;
+	
+	//@JsonIgnore
+	@OneToMany(mappedBy = "creator")
+	private List<Trip> createdTrips;
+	
+	//@JsonIgnore
+	@ManyToMany
+	@JoinTable(name = "user_trip", 
+		joinColumns = @JoinColumn(name = "trip_id"), 
+		inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<Trip> trips;
 
-	
-	
+
 	//METHODS
+	
 	public int getId() {
 		return id;
+	}
+
+	public List<Trip> getCreatedTrips() {
+		return createdTrips;
+	}
+
+	public void setCreatedTrips(List<Trip> createdTrips) {
+		this.createdTrips = createdTrips;
 	}
 
 	public void setId(int id) {
@@ -111,9 +137,17 @@ public class User {
 		this.dateStart = dateStart;
 	}
 
+	public Set<Trip> getTrips() {
+		return trips;
+	}
+
+	public void setTrips(Set<Trip> trips) {
+		this.trips = trips;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(active, dateStart, dateUpdated, email, id, imageUrl, password, role, username);
+		return Objects.hash(email, id, username);
 	}
 
 	@Override
@@ -125,11 +159,27 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return active == other.active && Objects.equals(dateStart, other.dateStart)
-				&& Objects.equals(dateUpdated, other.dateUpdated) && Objects.equals(email, other.email)
-				&& id == other.id && Objects.equals(imageUrl, other.imageUrl)
-				&& Objects.equals(password, other.password) && Objects.equals(role, other.role)
-				&& Objects.equals(username, other.username);
+		return Objects.equals(email, other.email) && id == other.id && Objects.equals(username, other.username);
+	}
+
+	public User(int id, String username, String password, String email, String role, boolean active, String imageUrl,
+			LocalDateTime dateUpdated, LocalDateTime dateStart, Set<Trip> trips) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.active = active;
+		this.imageUrl = imageUrl;
+		this.dateUpdated = dateUpdated;
+		this.dateStart = dateStart;
+		this.trips = trips;
+	}
+
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -153,32 +203,15 @@ public class User {
 		builder.append(dateUpdated);
 		builder.append(", dateStart=");
 		builder.append(dateStart);
+		builder.append(", trips=");
+		builder.append(trips);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	public User(int id, String username, String password, String email, String role, boolean active, String imageUrl,
-			LocalDateTime dateUpdated, LocalDateTime dateStart) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.role = role;
-		this.active = active;
-		this.imageUrl = imageUrl;
-		this.dateUpdated = dateUpdated;
-		this.dateStart = dateStart;
-	}
-
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	
 	
 	
 	
-
+	
 }
