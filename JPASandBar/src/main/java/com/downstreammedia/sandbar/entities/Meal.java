@@ -39,10 +39,21 @@ public class Meal {
 	@JoinColumn(name = "meal_type_id")
 	private MealType mealtype;
 	
+	@OneToMany(mappedBy = "meal")
+	private List<Food> ingredients;
+	
 	//METHODS
 
 	public int getId() {
 		return id;
+	}
+
+	public List<Food> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Food> ingredients) {
+		this.ingredients = ingredients;
 	}
 
 	public MealType getMealtype() {
