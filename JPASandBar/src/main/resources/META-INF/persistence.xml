@@ -13,6 +13,7 @@
     <class>com.downstreammedia.sandbar.entities.Trip</class>
     <class>com.downstreammedia.sandbar.entities.Expenses</class>
     <class>com.downstreammedia.sandbar.entities.Location</class>
+    <class>com.downstreammedia.sandbar.entities.MealDay</class>
     <!-- end entities -->
 
     <properties>

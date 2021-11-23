@@ -1,6 +1,7 @@
 package com.downstreammedia.sandbar.entities;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,11 +13,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class LocationTest {
+public class MealDayTest {
 	
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Location location;
+	private MealDay mealday;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -31,29 +32,28 @@ public class LocationTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		location = em.find(Location.class, 1);
+		mealday = em.find(MealDay.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		location = null;
+		mealday = null;
 	}
 
 	@Test
 	void test() {
-		assertNotNull(location);
-		assertEquals("Gates of Lodore Campground", location.getName());
-		assertEquals("This is the start of the adventure", location.getDescription());
-		assertEquals("Mabel", location.getCity());
-
+		assertNotNull(mealday);
+		assertEquals("Limestone Campsite", mealday.getSleep());
+		assertEquals(null, mealday.getDescription());
 	}
 	
 	@Test
 	void relationTest() {
-		assertNotNull(location.getTrips());
-		assertEquals(0, location.getTrips().size());
-		assertEquals(0, location.getMealdays().size());
+		assertEquals(0, mealday.getLocations().size());
+		assertEquals("Gates of Lodore", mealday.getTrip().getName());
+
+		
 	}
 
 }

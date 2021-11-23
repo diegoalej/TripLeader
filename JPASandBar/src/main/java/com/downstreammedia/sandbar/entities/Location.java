@@ -34,6 +34,10 @@ public class Location {
 	@ManyToMany(mappedBy = "locations")
 	private List<Trip> trips;
 	
+	//@JsonIgnore
+	@ManyToMany(mappedBy = "locations")
+	private List<MealDay> mealdays;
+
 	//METHODS
 
 	
@@ -43,6 +47,16 @@ public class Location {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	
+
+	public List<MealDay> getMealdays() {
+		return mealdays;
+	}
+
+	public void setMealdays(List<MealDay> mealdays) {
+		this.mealdays = mealdays;
 	}
 
 	public String getName() {

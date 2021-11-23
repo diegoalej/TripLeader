@@ -50,6 +50,9 @@ public class Trip {
 		joinColumns = @JoinColumn(name = "location_id"), 
 		inverseJoinColumns = @JoinColumn(name = "trip_id"))
 	private List<Location> locations;
+	
+	@OneToMany(mappedBy = "trip")
+	private Set<MealDay> mealSchedule;
 
 	
 	//METHODS
@@ -58,6 +61,19 @@ public class Trip {
 	public int getId() {
 		return id;
 	}
+	
+
+	public Set<MealDay> getMealSchedule() {
+		return mealSchedule;
+	}
+
+
+
+	public void setMealSchedule(Set<MealDay> mealSchedule) {
+		this.mealSchedule = mealSchedule;
+	}
+
+
 
 	public List<Location> getLocations() {
 		return locations;
