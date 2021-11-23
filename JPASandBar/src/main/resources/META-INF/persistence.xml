@@ -17,6 +17,7 @@
     <class>com.downstreammedia.sandbar.entities.Meal</class>
     <class>com.downstreammedia.sandbar.entities.MealType</class>
     <class>com.downstreammedia.sandbar.entities.Food</class>
+    <class>com.downstreammedia.sandbar.entities.Category</class>
     <!-- end entities -->
 
     <properties>

@@ -53,6 +53,12 @@ public class Trip {
 	
 	@OneToMany(mappedBy = "trip")
 	private Set<MealDay> mealSchedule;
+	
+	@ManyToMany
+	@JoinTable(name = "trip_category", 
+		joinColumns = @JoinColumn(name = "category_id"), 
+		inverseJoinColumns = @JoinColumn(name = "trip_id"))
+	private List<Category> categories;
 
 	
 	//METHODS
@@ -62,6 +68,16 @@ public class Trip {
 		return id;
 	}
 	
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
 
 	public Set<MealDay> getMealSchedule() {
 		return mealSchedule;
