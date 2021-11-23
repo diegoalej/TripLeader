@@ -1,6 +1,5 @@
 package com.downstreammedia.sandbar.entities;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -15,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Meal {
@@ -35,10 +35,22 @@ public class Meal {
 	@JoinColumn(name="meal_day_id")
 	private MealDay dayserved;
 	
+	@OneToOne
+	@JoinColumn(name = "meal_type_id")
+	private MealType mealtype;
+	
 	//METHODS
 
 	public int getId() {
 		return id;
+	}
+
+	public MealType getMealtype() {
+		return mealtype;
+	}
+
+	public void setMealtype(MealType mealtype) {
+		this.mealtype = mealtype;
 	}
 
 	public MealDay getDayserved() {

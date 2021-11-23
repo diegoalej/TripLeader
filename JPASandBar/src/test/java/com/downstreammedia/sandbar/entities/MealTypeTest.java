@@ -13,11 +13,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MealTest {
-
+public class MealTypeTest {
+	
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Meal meal;
+	private MealType mealType;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -32,27 +32,20 @@ public class MealTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		meal = em.find(Meal.class, 1);
+		mealType = em.find(MealType.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		meal = null;
+		mealType = null;
 	}
 
 	@Test
 	void test() {
-		assertNotNull(meal);
-		assertEquals("Locro de papa", meal.getName());
-		assertEquals("Ecuadorian potato soup with spinach", meal.getDescription());
+		assertNotNull(mealType);
+		assertEquals("breakfast", mealType.getName());
+		assertEquals("All things breakfast", mealType.getDescription());
 	}
-	
-	@Test
-	void relationTest() {
-		assertEquals("firstUser", meal.getCreator().getUsername());
-		assertEquals("Limestone Campsite", meal.getDayserved().getSleep());
-		assertEquals("dinner", meal.getMealtype().getName());
-		
-	}
+
 }
