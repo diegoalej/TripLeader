@@ -59,6 +59,9 @@ public class Trip {
 		joinColumns = @JoinColumn(name = "category_id"), 
 		inverseJoinColumns = @JoinColumn(name = "trip_id"))
 	private List<Category> categories;
+	
+	@OneToMany(mappedBy = "trip")
+	private Set<UserEquipment> tripgear;
 
 	
 	//METHODS
@@ -68,6 +71,16 @@ public class Trip {
 		return id;
 	}
 	
+
+	public Set<UserEquipment> getTripgear() {
+		return tripgear;
+	}
+
+
+	public void setTripgear(Set<UserEquipment> tripgear) {
+		this.tripgear = tripgear;
+	}
+
 
 	public List<Category> getCategories() {
 		return categories;

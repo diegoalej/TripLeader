@@ -56,6 +56,7 @@ class UserTest {
 		assertEquals(1, user.getCreatedTrips().size());
 		assertEquals(1, user.getExpenses().size());
 		assertEquals(2, user.getMeals().size());
+		assertEquals(1, user.getEquipment().size());
 	}
 
 }

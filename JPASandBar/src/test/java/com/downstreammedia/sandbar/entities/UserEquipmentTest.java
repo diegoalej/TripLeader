@@ -13,11 +13,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TripTest {
-
+public class UserEquipmentTest {
+	
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Trip trip;
+	private UserEquipment userE;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -32,29 +32,28 @@ public class TripTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		trip = em.find(Trip.class, 1);
+		userE = em.find(UserEquipment.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		trip = null;
+		userE = null;
 	}
 
 	@Test
 	void test() {
-		assertNotNull(trip);
-		assertEquals("Gates of Lodore", trip.getName());
+		assertNotNull(userE);
+		assertEquals(true, userE.isActive());
+		assertEquals("Like new", userE.getCondition());
 	}
 	
 	@Test
 	void relationTest() {
-		assertEquals("firstUser", trip.getCreator().getUsername());
-		assertEquals(1, trip.getExpenses().size());		
-		assertEquals(0, trip.getMembers().size());	
-		assertEquals(1, trip.getMealSchedule().size());
-		assertEquals(0, trip.getCategories().size());
-		assertEquals(1, trip.getTripgear().size());
+		assertEquals("firstUser", userE.getCreator().getUsername());
+		assertEquals("Fire pan", userE.getEquipment().getName());
+		assertEquals("Gates of Lodore", userE.getTrip().getName());
 		
 	}
+
 }

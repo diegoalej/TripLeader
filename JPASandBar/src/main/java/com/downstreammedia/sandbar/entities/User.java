@@ -59,6 +59,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "creator")
 	private Set<Meal> meals;
+	
+	@OneToMany(mappedBy = "creator")
+	private Set<UserEquipment> equipment;
 
 
 	//METHODS
@@ -67,6 +70,14 @@ public class User {
 	
 	public int getId() {
 		return id;
+	}
+
+	public Set<UserEquipment> getEquipment() {
+		return equipment;
+	}
+
+	public void setEquipment(Set<UserEquipment> equipment) {
+		this.equipment = equipment;
 	}
 
 	public Set<Meal> getMeals() {

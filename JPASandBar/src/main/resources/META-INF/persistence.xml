@@ -19,6 +19,7 @@
     <class>com.downstreammedia.sandbar.entities.Food</class>
     <class>com.downstreammedia.sandbar.entities.Category</class>
     <class>com.downstreammedia.sandbar.entities.Equipment</class>
+    <class>com.downstreammedia.sandbar.entities.UserEquipment</class>
     <!-- end entities -->
 
     <properties>
