@@ -14,6 +14,7 @@
     <class>com.downstreammedia.sandbar.entities.Expenses</class>
     <class>com.downstreammedia.sandbar.entities.Location</class>
     <class>com.downstreammedia.sandbar.entities.MealDay</class>
+    <class>com.downstreammedia.sandbar.entities.Meal</class>
     <!-- end entities -->
 
     <properties>

@@ -35,6 +35,8 @@ public class Expense {
 	@JoinColumn(name="trip_id")
 	private Trip trip;
 	
+	
+	
 	//METHODS
 
 	public int getId() {

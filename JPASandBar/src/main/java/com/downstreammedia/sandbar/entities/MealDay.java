@@ -3,6 +3,7 @@ package com.downstreammedia.sandbar.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -42,8 +44,24 @@ public class MealDay {
 		inverseJoinColumns = @JoinColumn(name = "meal_day_id"))
 	private List<Location> locations;
 
+	
+	@OneToMany(mappedBy = "dayserved")
+	private Set<Meal> meals;
+	
+	//METHODS
+	
+	
+	
 	public int getId() {
 		return id;
+	}
+
+	public Set<Meal> getMeals() {
+		return meals;
+	}
+
+	public void setMeals(Set<Meal> meals) {
+		this.meals = meals;
 	}
 
 	public void setId(int id) {
