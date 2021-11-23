@@ -1,6 +1,7 @@
 package com.downstreammedia.sandbar.entities;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Category {
+	
+	/*********FIELDS*********/
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,18 +36,10 @@ public class Category {
 	@OneToMany(mappedBy = "category")
 	private List<Equipment> equipmentList;
 	
-	//METHODS
+	/*********METHODS*********/
 
 	public int getId() {
 		return id;
-	}
-
-	public List<Equipment> getEquipmentList() {
-		return equipmentList;
-	}
-
-	public void setEquipmentList(List<Equipment> equipmentList) {
-		this.equipmentList = equipmentList;
 	}
 
 	public void setId(int id) {
@@ -82,7 +77,64 @@ public class Category {
 	public void setTrips(List<Trip> trips) {
 		this.trips = trips;
 	}
-	
-	
 
+	public List<Equipment> getEquipmentList() {
+		return equipmentList;
+	}
+
+	public void setEquipmentList(List<Equipment> equipmentList) {
+		this.equipmentList = equipmentList;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Category other = (Category) obj;
+		return id == other.id && Objects.equals(name, other.name);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Category [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", active=");
+		builder.append(active);
+		builder.append(", trips=");
+		builder.append(trips);
+		builder.append(", equipmentList=");
+		builder.append(equipmentList);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	public Category(int id, String name, String description, boolean active, List<Trip> trips,
+			List<Equipment> equipmentList) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.active = active;
+		this.trips = trips;
+		this.equipmentList = equipmentList;
+	}
+
+	public Category() {
+		super();
+	}
+	
 }

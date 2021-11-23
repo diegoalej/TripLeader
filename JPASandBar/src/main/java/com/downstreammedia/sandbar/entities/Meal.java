@@ -1,6 +1,7 @@
 package com.downstreammedia.sandbar.entities;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,8 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Meal {
+	
+	/*********FIELDS*********/
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,34 +40,10 @@ public class Meal {
 	@OneToMany(mappedBy = "meal")
 	private List<Food> ingredients;
 	
-	//METHODS
+	/*********METHODS*********/
 
 	public int getId() {
 		return id;
-	}
-
-	public List<Food> getIngredients() {
-		return ingredients;
-	}
-
-	public void setIngredients(List<Food> ingredients) {
-		this.ingredients = ingredients;
-	}
-
-	public MealType getMealtype() {
-		return mealtype;
-	}
-
-	public void setMealtype(MealType mealtype) {
-		this.mealtype = mealtype;
-	}
-
-	public MealDay getDayserved() {
-		return dayserved;
-	}
-
-	public void setDayserved(MealDay dayserved) {
-		this.dayserved = dayserved;
 	}
 
 	public void setId(int id) {
@@ -94,9 +73,85 @@ public class Meal {
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}
-	
-	
-	
-	
 
+	public MealDay getDayserved() {
+		return dayserved;
+	}
+
+	public void setDayserved(MealDay dayserved) {
+		this.dayserved = dayserved;
+	}
+
+	public MealType getMealtype() {
+		return mealtype;
+	}
+
+	public void setMealtype(MealType mealtype) {
+		this.mealtype = mealtype;
+	}
+
+	public List<Food> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Food> ingredients) {
+		this.ingredients = ingredients;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(creator, id, mealtype, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Meal other = (Meal) obj;
+		return Objects.equals(creator, other.creator) && id == other.id && Objects.equals(mealtype, other.mealtype)
+				&& Objects.equals(name, other.name);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Meal [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", creator=");
+		builder.append(creator);
+		builder.append(", dayserved=");
+		builder.append(dayserved);
+		builder.append(", mealtype=");
+		builder.append(mealtype);
+		builder.append(", ingredients=");
+		builder.append(ingredients);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	public Meal(int id, String name, String description, User creator, MealDay dayserved, MealType mealtype,
+			List<Food> ingredients) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.creator = creator;
+		this.dayserved = dayserved;
+		this.mealtype = mealtype;
+		this.ingredients = ingredients;
+	}
+
+	public Meal() {
+		super();
+	}
+	
+	
 }

@@ -19,7 +19,8 @@ import javax.persistence.JoinColumn;
 @Entity
 public class User {
 	
-	//FIELDS
+	/*********FIELDS*********/
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -62,46 +63,11 @@ public class User {
 	
 	@OneToMany(mappedBy = "creator")
 	private Set<UserEquipment> equipment;
+	
+	/*********METHODS*********/
 
-
-	//METHODS
-	
-	
-	
 	public int getId() {
 		return id;
-	}
-
-	public Set<UserEquipment> getEquipment() {
-		return equipment;
-	}
-
-	public void setEquipment(Set<UserEquipment> equipment) {
-		this.equipment = equipment;
-	}
-
-	public Set<Meal> getMeals() {
-		return meals;
-	}
-
-	public void setMeals(Set<Meal> meals) {
-		this.meals = meals;
-	}
-
-	public Set<Expense> getExpenses() {
-		return expenses;
-	}
-
-	public void setExpenses(Set<Expense> expenses) {
-		this.expenses = expenses;
-	}
-
-	public List<Trip> getCreatedTrips() {
-		return createdTrips;
-	}
-
-	public void setCreatedTrips(List<Trip> createdTrips) {
-		this.createdTrips = createdTrips;
 	}
 
 	public void setId(int id) {
@@ -172,6 +138,14 @@ public class User {
 		this.dateStart = dateStart;
 	}
 
+	public List<Trip> getCreatedTrips() {
+		return createdTrips;
+	}
+
+	public void setCreatedTrips(List<Trip> createdTrips) {
+		this.createdTrips = createdTrips;
+	}
+
 	public Set<Trip> getTrips() {
 		return trips;
 	}
@@ -180,9 +154,33 @@ public class User {
 		this.trips = trips;
 	}
 
+	public Set<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(Set<Expense> expenses) {
+		this.expenses = expenses;
+	}
+
+	public Set<Meal> getMeals() {
+		return meals;
+	}
+
+	public void setMeals(Set<Meal> meals) {
+		this.meals = meals;
+	}
+
+	public Set<UserEquipment> getEquipment() {
+		return equipment;
+	}
+
+	public void setEquipment(Set<UserEquipment> equipment) {
+		this.equipment = equipment;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, id, username);
+		return Objects.hash(dateStart, email, id);
 	}
 
 	@Override
@@ -194,27 +192,7 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(email, other.email) && id == other.id && Objects.equals(username, other.username);
-	}
-
-	public User(int id, String username, String password, String email, String role, boolean active, String imageUrl,
-			LocalDateTime dateUpdated, LocalDateTime dateStart, Set<Trip> trips) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.role = role;
-		this.active = active;
-		this.imageUrl = imageUrl;
-		this.dateUpdated = dateUpdated;
-		this.dateStart = dateStart;
-		this.trips = trips;
-	}
-
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
+		return Objects.equals(dateStart, other.dateStart) && Objects.equals(email, other.email) && id == other.id;
 	}
 
 	@Override
@@ -238,15 +216,42 @@ public class User {
 		builder.append(dateUpdated);
 		builder.append(", dateStart=");
 		builder.append(dateStart);
+		builder.append(", createdTrips=");
+		builder.append(createdTrips);
 		builder.append(", trips=");
 		builder.append(trips);
+		builder.append(", expenses=");
+		builder.append(expenses);
+		builder.append(", meals=");
+		builder.append(meals);
+		builder.append(", equipment=");
+		builder.append(equipment);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	
-	
-	
-	
+	public User(int id, String username, String password, String email, String role, boolean active, String imageUrl,
+			LocalDateTime dateUpdated, LocalDateTime dateStart, List<Trip> createdTrips, Set<Trip> trips,
+			Set<Expense> expenses, Set<Meal> meals, Set<UserEquipment> equipment) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.active = active;
+		this.imageUrl = imageUrl;
+		this.dateUpdated = dateUpdated;
+		this.dateStart = dateStart;
+		this.createdTrips = createdTrips;
+		this.trips = trips;
+		this.expenses = expenses;
+		this.meals = meals;
+		this.equipment = equipment;
+	}
+
+	public User() {
+		super();
+	}
 	
 }

@@ -12,6 +12,8 @@ import javax.persistence.Table;
 @Table(name="meal_type")
 public class MealType {
 	
+	/*********FIELDS*********/
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -20,8 +22,8 @@ public class MealType {
 	
 	private String description;
 	
-	//METHODS
-
+	/*********METHODS*********/
+	
 	public int getId() {
 		return id;
 	}
@@ -85,8 +87,6 @@ public class MealType {
 
 	public MealType() {
 		super();
-		// TODO Auto-generated constructor stub
 	}	
 	
-
 }

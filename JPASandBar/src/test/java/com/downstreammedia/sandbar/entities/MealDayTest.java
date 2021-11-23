@@ -53,7 +53,6 @@ public class MealDayTest {
 		assertEquals(0, mealday.getLocations().size());
 		assertEquals("Gates of Lodore", mealday.getTrip().getName());
 		assertEquals(3, mealday.getMeals().size());
-
 		
 	}
 

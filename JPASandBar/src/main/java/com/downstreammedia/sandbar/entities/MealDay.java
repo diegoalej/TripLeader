@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Table(name="meal_day")
 public class MealDay {
 	
-	//FIELDS
+	/*********FIELDS*********/
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,66 +47,79 @@ public class MealDay {
 	
 	@OneToMany(mappedBy = "dayserved")
 	private Set<Meal> meals;
-	
-	//METHODS
-	
-	
+
+
+	/*********METHODS*********/
 	
 	public int getId() {
 		return id;
 	}
 
-	public Set<Meal> getMeals() {
-		return meals;
-	}
-
-	public void setMeals(Set<Meal> meals) {
-		this.meals = meals;
-	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
+
 	public LocalDateTime getDate() {
 		return date;
 	}
+
 
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
+
 	public String getSleep() {
 		return sleep;
 	}
+
 
 	public void setSleep(String sleep) {
 		this.sleep = sleep;
 	}
 
+
 	public String getDescription() {
 		return description;
 	}
+
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+
 	public Trip getTrip() {
 		return trip;
 	}
+
 
 	public void setTrip(Trip trip) {
 		this.trip = trip;
 	}
 
+
 	public List<Location> getLocations() {
 		return locations;
 	}
 
+
 	public void setLocations(List<Location> locations) {
 		this.locations = locations;
 	}
+
+
+	public Set<Meal> getMeals() {
+		return meals;
+	}
+
+
+	public void setMeals(Set<Meal> meals) {
+		this.meals = meals;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -125,6 +138,7 @@ public class MealDay {
 		return Objects.equals(date, other.date) && id == other.id && Objects.equals(trip, other.trip);
 	}
 
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -140,11 +154,15 @@ public class MealDay {
 		builder.append(trip);
 		builder.append(", locations=");
 		builder.append(locations);
+		builder.append(", meals=");
+		builder.append(meals);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	public MealDay(int id, LocalDateTime date, String sleep, String description, Trip trip, List<Location> locations) {
+
+	public MealDay(int id, LocalDateTime date, String sleep, String description, Trip trip, List<Location> locations,
+			Set<Meal> meals) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -152,12 +170,12 @@ public class MealDay {
 		this.description = description;
 		this.trip = trip;
 		this.locations = locations;
+		this.meals = meals;
 	}
+
 
 	public MealDay() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-		
-
+	
 }

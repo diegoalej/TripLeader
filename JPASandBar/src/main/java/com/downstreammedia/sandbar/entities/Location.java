@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Location {
 	
-	//FIELDS
+	/*********FIELDS*********/
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +38,7 @@ public class Location {
 	@ManyToMany(mappedBy = "locations")
 	private List<MealDay> mealdays;
 
-	//METHODS
-
+	/*********METHODS*********/
 	
 	public int getId() {
 		return id;
@@ -47,16 +46,6 @@ public class Location {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-	
-	
-
-	public List<MealDay> getMealdays() {
-		return mealdays;
-	}
-
-	public void setMealdays(List<MealDay> mealdays) {
-		this.mealdays = mealdays;
 	}
 
 	public String getName() {
@@ -115,6 +104,14 @@ public class Location {
 		this.trips = trips;
 	}
 
+	public List<MealDay> getMealdays() {
+		return mealdays;
+	}
+
+	public void setMealdays(List<MealDay> mealdays) {
+		this.mealdays = mealdays;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name);
@@ -151,12 +148,14 @@ public class Location {
 		builder.append(coordinates);
 		builder.append(", trips=");
 		builder.append(trips);
+		builder.append(", mealdays=");
+		builder.append(mealdays);
 		builder.append("]");
 		return builder.toString();
 	}
 
 	public Location(int id, String name, String description, String address, String city, int zip, String coordinates,
-			List<Trip> trips) {
+			List<Trip> trips, List<MealDay> mealdays) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -166,6 +165,7 @@ public class Location {
 		this.zip = zip;
 		this.coordinates = coordinates;
 		this.trips = trips;
+		this.mealdays = mealdays;
 	}
 
 	public Location() {
@@ -173,10 +173,4 @@ public class Location {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
-	
-	
-	
-
 }

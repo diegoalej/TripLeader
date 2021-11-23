@@ -19,7 +19,8 @@ import javax.persistence.OneToMany;
 @Entity
 public class Trip {
 	
-	//FIELDS
+	/*********FIELDS*********/
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -62,62 +63,11 @@ public class Trip {
 	
 	@OneToMany(mappedBy = "trip")
 	private Set<UserEquipment> tripgear;
+	
+	/*********METHODS*********/
 
-	
-	//METHODS
-	
-	
 	public int getId() {
 		return id;
-	}
-	
-
-	public Set<UserEquipment> getTripgear() {
-		return tripgear;
-	}
-
-
-	public void setTripgear(Set<UserEquipment> tripgear) {
-		this.tripgear = tripgear;
-	}
-
-
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
-
-
-	public Set<MealDay> getMealSchedule() {
-		return mealSchedule;
-	}
-
-
-
-	public void setMealSchedule(Set<MealDay> mealSchedule) {
-		this.mealSchedule = mealSchedule;
-	}
-
-
-
-	public List<Location> getLocations() {
-		return locations;
-	}
-
-	public void setLocations(List<Location> locations) {
-		this.locations = locations;
-	}
-
-	public Set<Expense> getExpenses() {
-		return expenses;
-	}
-
-	public void setExpenses(Set<Expense> expenses) {
-		this.expenses = expenses;
 	}
 
 	public void setId(int id) {
@@ -172,9 +122,49 @@ public class Trip {
 		this.creator = creator;
 	}
 
+	public Set<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(Set<Expense> expenses) {
+		this.expenses = expenses;
+	}
+
+	public List<Location> getLocations() {
+		return locations;
+	}
+
+	public void setLocations(List<Location> locations) {
+		this.locations = locations;
+	}
+
+	public Set<MealDay> getMealSchedule() {
+		return mealSchedule;
+	}
+
+	public void setMealSchedule(Set<MealDay> mealSchedule) {
+		this.mealSchedule = mealSchedule;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
+	public Set<UserEquipment> getTripgear() {
+		return tripgear;
+	}
+
+	public void setTripgear(Set<UserEquipment> tripgear) {
+		this.tripgear = tripgear;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(creator, id, name);
+		return Objects.hash(creator, dateEnd, dateStart, id);
 	}
 
 	@Override
@@ -186,11 +176,44 @@ public class Trip {
 		if (getClass() != obj.getClass())
 			return false;
 		Trip other = (Trip) obj;
-		return Objects.equals(creator, other.creator) && id == other.id && Objects.equals(name, other.name);
+		return Objects.equals(creator, other.creator) && Objects.equals(dateEnd, other.dateEnd)
+				&& Objects.equals(dateStart, other.dateStart) && id == other.id;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Trip [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", dateStart=");
+		builder.append(dateStart);
+		builder.append(", dateEnd=");
+		builder.append(dateEnd);
+		builder.append(", members=");
+		builder.append(members);
+		builder.append(", creator=");
+		builder.append(creator);
+		builder.append(", expenses=");
+		builder.append(expenses);
+		builder.append(", locations=");
+		builder.append(locations);
+		builder.append(", mealSchedule=");
+		builder.append(mealSchedule);
+		builder.append(", categories=");
+		builder.append(categories);
+		builder.append(", tripgear=");
+		builder.append(tripgear);
+		builder.append("]");
+		return builder.toString();
 	}
 
 	public Trip(int id, String name, String description, LocalDateTime dateStart, LocalDateTime dateEnd,
-			Set<User> members, User creator) {
+			Set<User> members, User creator, Set<Expense> expenses, List<Location> locations, Set<MealDay> mealSchedule,
+			List<Category> categories, Set<UserEquipment> tripgear) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -199,15 +222,15 @@ public class Trip {
 		this.dateEnd = dateEnd;
 		this.members = members;
 		this.creator = creator;
+		this.expenses = expenses;
+		this.locations = locations;
+		this.mealSchedule = mealSchedule;
+		this.categories = categories;
+		this.tripgear = tripgear;
 	}
 
 	public Trip() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
-	
 	
 }

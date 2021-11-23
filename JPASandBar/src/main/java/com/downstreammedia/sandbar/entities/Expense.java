@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Expense {
 	
-	//FIELDS
+	/*********FIELDS*********/
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +36,7 @@ public class Expense {
 	private Trip trip;
 	
 	
-	
-	//METHODS
+	/*********METHODS*********/
 
 	public int getId() {
 		return id;
