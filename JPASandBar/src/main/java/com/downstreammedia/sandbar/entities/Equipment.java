@@ -1,20 +1,18 @@
 package com.downstreammedia.sandbar.entities;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Category {
+public class Equipment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,27 +22,16 @@ public class Category {
 	
 	private String description;
 	
-	private boolean active; 
+	private int amount;
 	
-	//@JsonIgnore
-	@ManyToMany(mappedBy = "categories")
-	private List<Trip> trips;
-	
-	@OneToMany(mappedBy = "category")
-	private List<Equipment> equipmentList;
+	@ManyToOne
+	@JoinColumn(name="category_id")
+	private Category category;
 	
 	//METHODS
 
 	public int getId() {
 		return id;
-	}
-
-	public List<Equipment> getEquipmentList() {
-		return equipmentList;
-	}
-
-	public void setEquipmentList(List<Equipment> equipmentList) {
-		this.equipmentList = equipmentList;
 	}
 
 	public void setId(int id) {
@@ -53,7 +40,7 @@ public class Category {
 
 	public String getName() {
 		return name;
-	}
+	} 
 
 	public void setName(String name) {
 		this.name = name;
@@ -67,22 +54,21 @@ public class Category {
 		this.description = description;
 	}
 
-	public boolean isActive() {
-		return active;
+	public int getAmount() {
+		return amount;
 	}
 
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 
-	public List<Trip> getTrips() {
-		return trips;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setTrips(List<Trip> trips) {
-		this.trips = trips;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
-	
 	
 
 }
