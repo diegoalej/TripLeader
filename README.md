@@ -1,11 +1,17 @@
 # SandBar Project
-This project is intended to be a simple log-in platform where users can safely log in and see their information. 
+This application is intended to be used as a tool to plan single- and multi-day outings in the outdoors or any other occasion with a focus on logistics, meals, and expenses.
 
 ## Project Description
-The sandBar project makes use of the Spring framework to build an API that persist user's data to a MySQL DB. For the front end our Angular app makes calls to the Spring API and handles all views. 
+The SandBar project makes use of the Spring framework and MySQL for the back-end REST API. For the front end an Angular app makes calls to the Spring API and handles all views. 
+
 Use cases include:
 * User can create new account from landing page
 * User can safely log in to account from landing page
-* User can see and edit personal information
+* User can see and edit personal information (trips, expenses, meals)
 * User can see and edit other users if member of admin group
 
+### MySQL DB and JPA Project 
+Once the DB schema was established, JPASandBar was created as a Gradle project to model and communicate with the DB. The project incorporates JPA (Hibernate) and JDBC driver (MySQL) to connect with the DB, and uses JUnit testing to ensure data and relationships are accurate. This project is meant to be a dependency of the main Spring Boot project on which a REST API will serve the data modeled here. 
+
+### Spring Boot Project
+The confluence project brings in JPASandbar as a dependency and sets up the API endpoints that, using services and repositories, will operate CRUD functions on the required entities to serve data or perform the required function. 
