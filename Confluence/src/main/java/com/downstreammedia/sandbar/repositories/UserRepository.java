@@ -6,4 +6,6 @@ import com.downstreammedia.sandbar.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
 
+	User findByUsername(String username);
+	
 }

@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.JoinColumn;
 
 
@@ -44,23 +47,26 @@ public class User {
 	@Column(name="date_start")
 	private LocalDateTime dateStart;
 	
-	//@JsonIgnore
+	@JsonIgnore
 	@OneToMany(mappedBy = "creator")
 	private List<Trip> createdTrips;
 	
-	//@JsonIgnore
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "user_trip", 
 		joinColumns = @JoinColumn(name = "trip_id"), 
 		inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<Trip> trips;
 	
+	@JsonIgnore	
 	@OneToMany(mappedBy = "creator")
 	private Set<Expense> expenses;
-	
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "creator")
 	private Set<Meal> meals;
-	
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "creator")
 	private Set<UserEquipment> equipment;
 	
