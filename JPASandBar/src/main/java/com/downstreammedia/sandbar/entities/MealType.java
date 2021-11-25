@@ -19,9 +19,7 @@ public class MealType {
 	private int id;
 	
 	private String name;
-	
-	private String description;
-	
+		
 	/*********METHODS*********/
 	
 	public int getId() {
@@ -40,17 +38,31 @@ public class MealType {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("MealType [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append("]");
+		return builder.toString();
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public MealType(int id, String name, String description) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
+	public MealType() {
+		super();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, name);
+		return Objects.hash(id, name);
 	}
 
 	@Override
@@ -62,31 +74,8 @@ public class MealType {
 		if (getClass() != obj.getClass())
 			return false;
 		MealType other = (MealType) obj;
-		return Objects.equals(description, other.description) && id == other.id && Objects.equals(name, other.name);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("MealType [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append("]");
-		return builder.toString();
-	}
-
-	public MealType(int id, String name, String description) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-	}
-
-	public MealType() {
-		super();
+		return id == other.id && Objects.equals(name, other.name);
 	}	
+	
 	
 }

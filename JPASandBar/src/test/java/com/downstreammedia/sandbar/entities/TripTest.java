@@ -53,8 +53,7 @@ public class TripTest {
 		assertEquals(1, trip.getExpenses().size());		
 		assertEquals(0, trip.getMembers().size());	
 		assertEquals(1, trip.getMealSchedule().size());
-		assertEquals(0, trip.getCategories().size());
-		assertEquals(1, trip.getTripgear().size());
+		assertEquals(2, trip.getCategories().size());
 		
 	}
 }

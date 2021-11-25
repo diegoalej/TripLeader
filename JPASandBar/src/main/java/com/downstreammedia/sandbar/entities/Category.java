@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -26,11 +28,10 @@ public class Category {
 	private boolean active; 
 	
 	//@JsonIgnore
-	@ManyToMany(mappedBy = "categories")
-	private List<Trip> trips;
+	@ManyToOne
+	@JoinColumn(name="trip_id")
+	private Trip trip;
 	
-	@OneToMany(mappedBy = "category")
-	private List<Equipment> equipmentList;
 	
 	/*********METHODS*********/
 
@@ -66,25 +67,17 @@ public class Category {
 		this.active = active;
 	}
 
-	public List<Trip> getTrips() {
-		return trips;
+	public Trip getTrip() {
+		return trip;
 	}
 
-	public void setTrips(List<Trip> trips) {
-		this.trips = trips;
-	}
-
-	public List<Equipment> getEquipmentList() {
-		return equipmentList;
-	}
-
-	public void setEquipmentList(List<Equipment> equipmentList) {
-		this.equipmentList = equipmentList;
+	public void setTrip(Trip trip) {
+		this.trip = trip;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name);
+		return Objects.hash(description, id, name);
 	}
 
 	@Override
@@ -96,7 +89,7 @@ public class Category {
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		return id == other.id && Objects.equals(name, other.name);
+		return Objects.equals(description, other.description) && id == other.id && Objects.equals(name, other.name);
 	}
 
 	@Override
@@ -110,27 +103,23 @@ public class Category {
 		builder.append(description);
 		builder.append(", active=");
 		builder.append(active);
-		builder.append(", trips=");
-		builder.append(trips);
-		builder.append(", equipmentList=");
-		builder.append(equipmentList);
+		builder.append(", trip=");
+		builder.append(trip);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	public Category(int id, String name, String description, boolean active, List<Trip> trips,
-			List<Equipment> equipmentList) {
+	public Category(int id, String name, String description, boolean active, Trip trip) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.active = active;
-		this.trips = trips;
-		this.equipmentList = equipmentList;
+		this.trip = trip;
 	}
 
 	public Category() {
 		super();
 	}
-	
+
 }

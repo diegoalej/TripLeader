@@ -45,7 +45,6 @@ public class MealTypeTest {
 	void test() {
 		assertNotNull(mealType);
 		assertEquals("breakfast", mealType.getName());
-		assertEquals("All things breakfast", mealType.getDescription());
 	}
 
 }

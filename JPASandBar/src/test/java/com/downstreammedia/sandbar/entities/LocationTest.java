@@ -51,9 +51,7 @@ public class LocationTest {
 	
 	@Test
 	void relationTest() {
-		assertNotNull(location.getTrips());
-		assertEquals(0, location.getTrips().size());
-		assertEquals(0, location.getMealdays().size());
+		//no relationships
 	}
 
 }

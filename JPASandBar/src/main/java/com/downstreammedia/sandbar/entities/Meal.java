@@ -40,6 +40,10 @@ public class Meal {
 	@OneToMany(mappedBy = "meal")
 	private List<Food> ingredients;
 	
+	@OneToOne
+	@JoinColumn(name = "location_id")
+	private Location location;
+	
 	/*********METHODS*********/
 
 	public int getId() {
@@ -98,9 +102,17 @@ public class Meal {
 		this.ingredients = ingredients;
 	}
 
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(creator, id, mealtype, name);
+		return Objects.hash(creator, id, name);
 	}
 
 	@Override
@@ -112,8 +124,7 @@ public class Meal {
 		if (getClass() != obj.getClass())
 			return false;
 		Meal other = (Meal) obj;
-		return Objects.equals(creator, other.creator) && id == other.id && Objects.equals(mealtype, other.mealtype)
-				&& Objects.equals(name, other.name);
+		return Objects.equals(creator, other.creator) && id == other.id && Objects.equals(name, other.name);
 	}
 
 	@Override
@@ -133,12 +144,14 @@ public class Meal {
 		builder.append(mealtype);
 		builder.append(", ingredients=");
 		builder.append(ingredients);
+		builder.append(", location=");
+		builder.append(location);
 		builder.append("]");
 		return builder.toString();
 	}
 
 	public Meal(int id, String name, String description, User creator, MealDay dayserved, MealType mealtype,
-			List<Food> ingredients) {
+			List<Food> ingredients, Location location) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -147,11 +160,11 @@ public class Meal {
 		this.dayserved = dayserved;
 		this.mealtype = mealtype;
 		this.ingredients = ingredients;
+		this.location = location;
 	}
 
 	public Meal() {
 		super();
 	}
-	
 	
 }
