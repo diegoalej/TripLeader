@@ -6,7 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +35,67 @@ public class UserController {
 		else {
 			resp.setStatus(404);
 			return null;
+		}
+	}
+	
+	@GetMapping("users/{id}")
+	public User findUserById(@PathVariable Integer id, HttpServletResponse resp) {
+		User user = userServ.findUserById(id);
+		if(user != null) {
+			return user;
+		}else {
+			resp.setStatus(404);
+			return null;
+		}
+	}
+	
+	@PostMapping("users")
+	public User createNewUser(@RequestBody User user, HttpServletResponse resp){
+		User newUser = userServ.createUser(user);
+		if (newUser != null) {
+			return newUser;
+		}
+		else {
+			resp.setStatus(404);
+			return null;
+		}
+	}
+	
+	//Once authentication is added this can be properly restricted to user and admin
+	@PutMapping("users/{id}")
+	public User updateExistingUser(
+			@RequestBody User user, 
+			@PathVariable int id, 
+			HttpServletResponse resp
+			//Principal principal
+			){
+		User editUser = userServ.updateUser(id, user, user.getUsername() );//principal.getName()
+		if (editUser != null) {
+			return editUser;
+		}
+		else {
+			resp.setStatus(404);
+			return null;
+		}
+	}
+	
+	
+	//Should delete trips, expenses, and meals
+	@DeleteMapping("users/{id}")
+	public void deleteUser(
+			@PathVariable Integer id, 
+			HttpServletResponse resp,
+			@RequestBody User user
+			//Principal principal
+			){
+		boolean result = false;
+		try {
+			result = userServ.deleteUser(id, user.getUsername());
+			if (result == true) {
+				resp.setStatus(204);
+			}
+		} catch (Exception e) {			
+			resp.setStatus(404);
 		}
 	}
 
