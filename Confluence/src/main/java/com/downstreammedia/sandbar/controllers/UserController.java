@@ -1,5 +1,6 @@
 package com.downstreammedia.sandbar.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -66,10 +67,10 @@ public class UserController {
 	public User updateExistingUser(
 			@RequestBody User user, 
 			@PathVariable int id, 
-			HttpServletResponse resp
-			//Principal principal
+			HttpServletResponse resp,
+			Principal principal
 			){
-		User editUser = userServ.updateUser(id, user, user.getUsername() );//principal.getName()
+		User editUser = userServ.updateUser(id, user, principal.getName() );//principal.getName()
 		if (editUser != null) {
 			return editUser;
 		}
@@ -85,12 +86,12 @@ public class UserController {
 	public void deleteUser(
 			@PathVariable Integer id, 
 			HttpServletResponse resp,
-			@RequestBody User user
-			//Principal principal
+			@RequestBody User user,
+			Principal principal
 			){
 		boolean result = false;
 		try {
-			result = userServ.deleteUser(id, user.getUsername());
+			result = userServ.deleteUser(id, principal.getName());
 			if (result == true) {
 				resp.setStatus(204);
 			}
