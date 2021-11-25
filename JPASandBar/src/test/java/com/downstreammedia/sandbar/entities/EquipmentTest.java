@@ -49,7 +49,7 @@ public class EquipmentTest {
 	
 	@Test
 	void relationTest() {
-		assertEquals("Camp essentials", equipment.getCategory().getName());
+		assertEquals(0, equipment.getTrips().size());
 		
 	}
 

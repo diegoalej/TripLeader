@@ -1,13 +1,11 @@
 package com.downstreammedia.sandbar.entities;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 @Entity
 public class Location {
@@ -28,15 +26,9 @@ public class Location {
 	
 	private int zip;
 	
-	private String coordinates;
-	
-	//@JsonIgnore
-	@ManyToMany(mappedBy = "locations")
-	private List<Trip> trips;
-	
-	//@JsonIgnore
-	@ManyToMany(mappedBy = "locations")
-	private List<MealDay> mealdays;
+	private String latitude;
+
+	private String longitude;
 
 	/*********METHODS*********/
 	
@@ -88,33 +80,26 @@ public class Location {
 		this.zip = zip;
 	}
 
-	public String getCoordinates() {
-		return coordinates;
+	public String getLatitude() {
+		return latitude;
 	}
 
-	public void setCoordinates(String coordinates) {
-		this.coordinates = coordinates;
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
 
-	public List<Trip> getTrips() {
-		return trips;
+	public String getLongitude() {
+		return longitude;
 	}
 
-	public void setTrips(List<Trip> trips) {
-		this.trips = trips;
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 
-	public List<MealDay> getMealdays() {
-		return mealdays;
-	}
-
-	public void setMealdays(List<MealDay> mealdays) {
-		this.mealdays = mealdays;
-	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name);
+		return Objects.hash(id, latitude, longitude, name);
 	}
 
 	@Override
@@ -126,7 +111,8 @@ public class Location {
 		if (getClass() != obj.getClass())
 			return false;
 		Location other = (Location) obj;
-		return id == other.id && Objects.equals(name, other.name);
+		return id == other.id && Objects.equals(latitude, other.latitude) && Objects.equals(longitude, other.longitude)
+				&& Objects.equals(name, other.name);
 	}
 
 	@Override
@@ -144,18 +130,16 @@ public class Location {
 		builder.append(city);
 		builder.append(", zip=");
 		builder.append(zip);
-		builder.append(", coordinates=");
-		builder.append(coordinates);
-		builder.append(", trips=");
-		builder.append(trips);
-		builder.append(", mealdays=");
-		builder.append(mealdays);
+		builder.append(", latitude=");
+		builder.append(latitude);
+		builder.append(", longitude=");
+		builder.append(longitude);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	public Location(int id, String name, String description, String address, String city, int zip, String coordinates,
-			List<Trip> trips, List<MealDay> mealdays) {
+	public Location(int id, String name, String description, String address, String city, int zip, String latitude,
+			String longitude) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -163,14 +147,15 @@ public class Location {
 		this.address = address;
 		this.city = city;
 		this.zip = zip;
-		this.coordinates = coordinates;
-		this.trips = trips;
-		this.mealdays = mealdays;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 
 	public Location() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	
 }
+	

@@ -44,14 +44,12 @@ public class CategoryTest {
 	@Test
 	void test() {
 		assertNotNull(category);
-		assertEquals("Camp essentials", category.getName());
+		assertEquals("Camping General", category.getName());
 	}
 	
 	@Test
 	void relationTest() {
-		assertEquals(0, category.getTrips().size());
-		assertEquals("Fire pan", category.getEquipmentList().get(0).getName());
-		
+		assertEquals("Gates of Lodore", category.getTrip().getName());		
 	}
 
 }

@@ -1,14 +1,15 @@
 package com.downstreammedia.sandbar.entities;
 
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 
 
 @Entity
@@ -26,9 +27,8 @@ public class Equipment {
 	
 	private int amount;
 	
-	@ManyToOne
-	@JoinColumn(name="category_id")
-	private Category category;
+	@ManyToMany(mappedBy = "gearlist")
+	private List<Trip> trips;
 	
 	/*********METHODS*********/
 
@@ -64,17 +64,17 @@ public class Equipment {
 		this.amount = amount;
 	}
 
-	public Category getCategory() {
-		return category;
+	public List<Trip> getTrips() {
+		return trips;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setTrips(List<Trip> trips) {
+		this.trips = trips;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(category, id, name);
+		return Objects.hash(description, id, name);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class Equipment {
 		if (getClass() != obj.getClass())
 			return false;
 		Equipment other = (Equipment) obj;
-		return Objects.equals(category, other.category) && id == other.id && Objects.equals(name, other.name);
+		return Objects.equals(description, other.description) && id == other.id && Objects.equals(name, other.name);
 	}
 
 	@Override
@@ -100,22 +100,23 @@ public class Equipment {
 		builder.append(description);
 		builder.append(", amount=");
 		builder.append(amount);
-		builder.append(", category=");
-		builder.append(category);
+		builder.append(", trips=");
+		builder.append(trips);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	public Equipment(int id, String name, String description, int amount, Category category) {
+	public Equipment(int id, String name, String description, int amount, List<Trip> trips) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.amount = amount;
-		this.category = category;
+		this.trips = trips;
 	}
 
 	public Equipment() {
 		super();
 	}
+	
 }

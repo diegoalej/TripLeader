@@ -1,7 +1,6 @@
 package com.downstreammedia.sandbar.entities;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -10,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -36,15 +33,7 @@ public class MealDay {
 	@ManyToOne
 	@JoinColumn(name="trip_id")
 	private Trip trip;    
-	
-	//@JsonIgnore
-	@ManyToMany
-	@JoinTable(name = "location_has_meal_day", 
-		joinColumns = @JoinColumn(name = "location_id"), 
-		inverseJoinColumns = @JoinColumn(name = "meal_day_id"))
-	private List<Location> locations;
 
-	
 	@OneToMany(mappedBy = "dayserved")
 	private Set<Meal> meals;
 
@@ -101,16 +90,6 @@ public class MealDay {
 	}
 
 
-	public List<Location> getLocations() {
-		return locations;
-	}
-
-
-	public void setLocations(List<Location> locations) {
-		this.locations = locations;
-	}
-
-
 	public Set<Meal> getMeals() {
 		return meals;
 	}
@@ -152,8 +131,6 @@ public class MealDay {
 		builder.append(description);
 		builder.append(", trip=");
 		builder.append(trip);
-		builder.append(", locations=");
-		builder.append(locations);
 		builder.append(", meals=");
 		builder.append(meals);
 		builder.append("]");
@@ -161,7 +138,7 @@ public class MealDay {
 	}
 
 
-	public MealDay(int id, LocalDateTime date, String sleep, String description, Trip trip, List<Location> locations,
+	public MealDay(int id, LocalDateTime date, String sleep, String description, Trip trip,
 			Set<Meal> meals) {
 		super();
 		this.id = id;
@@ -169,7 +146,6 @@ public class MealDay {
 		this.sleep = sleep;
 		this.description = description;
 		this.trip = trip;
-		this.locations = locations;
 		this.meals = meals;
 	}
 

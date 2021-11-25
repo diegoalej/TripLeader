@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -49,23 +50,28 @@ public class Trip {
 	@OneToMany(mappedBy = "trip")
 	private Set<Expense> expenses;
 	
-	@ManyToMany
-	@JoinTable(name = "trip_has_location", 
-		joinColumns = @JoinColumn(name = "location_id"), 
-		inverseJoinColumns = @JoinColumn(name = "trip_id"))
-	private List<Location> locations;
+	@OneToOne
+	@JoinColumn(name = "startloc_id")
+	private Location locationStart;
+
+	@OneToOne
+	@JoinColumn(name = "endloc_id")
+	private Location locationEnd;
 	
 	@OneToMany(mappedBy = "trip")
 	private Set<MealDay> mealSchedule;
 	
 	@ManyToMany
-	@JoinTable(name = "trip_category", 
-		joinColumns = @JoinColumn(name = "category_id"), 
+	@JoinTable(name = "trip_has_equipment", 
+		joinColumns = @JoinColumn(name = "equipment_id"), 
 		inverseJoinColumns = @JoinColumn(name = "trip_id"))
-	private List<Category> categories;
+	private List<Equipment> gearlist;
 	
 	@OneToMany(mappedBy = "trip")
-	private Set<UserEquipment> tripgear;
+	private Set<Category> categories;
+	
+	@OneToMany(mappedBy = "trip")
+	private Set<UserEquipment> userGear;
 	
 	/*********METHODS*********/
 
@@ -133,12 +139,20 @@ public class Trip {
 		this.expenses = expenses;
 	}
 
-	public List<Location> getLocations() {
-		return locations;
+	public Location getLocationStart() {
+		return locationStart;
 	}
 
-	public void setLocations(List<Location> locations) {
-		this.locations = locations;
+	public void setLocationStart(Location locationStart) {
+		this.locationStart = locationStart;
+	}
+
+	public Location getLocationEnd() {
+		return locationEnd;
+	}
+
+	public void setLocationEnd(Location locationEnd) {
+		this.locationEnd = locationEnd;
 	}
 
 	public Set<MealDay> getMealSchedule() {
@@ -149,25 +163,33 @@ public class Trip {
 		this.mealSchedule = mealSchedule;
 	}
 
-	public List<Category> getCategories() {
+	public List<Equipment> getGearlist() {
+		return gearlist;
+	}
+
+	public void setGearlist(List<Equipment> gearlist) {
+		this.gearlist = gearlist;
+	}
+
+	public Set<Category> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(List<Category> categories) {
+	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
 
-	public Set<UserEquipment> getTripgear() {
-		return tripgear;
+	public Set<UserEquipment> getUserGear() {
+		return userGear;
 	}
 
-	public void setTripgear(Set<UserEquipment> tripgear) {
-		this.tripgear = tripgear;
+	public void setUserGear(Set<UserEquipment> userGear) {
+		this.userGear = userGear;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(creator, dateEnd, dateStart, id);
+		return Objects.hash(dateEnd, dateStart, id, locationEnd, locationStart);
 	}
 
 	@Override
@@ -179,8 +201,8 @@ public class Trip {
 		if (getClass() != obj.getClass())
 			return false;
 		Trip other = (Trip) obj;
-		return Objects.equals(creator, other.creator) && Objects.equals(dateEnd, other.dateEnd)
-				&& Objects.equals(dateStart, other.dateStart) && id == other.id;
+		return Objects.equals(dateEnd, other.dateEnd) && Objects.equals(dateStart, other.dateStart) && id == other.id
+				&& Objects.equals(locationEnd, other.locationEnd) && Objects.equals(locationStart, other.locationStart);
 	}
 
 	@Override
@@ -202,21 +224,26 @@ public class Trip {
 		builder.append(creator);
 		builder.append(", expenses=");
 		builder.append(expenses);
-		builder.append(", locations=");
-		builder.append(locations);
+		builder.append(", locationStart=");
+		builder.append(locationStart);
+		builder.append(", locationEnd=");
+		builder.append(locationEnd);
 		builder.append(", mealSchedule=");
 		builder.append(mealSchedule);
+		builder.append(", gearlist=");
+		builder.append(gearlist);
 		builder.append(", categories=");
 		builder.append(categories);
-		builder.append(", tripgear=");
-		builder.append(tripgear);
+		builder.append(", userGear=");
+		builder.append(userGear);
 		builder.append("]");
 		return builder.toString();
 	}
 
 	public Trip(int id, String name, String description, LocalDateTime dateStart, LocalDateTime dateEnd,
-			Set<User> members, User creator, Set<Expense> expenses, List<Location> locations, Set<MealDay> mealSchedule,
-			List<Category> categories, Set<UserEquipment> tripgear) {
+			Set<User> members, User creator, Set<Expense> expenses, Location locationStart, Location locationEnd,
+			Set<MealDay> mealSchedule, List<Equipment> gearlist, Set<Category> categories,
+			Set<UserEquipment> userGear) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -226,14 +253,16 @@ public class Trip {
 		this.members = members;
 		this.creator = creator;
 		this.expenses = expenses;
-		this.locations = locations;
+		this.locationStart = locationStart;
+		this.locationEnd = locationEnd;
 		this.mealSchedule = mealSchedule;
+		this.gearlist = gearlist;
 		this.categories = categories;
-		this.tripgear = tripgear;
+		this.userGear = userGear;
 	}
 
 	public Trip() {
 		super();
 	}
-	
+		
 }
