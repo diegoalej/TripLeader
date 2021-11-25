@@ -18,8 +18,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 @Autowired
 	 private PasswordEncoder encoder;
 	 
-    @Autowired
-    private DataSource dataSource;
+     @Autowired
+     private DataSource dataSource;
 	
 	 @Override
 	 protected void configure(HttpSecurity http) throws Exception {
@@ -32,8 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		 		.httpBasic();
 		 
 		 http
-	        .sessionManagement()
-	        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		        .sessionManagement()
+		        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	 }
 	
 		@Override
@@ -41,10 +41,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			String userQuery = "SELECT username, password, active FROM User WHERE username=?";
 	        String authQuery = "SELECT username, role FROM User WHERE username=?";
 	        auth
-	        .jdbcAuthentication()
-	        .dataSource(dataSource)
-	        .usersByUsernameQuery(userQuery)
-	        .authoritiesByUsernameQuery(authQuery)
-	        .passwordEncoder(encoder);
+		        .jdbcAuthentication()
+		        .dataSource(dataSource)
+		        .usersByUsernameQuery(userQuery)
+		        .authoritiesByUsernameQuery(authQuery)
+		        .passwordEncoder(encoder);
 		}
 }
