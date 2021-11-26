@@ -1,14 +1,12 @@
 package com.downstreammedia.sandbar.entities;
 
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 
 @Entity
@@ -26,8 +24,6 @@ public class Equipment {
 	
 	private int amount;
 	
-	@ManyToMany(mappedBy = "gearlist")
-	private List<Trip> trips;
 	
 	/*********METHODS*********/
 
@@ -63,13 +59,6 @@ public class Equipment {
 		this.amount = amount;
 	}
 
-	public List<Trip> getTrips() {
-		return trips;
-	}
-
-	public void setTrips(List<Trip> trips) {
-		this.trips = trips;
-	}
 
 	@Override
 	public int hashCode() {
@@ -99,19 +88,16 @@ public class Equipment {
 		builder.append(description);
 		builder.append(", amount=");
 		builder.append(amount);
-		builder.append(", trips=");
-		builder.append(trips);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	public Equipment(int id, String name, String description, int amount, List<Trip> trips) {
+	public Equipment(int id, String name, String description, int amount) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.amount = amount;
-		this.trips = trips;
 	}
 
 	public Equipment() {
