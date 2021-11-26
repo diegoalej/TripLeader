@@ -56,6 +56,8 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	
+	//Will need new endpoint and service impl for changing pw
 	@Override
 	public User updateUser(int id, User user, String username) {
 		Optional<User> opt = userRepo.findById(id);
