@@ -39,9 +39,21 @@ public class LocationController {
 		}
 	}
 	
-	@GetMapping("locations/{id}")
+	@GetMapping("locations/id/{id}")
 	public Location getLocationWithId(@PathVariable Integer id, HttpServletResponse response){
 		Location location = locationServ.findLocationById(id);
+		if (location != null) {
+			return location;
+		}
+		else {
+			response.setStatus(404);
+			return null;
+		}
+	}
+
+	@GetMapping("locations/{name}")
+	public List<Location> getLocationWithName(@PathVariable String name, HttpServletResponse response){
+		List <Location> location = locationServ.findLocationByName(name);
 		if (location != null) {
 			return location;
 		}

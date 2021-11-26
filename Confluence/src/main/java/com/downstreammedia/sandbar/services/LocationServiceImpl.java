@@ -34,6 +34,17 @@ public class LocationServiceImpl implements LocationService {
 			return null;
 		}
 	}
+
+	@Override
+	public List <Location> findLocationByName(String name) {
+		List <Location> location = locationRepo.findByName(name);
+		if(location.size() > 0) {
+			return location;
+		}
+		else {
+			return null;
+		}
+	}
 	
 	@Override
 	public Location updateLocation(int id, Location location, String username) {

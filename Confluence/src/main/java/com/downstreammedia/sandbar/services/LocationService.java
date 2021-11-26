@@ -11,6 +11,8 @@ public interface LocationService {
 	
 	Location findLocationById(int id);
 
+	List <Location> findLocationByName(String name);
+
 	Location createLocation(Location location, String username);
 
 	Location updateLocation(int id, Location location, String username);
