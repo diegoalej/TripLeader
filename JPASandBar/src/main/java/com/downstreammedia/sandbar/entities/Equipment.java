@@ -3,7 +3,6 @@ package com.downstreammedia.sandbar.entities;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
