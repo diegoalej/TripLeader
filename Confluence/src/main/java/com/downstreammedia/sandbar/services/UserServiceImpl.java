@@ -11,7 +11,7 @@ import com.downstreammedia.sandbar.entities.User;
 import com.downstreammedia.sandbar.repositories.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepo;

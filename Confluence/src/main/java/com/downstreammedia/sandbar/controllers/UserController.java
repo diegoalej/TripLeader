@@ -50,6 +50,8 @@ public class UserController {
 		}
 	}
 	
+	
+	//Unnecessary?
 	@PostMapping("users")
 	public User createNewUser(@RequestBody User user, HttpServletResponse resp){
 		User newUser = userServ.createUser(user);
@@ -86,7 +88,6 @@ public class UserController {
 	public void deleteUser(
 			@PathVariable Integer id, 
 			HttpServletResponse resp,
-			@RequestBody User user,
 			Principal principal
 			){
 		boolean result = false;
