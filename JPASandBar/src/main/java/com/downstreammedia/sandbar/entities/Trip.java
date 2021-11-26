@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -61,11 +60,8 @@ public class Trip {
 	@OneToMany(mappedBy = "trip")
 	private Set<MealDay> mealSchedule;
 	
-	@ManyToMany
-	@JoinTable(name = "trip_has_equipment", 
-		joinColumns = @JoinColumn(name = "equipment_id"), 
-		inverseJoinColumns = @JoinColumn(name = "trip_id"))
-	private List<Equipment> gearlist;
+	@OneToMany(mappedBy = "trip")
+	private List<TripEquipment> gearlist;
 	
 	@OneToMany(mappedBy = "trip")
 	private Set<Category> categories;
@@ -163,11 +159,11 @@ public class Trip {
 		this.mealSchedule = mealSchedule;
 	}
 
-	public List<Equipment> getGearlist() {
+	public List<TripEquipment> getGearlist() {
 		return gearlist;
 	}
 
-	public void setGearlist(List<Equipment> gearlist) {
+	public void setGearlist(List<TripEquipment> gearlist) {
 		this.gearlist = gearlist;
 	}
 
@@ -242,7 +238,7 @@ public class Trip {
 
 	public Trip(int id, String name, String description, LocalDateTime dateStart, LocalDateTime dateEnd,
 			Set<User> members, User creator, Set<Expense> expenses, Location locationStart, Location locationEnd,
-			Set<MealDay> mealSchedule, List<Equipment> gearlist, Set<Category> categories,
+			Set<MealDay> mealSchedule, List<TripEquipment> gearlist, Set<Category> categories,
 			Set<UserEquipment> userGear) {
 		super();
 		this.id = id;

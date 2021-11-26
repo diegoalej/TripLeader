@@ -13,11 +13,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class EquipmentTest {
+public class TripEquipmentTest {
 	
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Equipment equipment;
+	private TripEquipment equipment;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -32,7 +32,7 @@ public class EquipmentTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		equipment = em.find(Equipment.class, 1);
+		equipment = em.find(TripEquipment.class, 1);
 	}
 
 	@AfterEach
@@ -44,11 +44,13 @@ public class EquipmentTest {
 	@Test
 	void test() {
 		assertNotNull(equipment);
-		assertEquals("Fire pan", equipment.getName());
+		assertEquals(true, equipment.isActive());
 	}
 	
 	@Test
 	void relationTest() {
+		assertEquals("Gates of Lodore", equipment.getTrip().getName());
+		assertEquals("Fire pan", equipment.getEquipment().getName());
 		//no relationships
 		
 	}
