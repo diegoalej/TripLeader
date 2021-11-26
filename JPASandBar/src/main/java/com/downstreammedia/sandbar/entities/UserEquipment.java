@@ -26,6 +26,8 @@ public class UserEquipment {
 	
 	private String condition; 
 	
+	private int amount;
+	
 	@OneToOne
 	@JoinColumn(name = "equipment_id")
 	private Equipment equipment;
@@ -88,9 +90,17 @@ public class UserEquipment {
 		this.trip = trip;
 	}
 
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(creator, id, trip);
+		return Objects.hash(creator, equipment, id);
 	}
 
 	@Override
@@ -102,7 +112,7 @@ public class UserEquipment {
 		if (getClass() != obj.getClass())
 			return false;
 		UserEquipment other = (UserEquipment) obj;
-		return Objects.equals(creator, other.creator) && id == other.id && Objects.equals(trip, other.trip);
+		return Objects.equals(creator, other.creator) && Objects.equals(equipment, other.equipment) && id == other.id;
 	}
 
 	@Override
@@ -114,6 +124,8 @@ public class UserEquipment {
 		builder.append(active);
 		builder.append(", condition=");
 		builder.append(condition);
+		builder.append(", amount=");
+		builder.append(amount);
 		builder.append(", equipment=");
 		builder.append(equipment);
 		builder.append(", creator=");
@@ -124,11 +136,13 @@ public class UserEquipment {
 		return builder.toString();
 	}
 
-	public UserEquipment(int id, boolean active, String condition, Equipment equipment, User creator, Trip trip) {
+	public UserEquipment(int id, boolean active, String condition, int amount, Equipment equipment, User creator,
+			Trip trip) {
 		super();
 		this.id = id;
 		this.active = active;
 		this.condition = condition;
+		this.amount = amount;
 		this.equipment = equipment;
 		this.creator = creator;
 		this.trip = trip;
@@ -137,6 +151,6 @@ public class UserEquipment {
 	public UserEquipment() {
 		super();
 	}
-	
+
 	
 }

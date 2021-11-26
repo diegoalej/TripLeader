@@ -15,11 +15,15 @@ import javax.persistence.Table;
 @Table(name="trip_equipment")
 public class TripEquipment {
 	
+	/*********METHODS*********/
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private boolean active;
+	
+	private int amount;
 	
 	@ManyToOne
 	@JoinColumn(name="trip_id")
@@ -28,6 +32,8 @@ public class TripEquipment {
 	@OneToOne
 	@JoinColumn(name="equipment_id")
 	private Equipment equipment;
+	
+	/*********METHODS*********/
 
 	public int getId() {
 		return id;
@@ -61,9 +67,17 @@ public class TripEquipment {
 		this.equipment = equipment;
 	}
 
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(amount, equipment, id);
 	}
 
 	@Override
@@ -75,7 +89,7 @@ public class TripEquipment {
 		if (getClass() != obj.getClass())
 			return false;
 		TripEquipment other = (TripEquipment) obj;
-		return id == other.id;
+		return amount == other.amount && Objects.equals(equipment, other.equipment) && id == other.id;
 	}
 
 	@Override
@@ -85,6 +99,8 @@ public class TripEquipment {
 		builder.append(id);
 		builder.append(", active=");
 		builder.append(active);
+		builder.append(", amount=");
+		builder.append(amount);
 		builder.append(", trip=");
 		builder.append(trip);
 		builder.append(", equipment=");
@@ -93,16 +109,17 @@ public class TripEquipment {
 		return builder.toString();
 	}
 
-	public TripEquipment(int id, boolean active, Trip trip, Equipment equipment) {
+	public TripEquipment(int id, boolean active, int amount, Trip trip, Equipment equipment) {
 		super();
 		this.id = id;
 		this.active = active;
+		this.amount = amount;
 		this.trip = trip;
 		this.equipment = equipment;
 	}
 
 	public TripEquipment() {
 		super();
-	}	
+	}
 
 }
