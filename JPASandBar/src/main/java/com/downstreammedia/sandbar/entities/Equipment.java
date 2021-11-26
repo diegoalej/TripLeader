@@ -22,8 +22,6 @@ public class Equipment {
 	
 	private String description;
 	
-	private int amount;
-	
 	
 	/*********METHODS*********/
 
@@ -49,14 +47,6 @@ public class Equipment {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
 	}
 
 
@@ -86,18 +76,15 @@ public class Equipment {
 		builder.append(name);
 		builder.append(", description=");
 		builder.append(description);
-		builder.append(", amount=");
-		builder.append(amount);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	public Equipment(int id, String name, String description, int amount) {
+	public Equipment(int id, String name, String description) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.amount = amount;
 	}
 
 	public Equipment() {
