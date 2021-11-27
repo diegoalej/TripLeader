@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Food {
 	
@@ -25,6 +27,7 @@ public class Food {
 	
 	private String description;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="meal_id")
 	private Meal meal;

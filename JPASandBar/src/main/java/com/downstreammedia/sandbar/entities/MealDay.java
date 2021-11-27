@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="meal_day")
@@ -30,10 +32,12 @@ public class MealDay {
 	
 	private String description;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="trip_id")
 	private Trip trip;    
-
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "dayserved")
 	private Set<Meal> meals;
 

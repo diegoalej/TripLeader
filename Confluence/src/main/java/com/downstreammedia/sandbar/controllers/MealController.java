@@ -16,22 +16,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.downstreammedia.sandbar.entities.Equipment;
-import com.downstreammedia.sandbar.services.EquipmentService;
+import com.downstreammedia.sandbar.entities.Meal;
+import com.downstreammedia.sandbar.services.MealService;
 
 @RestController
 @RequestMapping("api")
 @CrossOrigin({ "*", "http://localhost:4220" })//Angular local port 4220
-public class EquipmentController {
-	
+public class MealController {
+
 	@Autowired
-	private EquipmentService equipmentServ;
+	private MealService mealServ;
 	
-	@GetMapping("equipment")
-	private List<Equipment> getAllEquipment(HttpServletResponse response){
-		List<Equipment> equipment = equipmentServ.findAllEquipment();
-		if (equipment.size() > 0) {
-			return equipment;
+	@GetMapping("meals")
+	private List<Meal> getAllMeals(HttpServletResponse response){
+		List<Meal> meal = mealServ.findAllMeals();
+		if (meal.size() > 0) {
+			return meal;
 		}
 		else {
 			response.setStatus(404);
@@ -39,11 +39,11 @@ public class EquipmentController {
 		}
 	}
 	
-	@GetMapping("equipment/id/{id}")
-	public Equipment getEquipmentWithId(@PathVariable Integer id, HttpServletResponse response){
-		Equipment equipment = equipmentServ.findEquipmentById(id);
-		if (equipment != null) {
-			return equipment;
+	@GetMapping("meals/id/{id}")
+	public Meal getMealWithId(@PathVariable Integer id, HttpServletResponse response){
+		Meal meal = mealServ.findMealById(id);
+		if (meal != null) {
+			return meal;
 		}
 		else {
 			response.setStatus(404);
@@ -51,11 +51,11 @@ public class EquipmentController {
 		}
 	}
 
-	@GetMapping("equipment/{name}")
-	public Equipment getEquipmentWithName(@PathVariable String name, HttpServletResponse response){
-		Equipment equipment = equipmentServ.findEquipmentByName(name);
-		if (equipment != null) {
-			return equipment;
+	@GetMapping("meals/{name}")
+	public Meal getMealWithName(@PathVariable String name, HttpServletResponse response){
+		Meal meal = mealServ.findMealByName(name);
+		if (meal != null) {
+			return meal;
 		}
 		else {
 			response.setStatus(404);
@@ -63,15 +63,15 @@ public class EquipmentController {
 		}
 	}
 	
-	@PostMapping("equipment")
-	public Equipment createNewEquipment(
-			@RequestBody Equipment equipment, 
+	@PostMapping("meals")
+	public Meal createNewMeal(
+			@RequestBody Meal meal, 
 			HttpServletResponse response,
 			Principal principal
 			){
-		Equipment newEquipment = equipmentServ.createEquipment(equipment, principal.getName());
-		if (newEquipment != null) {
-			return newEquipment;
+		Meal newMeal = mealServ.createMeal(meal, principal.getName());
+		if (newMeal != null) {
+			return newMeal;
 		}
 		else {
 			response.setStatus(404);
@@ -79,16 +79,16 @@ public class EquipmentController {
 		}
 	}
 	
-	@PutMapping("equipment/{id}")
-	public Equipment updateExistingEquipment(
-			@RequestBody Equipment equipment, 
+	@PutMapping("meals/{id}")
+	public Meal updateExistingMeal(
+			@RequestBody Meal meal, 
 			@PathVariable int id, 
 			HttpServletResponse response,
 			Principal principal
 			){
-		Equipment editLocation = equipmentServ.updateEquipment(id, equipment, principal.getName());
-		if (editLocation != null) {
-			return editLocation;
+		Meal editMeal = mealServ.updateMeal(id, meal, principal.getName());
+		if (editMeal != null) {
+			return editMeal;
 		}
 		else {
 			response.setStatus(404);
@@ -96,15 +96,21 @@ public class EquipmentController {
 		}
 	}
 	
-	@DeleteMapping("equipment/{id}")
-	public void deleteLocation(
+	@DeleteMapping("meals/{id}")
+	public void deleteMeal(
 			@PathVariable int id, 
 			HttpServletResponse response,
 			Principal principal
 			){
 		boolean deleted = false;
+//		Location loc = locationServ.findLocationById(id);
+//		if(loc.getReviews().size() > 0) {
+//			for (Review review : loc.getReviews()) {
+//				revSvc.deleteReview(review.getId(), principal.getName());
+//			}
+//		}
 		try {
-			deleted = equipmentServ.deleteEquipment(id, principal.getName());
+			deleted = mealServ.deleteMeal(id, principal.getName());
 			if (deleted == true) {
 				response.setStatus(204);
 			}
@@ -112,5 +118,4 @@ public class EquipmentController {
 			response.setStatus(404);
 		}
 	}
-
 }
