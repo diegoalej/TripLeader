@@ -51,8 +51,8 @@ public class TripController {
 		}
 	}
 
-	@GetMapping("trip/{id}")
-	public List<Trip> getTripWithCreatorId(@PathVariable int id, HttpServletResponse response){
+	@GetMapping("trip/creator/{id}")
+	public List<Trip> getTripsWithCreatorId(@PathVariable int id, HttpServletResponse response){
 		List<Trip> trip = tripServ.findTripByCreatorId(id);
 		if (trip != null) {
 			return trip;

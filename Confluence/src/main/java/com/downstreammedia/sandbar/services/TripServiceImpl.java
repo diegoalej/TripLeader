@@ -70,7 +70,7 @@ public class TripServiceImpl implements TripService {
 		User creator = userRepo.findByUsername(username);
 		if (creator != null) {
 			trip.setCreator(creator);
-			newTrip = tripRepo.saveAndFlush(newTrip);
+			newTrip = tripRepo.saveAndFlush(trip);
 		}
 		return newTrip;			
 	}
