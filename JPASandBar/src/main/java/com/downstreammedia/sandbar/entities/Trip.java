@@ -41,11 +41,11 @@ public class Trip {
 	@ManyToMany(mappedBy = "trips")
 	private Set<User> members;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User creator;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "trip")
 	private Set<Expense> expenses;
 	
@@ -57,15 +57,19 @@ public class Trip {
 	@JoinColumn(name = "endloc_id")
 	private Location locationEnd;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "trip")
 	private Set<MealDay> mealSchedule;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "trip")
 	private List<TripEquipment> gearlist;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "trip")
 	private Set<Category> categories;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "trip")
 	private Set<UserEquipment> userGear;
 	

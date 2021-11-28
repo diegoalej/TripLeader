@@ -16,22 +16,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.downstreammedia.sandbar.entities.Equipment;
-import com.downstreammedia.sandbar.services.EquipmentService;
+import com.downstreammedia.sandbar.entities.Trip;
+import com.downstreammedia.sandbar.services.TripService;
 
 @RestController
 @RequestMapping("api")
 @CrossOrigin({ "*", "http://localhost:4220" })//Angular local port 4220
-public class EquipmentController {
+public class TripController {
 	
 	@Autowired
-	private EquipmentService equipmentServ;
+	private TripService tripServ;
 	
-	@GetMapping("equipment")
-	private List<Equipment> getAllEquipment(HttpServletResponse response){
-		List<Equipment> equipment = equipmentServ.findAllEquipment();
-		if (equipment.size() > 0) {
-			return equipment;
+	@GetMapping("trip")
+	private List<Trip> getAllTrips(HttpServletResponse response){
+		List<Trip> trip = tripServ.findAllTrips();
+		if (trip.size() > 0) {
+			return trip;
 		}
 		else {
 			response.setStatus(404);
@@ -39,11 +39,11 @@ public class EquipmentController {
 		}
 	}
 	
-	@GetMapping("equipment/id/{id}")
-	public Equipment getEquipmentWithId(@PathVariable Integer id, HttpServletResponse response){
-		Equipment equipment = equipmentServ.findEquipmentById(id);
-		if (equipment != null) {
-			return equipment;
+	@GetMapping("trip/id/{id}")
+	public Trip getTripWithId(@PathVariable Integer id, HttpServletResponse response){
+		Trip trip = tripServ.findTripById(id);
+		if (trip != null) {
+			return trip;
 		}
 		else {
 			response.setStatus(404);
@@ -51,11 +51,11 @@ public class EquipmentController {
 		}
 	}
 
-	@GetMapping("equipment/{name}")
-	public Equipment getEquipmentWithName(@PathVariable String name, HttpServletResponse response){
-		Equipment equipment = equipmentServ.findEquipmentByName(name);
-		if (equipment != null) {
-			return equipment;
+	@GetMapping("trip/{id}")
+	public List<Trip> getTripWithCreatorId(@PathVariable int id, HttpServletResponse response){
+		List<Trip> trip = tripServ.findTripByCreatorId(id);
+		if (trip != null) {
+			return trip;
 		}
 		else {
 			response.setStatus(404);
@@ -63,15 +63,15 @@ public class EquipmentController {
 		}
 	}
 	
-	@PostMapping("equipment")
-	public Equipment createNewEquipment(
-			@RequestBody Equipment equipment, 
+	@PostMapping("trip")
+	public Trip createNewTrip (
+			@RequestBody Trip trip, 
 			HttpServletResponse response,
 			Principal principal
 			){
-		Equipment newEquipment = equipmentServ.createEquipment(equipment, principal.getName());
-		if (newEquipment != null) {
-			return newEquipment;
+		Trip newTrip = tripServ.createTrip(trip, principal.getName());
+		if (newTrip != null) {
+			return newTrip;
 		}
 		else {
 			response.setStatus(404);
@@ -79,16 +79,16 @@ public class EquipmentController {
 		}
 	}
 	
-	@PutMapping("equipment/{id}")
-	public Equipment updateExistingEquipment(
-			@RequestBody Equipment equipment, 
+	@PutMapping("trip/{id}")
+	public Trip updateExistingTrip(
+			@RequestBody Trip trip, 
 			@PathVariable int id, 
 			HttpServletResponse response,
 			Principal principal
 			){
-		Equipment editLocation = equipmentServ.updateEquipment(id, equipment, principal.getName());
-		if (editLocation != null) {
-			return editLocation;
+		Trip editTrip = tripServ.updateTrip(id, trip, principal.getName());
+		if (editTrip != null) {
+			return editTrip;
 		}
 		else {
 			response.setStatus(404);
@@ -96,15 +96,15 @@ public class EquipmentController {
 		}
 	}
 	
-	@DeleteMapping("equipment/{id}")
-	public void deleteEquipment(
+	@DeleteMapping("trip/{id}")
+	public void deleteTrip(
 			@PathVariable int id, 
 			HttpServletResponse response,
 			Principal principal
 			){
 		boolean deleted = false;
 		try {
-			deleted = equipmentServ.deleteEquipment(id, principal.getName());
+			deleted = tripServ.deleteTrip(id, principal.getName());
 			if (deleted == true) {
 				response.setStatus(204);
 			}
