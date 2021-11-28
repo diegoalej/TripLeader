@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Category {
 	
@@ -24,7 +26,7 @@ public class Category {
 	
 	private boolean active; 
 	
-	//@JsonIgnore
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="trip_id")
 	private Trip trip;
