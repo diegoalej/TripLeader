@@ -66,16 +66,24 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public Expense createExpense(Expense expense, String username, int id) {
-		Expense newExpense = null;
 		User user = userRepo.findByUsername(username);
 		Optional<Trip> trip = tripRepo.findById(id);
 		if (user != null && trip.isPresent()) {
 			expense.setTrip(trip.get());
 			expense.setCreator(user);
-			newExpense = exRepo.saveAndFlush(expense);
+			Expense newExpense= exRepo.saveAndFlush(expense);
+			if(newExpense != null) {
+			return newExpense;
+			}
+	
+			else {
+			return null;
+			}
 		}
-		return newExpense;	
-	}
+		else {
+			return null;
+		}
+	}	
 
 	@Override
 	public Expense updateExpense(Expense expense, String username, int id) {
@@ -86,6 +94,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 			managedExpense = oldExpense.get();
 			managedExpense.setName(expense.getName());
 			managedExpense.setDate(expense.getDate());
+			managedExpense.setDescription(expense.getDescription());
+			managedExpense.setCost(expense.getCost());
 			managedExpense.setCreator(user);
 			if (user != null 
 					//Allowing only creator or admin to edit
