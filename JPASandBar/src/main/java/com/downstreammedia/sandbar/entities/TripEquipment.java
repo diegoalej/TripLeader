@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="trip_equipment")
 public class TripEquipment {
@@ -25,6 +27,7 @@ public class TripEquipment {
 	
 	private int amount;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="trip_id")
 	private Trip trip;
