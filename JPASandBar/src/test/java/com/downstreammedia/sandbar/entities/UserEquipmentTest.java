@@ -45,7 +45,6 @@ public class UserEquipmentTest {
 	void test() {
 		assertNotNull(userE);
 		assertEquals(true, userE.isActive());
-		assertEquals("Like new", userE.getCondition());
 	}
 	
 	@Test

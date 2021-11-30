@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.downstreammedia.sandbar.entities.Expense;
 import com.downstreammedia.sandbar.services.ExpenseService;
-import com.downstreammedia.sandbar.services.TripService;
 
 @RestController
 @RequestMapping("api")
@@ -30,8 +29,6 @@ public class ExpenseController {
 	@Autowired
 	ExpenseService exServ;
 
-	@Autowired
-	TripService tripServ;
 	
 	@GetMapping("expenses")
 	List<Expense> getAllExpenses(HttpServletResponse response){

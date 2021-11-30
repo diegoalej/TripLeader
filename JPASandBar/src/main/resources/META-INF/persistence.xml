@@ -20,6 +20,7 @@
     <class>com.downstreammedia.sandbar.entities.Category</class>
     <class>com.downstreammedia.sandbar.entities.Equipment</class>
     <class>com.downstreammedia.sandbar.entities.UserEquipment</class>
+    <class>com.downstreammedia.sandbar.entities.TripEquipment</class>
     <!-- end entities -->
 
     <properties>

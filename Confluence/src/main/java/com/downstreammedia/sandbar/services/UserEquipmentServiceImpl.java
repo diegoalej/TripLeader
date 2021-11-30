@@ -68,8 +68,9 @@ public class UserEquipmentServiceImpl implements UserEquipmentService {
 		User user = userRepo.findByUsername(username);
 		Optional<Trip> trip = tripRepo.findById(id);
 		if (user != null && trip.isPresent()) {
-			equipment.setTrip(trip.get());
 			equipment.setCreator(user);
+			equipment.setEquipment(equipment.getEquipment());
+			equipment.setTrip(trip.get());
 			UserEquipment newEquipment= ueRepo.saveAndFlush(equipment);
 			if(newEquipment != null) {
 			return newEquipment;
@@ -91,7 +92,7 @@ public class UserEquipmentServiceImpl implements UserEquipmentService {
 		User user = userRepo.findByUsername(username);
 		if (oldEquipment.isPresent()) {
 			managedEquipment = oldEquipment.get();
-			managedEquipment.setCondition(equipment.getCondition());
+			managedEquipment.setAmount(equipment.getAmount());
 			managedEquipment.setActive(equipment.isActive());
 			managedEquipment.setCreator(user);
 			if (user != null 

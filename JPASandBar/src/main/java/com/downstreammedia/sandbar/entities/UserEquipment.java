@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="user_equipment")
 public class UserEquipment {
@@ -23,19 +25,19 @@ public class UserEquipment {
 	private int id;
 	
 	private boolean active;
-	
-	private String condition; 
-	
+		
 	private int amount;
 	
 	@OneToOne
 	@JoinColumn(name = "equipment_id")
 	private Equipment equipment;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User creator;
-
+	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="trip_id")
 	private Trip trip;
@@ -58,12 +60,13 @@ public class UserEquipment {
 		this.active = active;
 	}
 
-	public String getCondition() {
-		return condition;
+
+	public int getAmount() {
+		return amount;
 	}
 
-	public void setCondition(String condition) {
-		this.condition = condition;
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 
 	public Equipment getEquipment() {
@@ -90,17 +93,11 @@ public class UserEquipment {
 		this.trip = trip;
 	}
 
-	public int getAmount() {
-		return amount;
-	}
 
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(creator, equipment, id);
+		return Objects.hash(creator, id, trip);
 	}
 
 	@Override
@@ -112,7 +109,7 @@ public class UserEquipment {
 		if (getClass() != obj.getClass())
 			return false;
 		UserEquipment other = (UserEquipment) obj;
-		return Objects.equals(creator, other.creator) && Objects.equals(equipment, other.equipment) && id == other.id;
+		return Objects.equals(creator, other.creator) && id == other.id && Objects.equals(trip, other.trip);
 	}
 
 	@Override
@@ -122,8 +119,6 @@ public class UserEquipment {
 		builder.append(id);
 		builder.append(", active=");
 		builder.append(active);
-		builder.append(", condition=");
-		builder.append(condition);
 		builder.append(", amount=");
 		builder.append(amount);
 		builder.append(", equipment=");
@@ -141,7 +136,6 @@ public class UserEquipment {
 		super();
 		this.id = id;
 		this.active = active;
-		this.condition = condition;
 		this.amount = amount;
 		this.equipment = equipment;
 		this.creator = creator;
@@ -151,6 +145,10 @@ public class UserEquipment {
 	public UserEquipment() {
 		super();
 	}
+	
+
+
+	
 
 	
 }
