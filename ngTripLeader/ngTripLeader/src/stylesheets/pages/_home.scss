@@ -1,3 +1,18 @@
 // -----------------------------------------------------------------------------
 // This file contains styles that are specific to the home page.
 // -----------------------------------------------------------------------------
+
+.bgimage {
+  width:100%;
+  height:500px;
+  background: url('https://www.nps.gov/dino/planyourvisit/images/Enjoying-the-Gates-of-Lodore-view.jpg?maxwidth=1200&maxheight=1200&autorotate=false');
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:cover;
+  background-attachment: fixed;
+}
+.bgimage h5 {
+  color:white;
+  text-shadow:2px 2px #333;
+}
