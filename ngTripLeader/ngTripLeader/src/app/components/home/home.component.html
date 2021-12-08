@@ -8,7 +8,13 @@
           <h1>Start planning your next adventure</h1>
           <p class="lead mx-4">TripLeader is an app to help you stay outside. Create, find, and share trips
             with other outdoor enthusiasts and let TripLeader keep track of the logistics. </p>
-            <p><a href="#" class="btn btn-primary btn-large">Learn more »</a></p>
+            <p>
+              <a  routerLink="login" href="#" class="btn btn-primary btn-large">Login</a>
+              <a  routerLink="register" href="#" class="btn btn-primary btn-large">Register</a>
+            </p>
+            <div class="container">
+              <router-outlet></router-outlet>
+            </div>
         </div>
       </div>
 
