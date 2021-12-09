@@ -8,6 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'  },
   { path: 'home', component: HomeComponent, children: [
+    { path: '', redirectTo: 'login', pathMatch: 'full'  },
     {path: 'login', component: LoginComponent},
     {path: 'register', component: CreateUserComponent}
    ] },

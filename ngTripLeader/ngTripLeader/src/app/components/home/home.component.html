@@ -1,7 +1,7 @@
-<section class="bgimage">
-  <div class="project-overlay"></div>
-  <div class="container-fluid">
+<!-- Main landing page and login/register -->
 
+  <div class="container-fluid bgimage px-0">
+    <div class="project-overlay"></div>
     <div class="container">
       <div class="row align-items-center align-self-center pt-5">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
@@ -9,18 +9,43 @@
           <p class="lead mx-4">TripLeader is an app to help you stay outside. Create, find, and share trips
             with other outdoor enthusiasts and let TripLeader keep track of the logistics. </p>
             <p>
-              <a  routerLink="login" href="#" class="btn btn-primary btn-large">Login</a>
+              <a  routerLink="login" href="#" class="btn btn-primary btn-large mr-4">Login</a>
               <a  routerLink="register" href="#" class="btn btn-primary btn-large">Register</a>
             </p>
-            <div class="container">
+            <div class="container mb-5">
               <div class="col-md-8 offset-md-2 p-4 home-form">
                 <router-outlet></router-outlet>
               </div>
             </div>
         </div>
       </div>
-
     </div>
-
   </div>
-</section>
+
+
+<!-- About section -->
+
+<div class="container-fluid bg-dark">
+  <div class="container about-styles">
+    <div class="row py-5 text-center">
+      <div class="col-md-4">
+          <h4>Necessary equipment</h4>
+          <p>Add from a wide list or create your own
+            to ensure that all necessary equipment is
+            included and accounted for.</p>
+      </div>
+      <div class="col-md-4">
+          <h4>Meal Schedule</h4>
+          <p>Be as detailed as necessary to
+            assign meals to trip members or
+            communicate to provide for self</p>
+      </div>
+      <div class="col-md-4">
+          <h4>Keep track of expenses</h4>
+          <p>Add all expenses to a trip
+            so any shared expenses can be
+            seen  and divided by all trip members.</p>
+      </div>
+    </div>
+  </div>
+</div>
