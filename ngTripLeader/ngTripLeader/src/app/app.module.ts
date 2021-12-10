@@ -9,6 +9,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
+import { TripsComponent } from './components/trips/trips.component';
+import { UserService } from './services/user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,14 +20,18 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
     FooterComponent,
     LoginComponent,
     NavigationComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    TripsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
