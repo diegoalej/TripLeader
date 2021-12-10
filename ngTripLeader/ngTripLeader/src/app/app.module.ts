@@ -12,6 +12,8 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
 import { TripsComponent } from './components/trips/trips.component';
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { TripService } from './services/trip.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    UserService
+    UserService,
+    TripService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
