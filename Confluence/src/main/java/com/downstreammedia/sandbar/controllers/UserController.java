@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.downstreammedia.sandbar.entities.Trip;
 import com.downstreammedia.sandbar.entities.User;
+import com.downstreammedia.sandbar.services.TripService;
 import com.downstreammedia.sandbar.services.UserService;
 
 @RestController
@@ -26,6 +28,7 @@ public class UserController {
 	
 	@Autowired
 	private UserService userServ;
+
 	
 	@GetMapping("users")
 	public List<User> showAllUsers(HttpServletResponse resp){
@@ -100,5 +103,6 @@ public class UserController {
 			resp.setStatus(404);
 		}
 	}
+	
 
 }
