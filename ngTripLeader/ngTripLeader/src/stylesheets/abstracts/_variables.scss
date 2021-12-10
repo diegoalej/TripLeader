@@ -15,8 +15,45 @@ $text-font-stack: 'Lato', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica',
 $code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Monaco', monospace !default;
 
 
+/// Navbar link color
+/// @type Color
+$navbar-light-color: rgb(201, 50, 9);
 
 
+/// Navbar link hover color
+/// @type Color
+$navbar-light-hover-color:  rgb(214, 101, 70);
+
+
+/// Link color
+/// @type Color
+$link-color: rgb(201, 50, 9)!default;
+
+
+/// Link hover color
+/// @type Color
+$link-hover-color: rgb(214, 101, 70)!default;
+
+/// Primary color
+/// @type Color
+$primary:     rgb(0 , 121, 196) !default;
+// $secondary:     $gray-600 !default;
+// $success:       $green !default;
+// $info:          $cyan !default;
+// $warning:       $yellow !default;
+// $danger:        $red !default;
+
+/// Light theme color
+/// @type Color
+$light:  rgb(217 , 235, 246);
+
+/// Dark theme color
+/// @type Color
+$dark:rgb(64, 154, 211) !default;
+
+/// Form Background
+/// @type Color
+$form-bg:rgb(128, 188, 225);
 
 /// Copy text color
 /// @type Color
@@ -28,7 +65,7 @@ $brand-color: rgb(201, 50, 9) !default;
 
 /// Light grey
 /// @type Color
-$light-grey: rgb(217 , 235, 246) !default;
+$light-grey: rgb(217 , 235, 246);
 
 /// Medium grey
 /// @type Color
@@ -39,7 +76,9 @@ $mid-grey: rgb(153, 153, 153) !default;
 $dark-grey: rgb(68, 68, 68) !default;
 
 
-
+/// Background color
+/// @type Color
+$body-bg: $light-grey;
 
 
 /// Container's maximum width
