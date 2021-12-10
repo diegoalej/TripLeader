@@ -1,7 +1,9 @@
 package com.downstreammedia.sandbar.services;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,9 +48,20 @@ public class TripServiceImpl implements TripService {
 		}
 	}
 	
+	public List<Trip> findTripByMemberId(int id) {
+		List<Trip> trip = tripRepo.findByMembersId(id);
+		if(trip != null) {
+			return trip;
+		}
+		else {
+			return null;
+		}
+	}
+	
 	@Override
 	public Trip updateTrip(int id, Trip trip, String username) {
 		Optional<Trip> oldTrip = tripRepo.findById(id);
+		User creator = userRepo.findByUsername(username);
 		Trip managedTrip = null;
 		if (oldTrip.isPresent()) {
 			managedTrip = oldTrip.get();
@@ -57,12 +70,47 @@ public class TripServiceImpl implements TripService {
 			managedTrip.setDescription(trip.getDescription());
 			managedTrip.setDateStart(trip.getDateStart());
 			managedTrip.setDateEnd(trip.getDateEnd());
-			if (userRepo.findByUsername(username) != null) {
+			if (creator != null) {
 				return tripRepo.saveAndFlush(managedTrip);
 			}			
 		}
 		return null;
 	}
+	
+	@Override
+	public Trip addTripMember(int id, User user, String username) {
+		Optional<Trip> oldTrip = tripRepo.findById(id);
+		User editor = userRepo.findByUsername(username);
+		Set<User> members = null;
+		Set<Trip> userTrips = user.getTrips();
+		Trip managedTrip = null;
+		if (oldTrip.isPresent() && editor != null) {
+			members = oldTrip.get().getMembers();
+			members.add(user);
+			
+			managedTrip = oldTrip.get();
+			managedTrip.setId(id);
+			managedTrip.setMembers(members);
+			
+			if(userTrips != null) {				
+				userTrips = user.getTrips();
+				userTrips.add(managedTrip);
+				user.setTrips(userTrips);
+			}
+			else {
+				userTrips = new HashSet<Trip>();
+				userTrips.add(managedTrip);
+				user.setTrips(userTrips);
+			}
+			if (editor != null) {
+				userRepo.saveAndFlush(user);
+				return tripRepo.saveAndFlush(managedTrip);
+			}			
+		}
+		return null;
+	}
+	
+	
 	
 	@Override
 	public Trip createTrip(Trip trip, String username) {
@@ -84,6 +132,28 @@ public class TripServiceImpl implements TripService {
 			answer = true;
 		}	
 		return answer;
+	}
+
+	@Override
+	public Trip updateTripMember(int tripId, int userId, String username) {
+		Optional<Trip> trip = tripRepo.findById(tripId);
+		Optional<User> user = userRepo.findById(userId);
+		Trip managedTrip = null;
+		User managedUser = null;
+		if ((trip!= null && user.isPresent()) &&
+			userRepo.findByUsername(username).getRole().equals("admin") || user.get().getUsername().equals(username)) {
+			managedTrip = trip.get();
+			managedUser = user.get();
+			Set<User> tripMembers = trip.get().getMembers();
+			Set<Trip> userTrips = user.get().getTrips();
+			userTrips.remove(managedTrip);
+			tripMembers.remove(managedUser);
+			managedUser.setTrips(userTrips);
+			managedTrip.setMembers(tripMembers);
+			userRepo.saveAndFlush(managedUser);
+			return tripRepo.saveAndFlush(managedTrip);
+		}	
+		return null;
 	}
 
 }

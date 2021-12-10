@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.downstreammedia.sandbar.entities.Trip;
+import com.downstreammedia.sandbar.entities.User;
 import com.downstreammedia.sandbar.services.TripService;
 
 @RestController
@@ -27,7 +28,7 @@ public class TripController {
 	@Autowired
 	private TripService tripServ;
 	
-	@GetMapping("trip")
+	@GetMapping("trips")
 	private List<Trip> getAllTrips(HttpServletResponse response){
 		List<Trip> trip = tripServ.findAllTrips();
 		if (trip.size() > 0) {
@@ -39,7 +40,7 @@ public class TripController {
 		}
 	}
 	
-	@GetMapping("trip/id/{id}")
+	@GetMapping("trips/id/{id}")
 	public Trip getTripWithId(@PathVariable Integer id, HttpServletResponse response){
 		Trip trip = tripServ.findTripById(id);
 		if (trip != null) {
@@ -51,19 +52,8 @@ public class TripController {
 		}
 	}
 
-	@GetMapping("trip/creator/{id}")
-	public List<Trip> getTripsWithCreatorId(@PathVariable int id, HttpServletResponse response){
-		List<Trip> trip = tripServ.findTripByCreatorId(id);
-		if (trip != null) {
-			return trip;
-		}
-		else {
-			response.setStatus(404);
-			return null;
-		}
-	}
 	
-	@PostMapping("trip")
+	@PostMapping("trips")
 	public Trip createNewTrip (
 			@RequestBody Trip trip, 
 			HttpServletResponse response,
@@ -79,7 +69,7 @@ public class TripController {
 		}
 	}
 	
-	@PutMapping("trip/{id}")
+	@PutMapping("trips/{id}")
 	public Trip updateExistingTrip(
 			@RequestBody Trip trip, 
 			@PathVariable int id, 
@@ -95,8 +85,42 @@ public class TripController {
 			return null;
 		}
 	}
+
+	@PutMapping("trips/member/{id}")
+	public Trip addTripMember(
+			@RequestBody User user, 
+			@PathVariable int id, 
+			HttpServletResponse response,
+			Principal principal
+			){
+		Trip editTrip = tripServ.addTripMember(id, user, principal.getName());
+		if (editTrip != null) {
+			return editTrip;
+		}
+		else {
+			response.setStatus(404);
+			return null;
+		}
+	}
+
+	@PutMapping("trips/member/{tripId}/{userId}")
+	public Trip updatedTripMember(
+			@PathVariable int userId, 
+			@PathVariable int tripId, 
+			HttpServletResponse response,
+			Principal principal
+			){
+		Trip editTrip = tripServ.updateTripMember(tripId, userId, principal.getName());
+		if (editTrip != null) {
+			return editTrip;
+		}
+		else {
+			response.setStatus(404);
+			return null;
+		}
+	}
 	
-	@DeleteMapping("trip/{id}")
+	@DeleteMapping("trips/{id}")
 	public void deleteTrip(
 			@PathVariable int id, 
 			HttpServletResponse response,
@@ -110,6 +134,30 @@ public class TripController {
 			}
 		} catch (Exception e) {			
 			response.setStatus(404);
+		}
+	}
+	
+	@GetMapping("trips/creator/{id}")
+	public List<Trip> getTripsCreatedWithCreatorId(@PathVariable int id, HttpServletResponse response){
+		List<Trip> trip = tripServ.findTripByCreatorId(id);
+		if (trip != null) {
+			return trip;
+		}
+		else {
+			response.setStatus(404);
+			return null;
+		}
+	}
+
+	@GetMapping("trips/member/{id}")
+	public List<Trip> getTripsMemberOfByCreatorId(@PathVariable int id, HttpServletResponse response){
+		List<Trip> trip = tripServ.findTripByMemberId(id);
+		if (trip != null) {
+			return trip;
+		}
+		else {
+			response.setStatus(404);
+			return null;
 		}
 	}
 
