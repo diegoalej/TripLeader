@@ -4,6 +4,7 @@ import { User } from '../models/user';
 import { HttpClient, HttpHeaders} from '@angular/common/http'
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 
 
@@ -11,12 +12,13 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
-
+  [x: string]: any;
   private url = environment.baseUrl + 'api/users';
   private user: User[] = [];
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private auth: AuthService
   ) { }
 
    public index() {
@@ -30,25 +32,25 @@ export class UserService {
   }
 
   private getHttpOptions() {
-    //const credentials = this.auth.getCredentials();
+    const credentials = this.auth.getCredentials();
     let httpOptions = {};
-    // if (credentials) {
+    if (credentials) {
 
-    //   httpOptions = {
-    //     headers: new HttpHeaders({
-    //       'Content-Type': 'application/json',
-    //       'x-requested-with': 'XMLHttpRequest',
-    //       'Authorization': `Basic ${credentials}`
-    //     })
-    //   };
-    // } else {
+      httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'x-requested-with': 'XMLHttpRequest',
+          'Authorization': `Basic ${credentials}`
+        })
+      };
+    } else {
       httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'x-requested-with': 'XMLHttpRequest'
         })
       };
-    //}
+    }
     return httpOptions;
   }
 }

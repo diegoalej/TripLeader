@@ -10,9 +10,10 @@ import { LoginComponent } from './components/login/login.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { TripsComponent } from './components/trips/trips.component';
-import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TripService } from './services/trip.service';
+import { FormsModule } from '@angular/forms';
+import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 
 @NgModule({
@@ -29,7 +30,8 @@ import { AuthService } from './services/auth.service';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     UserService,
