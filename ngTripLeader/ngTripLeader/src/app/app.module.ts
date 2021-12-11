@@ -15,6 +15,7 @@ import { TripService } from './services/trip.service';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AuthService } from './services/auth.service';
     LoginComponent,
     NavigationComponent,
     CreateUserComponent,
-    TripsComponent
+    TripsComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
