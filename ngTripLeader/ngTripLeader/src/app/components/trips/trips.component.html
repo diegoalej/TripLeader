@@ -1,26 +1,34 @@
-<!-- <div class="container-fluid bgimage px-0">
-  <div class="project-overlay"> -->
+<!-- Main landing page and login/register -->
 
+<div class="container-fluid bgimage px-0">
+  <div class="project-overlay"></div>
+  <div class="container">
 
-    <div class="container .bgimage">
-      <div class="row justify-content-center text center">
+    <div class="row justify-content-center text-center">
+      <div class="col-sm-12 pt-5">
         <h1><strong>My Trips</strong></h1>
-      </div>
-      <div class="row justify-content-center text center">
         <h2><strong>Trips I created</strong></h2>
       </div>
+    </div>
 
-      <div *ngFor="let trip of userTrips" class="card col-md-4" >
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h3 class="card-title">{{trip.name}}</h3>
-          <h4 class="card-title">{{trip.dateStart}}</h4>
-          <h4 class="card-title">{{trip.dateEnd}}</h4>
-          <p class="card-text">{{trip.description}}</p>
-          <a href="#" class="btn btn-primary">See More</a>
+    <div class="row">
+      <div *ngFor="let trip of userTrips" class="col-md-4">
+        <div  class="card my-5 mx-1" >
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h3 class="card-title">{{trip.name}}</h3>
+            <h4 class="card-title">{{trip.dateStart}}</h4>
+            <h4 class="card-title">{{trip.dateEnd}}</h4>
+            <p class="card-text">{{trip.description}}</p>
+            <a href="#" class="btn btn-primary">See More</a>
+          </div>
         </div>
       </div>
     </div>
-<!--
+
   </div>
-</div> -->
+
+</div>
+
+
+
