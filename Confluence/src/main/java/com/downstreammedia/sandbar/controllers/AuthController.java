@@ -17,7 +17,7 @@ import com.downstreammedia.sandbar.services.UserService;
 
 
 @RestController
-@CrossOrigin({ "*", "http://localhost:4220" }) // Angular local port
+@CrossOrigin({ "*", "http://localhost:4200" }) // Angular local port
 public class AuthController {
 
 	@Autowired

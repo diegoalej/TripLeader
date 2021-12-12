@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
+import { Trip } from 'src/app/models/trip';
+import { TripService } from 'src/app/services/trip.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-trips',
@@ -9,24 +13,33 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class TripsComponent implements OnInit {
 
-  users!: User[];
+  users: User[] = [];
+  userTrips: Trip[] = [];
+  userId: number = 0;
+
 
   constructor(
-    private userSvc: UserService
+    private userSvc: UserService,
+    private tripSvc: TripService,
+    private auth: AuthService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.loadUsers();
+    this.loadTrips();
   }
   //testing connection to REST api
-  loadUsers() {
-    this.userSvc.index().subscribe(
+  loadTrips() {
+
+    this.userId = Number(this.auth.getCurrentUserId());
+
+    this.tripSvc.getUserTrips(this.userId).subscribe(
       (success) => {
-        this.users = success;
-        console.log(this.users);
+        this.userTrips = success;
+        console.log(this.userTrips);
       },
       (fail) => {
-        console.log('unable to get users');
+        console.log('unable to get userTrips');
       }
     );
   }

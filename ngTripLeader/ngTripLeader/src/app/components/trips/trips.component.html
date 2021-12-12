@@ -1,10 +1,82 @@
-<div class="container-fluid">
-  <div class="row justify-content-center">
-    <h1><strong>User Test List</strong><br></h1>
-  </div>
-  <div *ngFor="let user of users">
-      <strong>{{user.username}}</strong>
-      <strong>{{user.role}}</strong>
-      <strong>{{user.dateCreated}}</strong>
+<!-- User login landing displaying trips created -->
+
+<div class="container-fluid bgimage px-0">
+  <div class="project-overlay"></div>
+  <div class="container">
+    <!-- row for section title and subtitle -->
+    <div class="row justify-content-center text-center">
+      <div class="col-sm-12 pt-5">
+        <h1><strong>My Trips</strong></h1>
+        <h2>Created trips</h2>
+      </div>
+    </div>
+    <!-- Loop over user's created trips to create columns with trip cards -->
+    <div class="row">
+      <div *ngFor="let trip of userTrips" class="col-md-4">
+        <div  class="card my-5 mx-1 card-bg" >
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h3 class="card-title">{{trip.name}}</h3>
+            <h5 class="card-title">{{trip.dateStart}}</h5>
+            <h5 class="card-title">{{trip.dateEnd}}</h5>
+            <p class="card-text">{{trip.description}}</p>
+            <a href="#" class="btn btn-primary">See More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
+
+<!-- Section displaying trips user is member of -->
+
+<div class="container-fluid bg-dark">
+  <div class="container about-styles">
+    <!-- row for section title -->
+    <div class="row justify-content-center text-center">
+      <div class="col-sm-12 pt-5">
+        <h2><strong>Trips I am part of</strong></h2>
+      </div>
+    </div>
+    <!-- Loop over trips user is part of -->
+    <div class="row">
+      <div *ngFor="let others of userTrips" class="col-sm-12">
+        <div  class="card my-3 mx-1 card-bg" >
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h3 class="card-title">{{others.name}}</h3>
+            <h5 class="card-title">{{others.dateStart}}</h5>
+            <h5 class="card-title">{{others.dateEnd}}</h5>
+            <p class="card-text">{{others.description}}</p>
+            <a href="#" class="btn btn-primary">See More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row py-4">
+  </div>
+  </div>
+</div>
+
+<!-- Search section -->
+
+<div class="container-fluid bgimage px-0">
+  <div class="project-overlay"></div>
+  <div class="container">
+    <!-- row for section title and subtitle -->
+    <div class="row justify-content-center text-center">
+      <div class="col-sm-12 pt-5">
+        <h1><strong>Find a trip</strong></h1>
+      </div>
+    </div>
+    <div class="row py-5 mb-5 home-form text-center">
+      <div class="col-sm-12">
+        <p>This is where the search form goes</p>
+      </div>
+    </div>
+    <div class="row py-4"></div>
+
+  </div>
+</div>
+

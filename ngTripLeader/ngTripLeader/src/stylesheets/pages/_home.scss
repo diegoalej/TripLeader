@@ -14,8 +14,12 @@
   position: relative;
 }
 
-.bgimage h1 {
+.bgimage h1{
   color: $brand-color;
+}
+
+.bgimage h3 {
+  color: $dark;
 }
 
 .project-overlay {
@@ -28,8 +32,9 @@
   // padding: 50%;
 }
 
-.lead {
+p.lead {
   color: $dark;
+  font-weight: 400;
 }
 
 .home-form {
@@ -38,5 +43,18 @@
 
 .about-styles{
   color: white;
+}
+
+
+.card.card-bg {
+  background-color: $light-grey;
+}
+
+.card h3 {
+  color: $brand-color;
+}
+
+.card h5, .card p {
+  color: $dark;
 }
 

@@ -23,7 +23,7 @@ import com.downstreammedia.sandbar.services.UserService;
 
 @RestController
 @RequestMapping("api")
-@CrossOrigin({ "*", "http://localhost:4220" })//Angular local port 4220
+@CrossOrigin({ "*", "http://localhost:4200" })//Angular local port 4220
 public class UserController {
 	
 	@Autowired
