@@ -1,4 +1,5 @@
 import { User } from "./user";
+import { Location } from "./location";
 export class Trip {
 
   id: number;
@@ -7,6 +8,8 @@ export class Trip {
   name: string;
   creator: User;
   description: string;
+  locationStart: Location;
+  locationEnd: Location;
 
   constructor(
     id?: number,
@@ -14,7 +17,9 @@ export class Trip {
     dateEnd?: string,
     name?: string,
     creator?: User,
-    description?: string
+    description?: string,
+    locationStart?: Location,
+    locationEnd?: Location
   ){
 
     if (!id) {
@@ -46,6 +51,18 @@ export class Trip {
       throw new Error("Unexpecter error: Trip missing description")
     }
     this.description = description;
+
+    if(!locationStart) {
+      throw new Error("Unexpecter error: Trip missing description")
+    }
+    this.locationStart = locationStart;
+
+    if(!locationEnd) {
+      throw new Error("Unexpecter error: Trip missing description")
+    }
+    this.locationEnd = locationEnd;
+
   }
 
 }
+

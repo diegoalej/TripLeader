@@ -17,12 +17,18 @@
           <img src="..." class="card-img-top" alt="...">
           <div class="card-body">
             <h3 class="card-title">{{trip.name}}</h3>
-            <h5 class="card-title">{{trip.dateStart | date}}</h5>
-            <h5 class="card-title">{{trip.dateEnd | date}}</h5>
+            <p class="card-text"><strong>{{trip.locationStart.name}} to {{trip.locationEnd.name}}</strong></p>
             <p class="card-text">{{trip.description}}</p>
-            <a href="#" class="btn btn-primary">See More</a>
+            <p class="card-text">{{trip.dateStart | date}} - {{trip.dateEnd | date}}</p>
+            <button href="#" class="btn btn-primary">See Details</button>
           </div>
         </div>
+      </div>
+    </div>
+    <!-- Button to create new trip -->
+    <div class="row">
+      <div class="col-sm-12 d-flex justify-content-center pb-5">
+        <button class="btn btn-primary">Create Trip</button>
       </div>
     </div>
 
@@ -46,10 +52,10 @@
           <img src="..." class="card-img-top" alt="...">
           <div class="card-body">
             <h3 class="card-title">{{trip.name}}</h3>
-            <h5 class="card-title">{{trip.dateStart | date}}</h5>
-            <h5 class="card-title">{{trip.dateEnd | date}}</h5>
+            <p class="card-text"><strong>{{trip.locationStart.name}} to {{trip.locationEnd.name}}</strong></p>
             <p class="card-text">{{trip.description}}</p>
-            <a href="#" class="btn btn-primary">See More</a>
+            <p class="card-text">{{trip.dateStart | date}} - {{trip.dateEnd | date}}</p>
+            <button href="#" class="btn btn-primary">See Details</button>
           </div>
         </div>
       </div>

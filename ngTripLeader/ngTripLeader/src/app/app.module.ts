@@ -17,7 +17,6 @@ import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { LogoutComponent } from './components/logout/logout.component';
 import { DatePipe } from '@angular/common';
-import { LocationComponent } from './models/location/location.component';
 
 @NgModule({
   declarations: [
@@ -28,8 +27,7 @@ import { LocationComponent } from './models/location/location.component';
     NavigationComponent,
     CreateUserComponent,
     TripsComponent,
-    LogoutComponent,
-    LocationComponent
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
