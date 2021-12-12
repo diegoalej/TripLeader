@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { LogoutComponent } from './components/logout/logout.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { LogoutComponent } from './components/logout/logout.component';
   providers: [
     UserService,
     TripService,
-    AuthService
+    AuthService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

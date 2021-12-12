@@ -5,6 +5,14 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { TripsComponent } from './components/trips/trips.component';
+import { ExtraOptions } from '@angular/router';
+
+const routerOptions: ExtraOptions = {
+  anchorScrolling: 'enabled',
+  onSameUrlNavigation: 'reload',
+  scrollPositionRestoration: 'enabled'
+  // ...any other options
+};
 
 const routes: Routes = [
   { path: '',  redirectTo: 'home/login', pathMatch: 'full'  },
@@ -18,7 +26,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, routerOptions)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

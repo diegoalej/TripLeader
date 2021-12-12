@@ -78,18 +78,22 @@ public class TripServiceImpl implements TripService {
 	}
 	
 	@Override
-	public Trip addTripMember(int id, User user, String username) {
-		Optional<Trip> oldTrip = tripRepo.findById(id);
+	public Trip addTripMember(int tripId, int userId, String username) {
+		Optional<Trip> oldTrip = tripRepo.findById(tripId);
+		Optional<User> oldUser = userRepo.findById(userId);
 		User editor = userRepo.findByUsername(username);
+		User user = null;
 		Set<User> members = null;
-		Set<Trip> userTrips = user.getTrips();
+		Set<Trip> userTrips = null;
 		Trip managedTrip = null;
 		if (oldTrip.isPresent() && editor != null) {
-			members = oldTrip.get().getMembers();
+			user = oldUser.get();
+			userTrips = user.getTrips();
+			managedTrip = oldTrip.get();
+			members = managedTrip.getMembers();
 			members.add(user);
 			
-			managedTrip = oldTrip.get();
-			managedTrip.setId(id);
+			managedTrip.setId(tripId);
 			managedTrip.setMembers(members);
 			
 			if(userTrips != null) {				

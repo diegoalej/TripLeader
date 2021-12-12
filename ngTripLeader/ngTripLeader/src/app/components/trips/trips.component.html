@@ -12,17 +12,23 @@
     </div>
     <!-- Loop over user's created trips to create columns with trip cards -->
     <div class="row">
-      <div *ngFor="let trip of userTrips" class="col-md-4">
+      <div *ngFor="let trip of tripsCreated" class="col-md-4">
         <div  class="card my-5 mx-1 card-bg" >
           <img src="..." class="card-img-top" alt="...">
           <div class="card-body">
             <h3 class="card-title">{{trip.name}}</h3>
-            <h5 class="card-title">{{trip.dateStart}}</h5>
-            <h5 class="card-title">{{trip.dateEnd}}</h5>
+            <p class="card-text"><strong>{{trip.locationStart.name}} to {{trip.locationEnd.name}}</strong></p>
             <p class="card-text">{{trip.description}}</p>
-            <a href="#" class="btn btn-primary">See More</a>
+            <p class="card-text">{{trip.dateStart | date}} - {{trip.dateEnd | date}}</p>
+            <button href="#" class="btn btn-primary">See Details</button>
           </div>
         </div>
+      </div>
+    </div>
+    <!-- Button to create new trip -->
+    <div class="row">
+      <div class="col-sm-12 d-flex justify-content-center pb-5">
+        <button class="btn btn-primary">Create Trip</button>
       </div>
     </div>
 
@@ -41,15 +47,15 @@
     </div>
     <!-- Loop over trips user is part of -->
     <div class="row">
-      <div *ngFor="let others of userTrips" class="col-sm-12">
+      <div *ngFor="let trip of tripsMemberOf" class="col-sm-12">
         <div  class="card my-3 mx-1 card-bg" >
           <img src="..." class="card-img-top" alt="...">
           <div class="card-body">
-            <h3 class="card-title">{{others.name}}</h3>
-            <h5 class="card-title">{{others.dateStart}}</h5>
-            <h5 class="card-title">{{others.dateEnd}}</h5>
-            <p class="card-text">{{others.description}}</p>
-            <a href="#" class="btn btn-primary">See More</a>
+            <h3 class="card-title">{{trip.name}}</h3>
+            <p class="card-text"><strong>{{trip.locationStart.name}} to {{trip.locationEnd.name}}</strong></p>
+            <p class="card-text">{{trip.description}}</p>
+            <p class="card-text">{{trip.dateStart | date}} - {{trip.dateEnd | date}}</p>
+            <button href="#" class="btn btn-primary">See Details</button>
           </div>
         </div>
       </div>
