@@ -16,6 +16,8 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { LogoutComponent } from './components/logout/logout.component';
+import { DatePipe } from '@angular/common';
+import { LocationComponent } from './models/location/location.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     NavigationComponent,
     CreateUserComponent,
     TripsComponent,
-    LogoutComponent
+    LogoutComponent,
+    LocationComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { LogoutComponent } from './components/logout/logout.component';
   providers: [
     UserService,
     TripService,
-    AuthService
+    AuthService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

@@ -17,8 +17,8 @@
           <img src="..." class="card-img-top" alt="...">
           <div class="card-body">
             <h3 class="card-title">{{trip.name}}</h3>
-            <h5 class="card-title">{{trip.dateStart}}</h5>
-            <h5 class="card-title">{{trip.dateEnd}}</h5>
+            <h5 class="card-title">{{trip.dateStart | date}}</h5>
+            <h5 class="card-title">{{trip.dateEnd | date}}</h5>
             <p class="card-text">{{trip.description}}</p>
             <a href="#" class="btn btn-primary">See More</a>
           </div>
@@ -46,8 +46,8 @@
           <img src="..." class="card-img-top" alt="...">
           <div class="card-body">
             <h3 class="card-title">{{trip.name}}</h3>
-            <h5 class="card-title">{{trip.dateStart}}</h5>
-            <h5 class="card-title">{{trip.dateEnd}}</h5>
+            <h5 class="card-title">{{trip.dateStart | date}}</h5>
+            <h5 class="card-title">{{trip.dateEnd | date}}</h5>
             <p class="card-text">{{trip.description}}</p>
             <a href="#" class="btn btn-primary">See More</a>
           </div>
