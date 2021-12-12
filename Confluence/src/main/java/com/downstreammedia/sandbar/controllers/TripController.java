@@ -86,14 +86,14 @@ public class TripController {
 		}
 	}
 
-	@PutMapping("trips/member/{id}")
+	@PutMapping("trips/member/{tripId}/{userId}")
 	public Trip addTripMember(
-			@RequestBody User user, 
-			@PathVariable int id, 
+			@PathVariable int userId, 
+			@PathVariable int tripId, 
 			HttpServletResponse response,
 			Principal principal
 			){
-		Trip editTrip = tripServ.addTripMember(id, user, principal.getName());
+		Trip editTrip = tripServ.addTripMember(tripId, userId, principal.getName());
 		if (editTrip != null) {
 			return editTrip;
 		}
@@ -103,7 +103,7 @@ public class TripController {
 		}
 	}
 
-	@PutMapping("trips/member/{tripId}/{userId}")
+	@PutMapping("trips/member/update/{tripId}/{userId}")
 	public Trip updatedTripMember(
 			@PathVariable int userId, 
 			@PathVariable int tripId, 

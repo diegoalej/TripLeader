@@ -14,7 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 export class TripsComponent implements OnInit {
 
   users: User[] = [];
-  userTrips: Trip[] = [];
+  tripsCreated: Trip[] = [];
+  tripsMemberOf: Trip[] = [];
   userId: number = 0;
 
 
@@ -28,20 +29,35 @@ export class TripsComponent implements OnInit {
   ngOnInit(): void {
     this.loadTrips();
   }
-  //testing connection to REST api
+  //This will subscribe to get Users' created and trips
+  //they are members of
   loadTrips() {
-
+    //Get user Id
     this.userId = Number(this.auth.getCurrentUserId());
-
+    //Get trips created
     this.tripSvc.getUserTrips(this.userId).subscribe(
       (success) => {
-        this.userTrips = success;
-        console.log(this.userTrips);
+        this.tripsCreated = success;
+        console.log(this.tripsCreated);
       },
       (fail) => {
         console.log('unable to get userTrips');
       }
     );
+    //Get Trips user is member of
+    this.tripSvc.getTripsUserIsIn(this.userId).subscribe(
+      (success) => {
+        this.tripsMemberOf = success;
+        console.log(this.tripsMemberOf);
+      },
+      (fail) => {
+        console.log('unable to get userTrips');
+      }
+    );
+
+
   }
+
+
 
 }

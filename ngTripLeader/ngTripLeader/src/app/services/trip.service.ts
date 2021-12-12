@@ -31,6 +31,16 @@ export class TripService {
     )
   }
 
+  public getTripsUserIsIn(id: number) {
+    const httpOptions = this.getHttpOptions();
+    return this.http.get<Trip[]>(`${this.url}/member/${id}`, httpOptions).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('TripService: error retrieving userTrips');
+      })
+    )
+  }
+
   private getHttpOptions() {
     const credentials = this.auth.getCredentials();
     let httpOptions = {};

@@ -16,7 +16,7 @@ public interface TripService {
 	
 	List<Trip> findTripByMemberId(int id);
 	
-	Trip addTripMember(int id, User user, String username);
+	Trip addTripMember(int tripId, int userId, String username);
 	
 	Trip updateTripMember(int tripId, int userId, String username);
 
