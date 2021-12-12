@@ -2,3 +2,16 @@
 // This file contains all styles related to the button component.
 // -----------------------------------------------------------------------------
 
+button.btn-primary{
+  background-color: $brand-color;
+  border-color: $navbar-light-hover-color;
+}
+
+button.btn-primary:hover {
+  background-color: rgba($brand-color,0.8);
+  border-color: $navbar-light-hover-color;
+}
+
+.btn-secondary {
+  background-color: $light-grey;
+}
