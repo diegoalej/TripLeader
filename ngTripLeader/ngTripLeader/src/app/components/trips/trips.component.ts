@@ -17,10 +17,9 @@ export class TripsComponent implements OnInit {
   tripsCreated: Trip[] = [];
   tripsMemberOf: Trip[] = [];
   userId: number = 0;
-
+  createTripForm = false;
 
   constructor(
-    private userSvc: UserService,
     private tripSvc: TripService,
     private auth: AuthService,
     private route: ActivatedRoute
@@ -54,8 +53,10 @@ export class TripsComponent implements OnInit {
         console.log('unable to get userTrips');
       }
     );
+  }
 
-
+  showTripForms() {
+    this.createTripForm = !this.createTripForm;
   }
 
 
