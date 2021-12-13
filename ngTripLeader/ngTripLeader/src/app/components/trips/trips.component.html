@@ -12,6 +12,9 @@
     </div>
     <!-- Loop over user's created trips to create columns with trip cards -->
     <div class="row">
+      <div *ngIf="tripsCreated.length == 0" class="col-sm-12 text-center p-4">
+        <h3>Create a trip to get started, what are you waiting for?!</h3>
+      </div>
       <div *ngFor="let trip of tripsCreated" class="col-md-4">
         <div  class="card my-5 mx-1 card-bg" >
           <img src="..." class="card-img-top" alt="...">
@@ -47,6 +50,9 @@
     </div>
     <!-- Loop over trips user is part of -->
     <div class="row">
+      <div *ngIf="tripsMemberOf.length == 0" class="col-sm-12 text-center p-4">
+        <h3>Search for a trip below and add your next adventure</h3>
+      </div>
       <div *ngFor="let trip of tripsMemberOf" class="col-sm-12">
         <div  class="card my-3 mx-1 card-bg" >
           <img src="..." class="card-img-top" alt="...">

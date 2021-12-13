@@ -11,8 +11,6 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class CreateUserComponent implements OnInit {
 
-  // newUser: User = new User(1, " ", " "," ",true, "user", " "," "," ");
-
   constructor(
     private auth: AuthService,
     private router: Router
