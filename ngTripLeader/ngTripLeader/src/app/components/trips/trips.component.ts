@@ -5,6 +5,7 @@ import { Trip } from 'src/app/models/trip';
 import { TripService } from 'src/app/services/trip.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'app-trips',
@@ -58,7 +59,5 @@ export class TripsComponent implements OnInit {
   showTripForms() {
     this.createTripForm = !this.createTripForm;
   }
-
-
 
 }
