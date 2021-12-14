@@ -15,3 +15,11 @@ button.btn-primary:hover {
 .btn-secondary {
   background-color: $light-grey;
 }
+
+button.btn-primary:not(:disabled):not(.disabled):active:focus,
+button.btn-primary:not(:disabled):not(.disabled):active,
+button.btn-primary:focus {
+  background-color: rgba($brand-color,0.8);
+  border-color: ($brand-color);
+  box-shadow: none;
+}
