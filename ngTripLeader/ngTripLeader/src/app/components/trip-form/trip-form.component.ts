@@ -5,6 +5,9 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Location } from 'src/app/models/location'
 import { UserService } from 'src/app/services/user.service';
 import { LocationService } from 'src/app/services/location.service';
+import { TripService } from 'src/app/services/trip.service';
+import { Trip } from 'src/app/models/trip';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trip-form',
@@ -14,23 +17,20 @@ import { LocationService } from 'src/app/services/location.service';
 export class TripFormComponent implements OnInit {
 
   locations: Location[] = [];
-  // userId: number = 0;
 
   constructor(
     private auth: AuthService,
-    private locSvc: LocationService
+    private locSvc: LocationService,
+    private tripSvc: TripService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.loadLocations()
   }
 
-   //This will subscribe to get Users' created and trips
-  //they are members of
+  //This will get all Locations for user to select
   loadLocations() {
-    // //Get user Id
-    // this.userId = Number(this.auth.getCurrentUserId());
-    //Get trips created
     this.locSvc.getAllLocations().subscribe(
       (success) => {
         this.locations = success;
@@ -44,6 +44,22 @@ export class TripFormComponent implements OnInit {
   }
 
   createTrip(form: NgForm){
-    console.log( "inside createTrip" + form );
+    const newTrip: Trip = form.value;
+    newTrip.locationEnd = this.locations[form.value.locationEnd];
+    newTrip.locationStart = this.locations[form.value.locationStart];
+
+    console.log( "inside createTrip" + (JSON.stringify(newTrip)));
+    this.tripSvc.create(newTrip).subscribe(
+      (yay) => {
+        console.log('TripFormComponent.create(): Location created.');
+        this.router.navigateByUrl('./trips');
+        // this.tripSvc.show(yay.id);
+        // this.load(yay.id);
+      },
+      (nay) => {
+        console.error('TripFormComponent.create(): ERROR.');
+        console.error(nay);
+      }
+    );
   }
 }

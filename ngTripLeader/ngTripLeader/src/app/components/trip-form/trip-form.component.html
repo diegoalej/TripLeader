@@ -22,7 +22,7 @@
   <div class="form-group">
     <label for="dateStart">Date Start</label>
     <input
-      type="text"
+      type="datetime"
       name="dateStart"
       class="form-control"
       placeholder="Date *"
@@ -32,7 +32,7 @@
   <div class="form-group">
     <label for="dateEnd">Date End</label>
     <input
-      type="text"
+      type="datetime"
       name="dateEnd"
       class="form-control"
       placeholder="Date End *"
@@ -40,11 +40,21 @@
   </div>
 
   <div class="form-group">
-    <label for="exampleFormControlSelect1">Example select</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option *ngFor="let location  of locations">{{location.name}}</option>
+    <label for="locationStart">Location Start</label>
+    <select class="form-control" id="locationStart" type="Location" name="locationStart" ngModel>
+      <option value="" disabled>Choose trip start location</option>
+      <option *ngFor="let location  of locations" value={{location.id}}>{{location.name}}</option>
     </select>
   </div>
 
-<button type="submit" class="btn btn-primary" (click)="createTrip(form)">Register</button>
+  <div class="form-group">
+    <label for="locationStart">Location End</label>
+    <select class="form-control" id="locationEnd" type="Location" name="locationEnd" ngModel>
+      <option value="" disabled>Choose trip End location</option>
+      <option *ngFor="let location  of locations" value={{location.id}}>{{location.name}}</option>
+    </select>
+  </div>
+
+
+  <button type="submit" class="btn btn-primary" (click)="createTrip(form)">Create Trip</button>
 </form>

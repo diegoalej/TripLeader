@@ -1,5 +1,6 @@
 package com.downstreammedia.sandbar.services;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -121,6 +122,8 @@ public class TripServiceImpl implements TripService {
 		Trip newTrip = null;
 		User creator = userRepo.findByUsername(username);
 		if (creator != null) {
+			trip.setDateEnd(LocalDateTime.now());
+			trip.setDateStart(LocalDateTime.now());
 			trip.setCreator(creator);
 			newTrip = tripRepo.saveAndFlush(trip);
 		}

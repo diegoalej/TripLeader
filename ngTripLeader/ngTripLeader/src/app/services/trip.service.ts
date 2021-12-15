@@ -41,6 +41,16 @@ export class TripService {
     )
   }
 
+  public create(trip: Trip) {
+     const httpOptions = this.getHttpOptions();
+     return this.http.post<Trip>(this.url, trip, httpOptions).pipe(
+       catchError((err: any) => {
+         console.log(err);
+         return throwError('TripService.create: error creating entry: ' + err);
+       })
+     );
+   }
+
   private getHttpOptions() {
     const credentials = this.auth.getCredentials();
     let httpOptions = {};
