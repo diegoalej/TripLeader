@@ -51,8 +51,8 @@ export class TripFormComponent implements OnInit {
     console.log( "inside createTrip" + (JSON.stringify(newTrip)));
     this.tripSvc.create(newTrip).subscribe(
       (yay) => {
-        console.log('TripFormComponent.create(): Location created.');
-        this.router.navigateByUrl('./trips');
+        console.log('TripFormComponent.create(): Trip created.');
+        this.router.navigateByUrl('/trips');
         // this.tripSvc.show(yay.id);
         // this.load(yay.id);
       },
