@@ -51,6 +51,16 @@ export class TripService {
      );
    }
 
+   public getTripById(id: number) {
+    const httpOptions = this.getHttpOptions();
+    return this.http.get<Trip>(`${this.url}/id/${id}`, httpOptions).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('TripService.show: error retrieving entry: ' + err);
+      })
+    );
+  }
+
   private getHttpOptions() {
     const credentials = this.auth.getCredentials();
     let httpOptions = {};

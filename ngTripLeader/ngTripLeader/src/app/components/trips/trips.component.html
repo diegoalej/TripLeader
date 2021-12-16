@@ -24,7 +24,7 @@
             <p class="card-text"><strong>{{trip.locationStart.name}} to {{trip.locationEnd.name}}</strong></p>
             <p class="card-text">{{trip.description}}</p>
             <p class="card-text">{{trip.dateStart | date}} - {{trip.dateEnd | date}}</p>
-            <button href="#" class="btn btn-primary">See Details</button>
+            <button href="#" class="btn btn-primary" [routerLink]="['../trip/'+trip.id]">See Details</button>
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@
             <p class="card-text"><strong>{{trip.locationStart.name}} to {{trip.locationEnd.name}}</strong></p>
             <p class="card-text">{{trip.description}}</p>
             <p class="card-text">{{trip.dateStart | date}} - {{trip.dateEnd | date}}</p>
-            <button href="#" class="btn btn-primary">See Details</button>
+            <button [routerLink]="['trip/'+trip.id]" class="btn btn-primary">See Details</button>
           </div>
         </div>
       </div>

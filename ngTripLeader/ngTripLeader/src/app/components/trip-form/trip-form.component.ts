@@ -52,7 +52,7 @@ export class TripFormComponent implements OnInit {
     this.tripSvc.create(newTrip).subscribe(
       (yay) => {
         console.log('TripFormComponent.create(): Trip created.');
-        this.router.navigateByUrl('/trips');
+        this.router.navigateByUrl('/trips/' + newTrip.id);
         // this.tripSvc.show(yay.id);
         // this.load(yay.id);
       },
