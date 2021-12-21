@@ -18,7 +18,7 @@
       </div>
       <div *ngFor="let trip of tripsCreated" class="col-md-4">
         <div  class="card my-5 mx-1 card-bg" >
-          <img src="..." class="card-img-top" alt="...">
+          <img src="https://images.unsplash.com/photo-1488375634201-b85b28653a79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2629&q=80" class="card-img-top" alt="...">
           <div class="card-body">
             <h3 class="card-title">{{trip.name}}</h3>
             <p class="card-text"><strong>{{trip.locationStart.name}} to {{trip.locationEnd.name}}</strong></p>
@@ -62,13 +62,19 @@
       </div>
       <div *ngFor="let trip of tripsMemberOf" class="col-sm-12">
         <div  class="card my-3 mx-1 card-bg" >
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h3 class="card-title">{{trip.name}}</h3>
-            <p class="card-text"><strong>{{trip.locationStart.name}} to {{trip.locationEnd.name}}</strong></p>
-            <p class="card-text">{{trip.description}}</p>
-            <p class="card-text">{{trip.dateStart | date}} - {{trip.dateEnd | date}}</p>
-            <button [routerLink]="['trip/'+trip.id]" class="btn btn-primary">See Details</button>
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="https://images.unsplash.com/photo-1519992599773-1e1d4029929d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2673&q=80" class="card-img-top" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h3 class="card-title">{{trip.name}}</h3>
+                <p class="card-text"><strong>{{trip.locationStart.name}} to {{trip.locationEnd.name}}</strong></p>
+                <p class="card-text">{{trip.description}}</p>
+                <p class="card-text">{{trip.dateStart | date}} - {{trip.dateEnd | date}}</p>
+                <button href="#" class="btn btn-primary" [routerLink]="['../trip/'+trip.id]">See Details</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
