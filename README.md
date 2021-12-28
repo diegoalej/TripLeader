@@ -12,3 +12,5 @@ The confluence project brings in JPASandbar as a dependency and sets up the API 
 
 ### Angular Project
 This project displays all user views and logic by making calls to the REST API and other API's as necessary. It uses Angular 12 with Bootstrap 4.6 and Ng Bootstrap to build the UI. 
+
+![Homepage screenshot](assets/images/homepage_screenshot.png)
