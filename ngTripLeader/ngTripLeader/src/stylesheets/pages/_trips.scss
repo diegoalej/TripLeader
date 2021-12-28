@@ -1,0 +1,19 @@
+// -----------------------------------------------------------------------------
+// This file contains styles that are specific to the trips page.
+// -----------------------------------------------------------------------------
+
+.card.card-bg {
+  background-color: $light-grey;
+}
+
+.card h3 {
+  color: $brand-color;
+}
+
+.card h5, .card p {
+  color: $dark;
+}
+
+input.form-control {
+  text-align: center;
+}

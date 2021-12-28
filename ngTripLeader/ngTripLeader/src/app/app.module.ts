@@ -17,6 +17,8 @@ import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { LogoutComponent } from './components/logout/logout.component';
 import { DatePipe } from '@angular/common';
+import { TripFormComponent } from './components/trip-form/trip-form.component';
+import { TripDetailComponent } from './components/trip-detail/trip-detail.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { DatePipe } from '@angular/common';
     NavigationComponent,
     CreateUserComponent,
     TripsComponent,
-    LogoutComponent
+    LogoutComponent,
+    TripFormComponent,
+    TripDetailComponent
   ],
   imports: [
     BrowserModule,

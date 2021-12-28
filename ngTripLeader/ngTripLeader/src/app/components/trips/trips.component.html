@@ -7,20 +7,24 @@
     <div class="row justify-content-center text-center">
       <div class="col-sm-12 pt-5">
         <h1><strong>My Trips</strong></h1>
+        <br>
         <h2>Created trips</h2>
       </div>
     </div>
     <!-- Loop over user's created trips to create columns with trip cards -->
     <div class="row">
+      <div *ngIf="tripsCreated.length == 0" class="col-sm-12 text-center p-4">
+        <h3>Create a trip to get started, what are you waiting for?!</h3>
+      </div>
       <div *ngFor="let trip of tripsCreated" class="col-md-4">
         <div  class="card my-5 mx-1 card-bg" >
-          <img src="..." class="card-img-top" alt="...">
+          <img src="https://images.unsplash.com/photo-1488375634201-b85b28653a79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2629&q=80" class="card-img-top" alt="...">
           <div class="card-body">
             <h3 class="card-title">{{trip.name}}</h3>
             <p class="card-text"><strong>{{trip.locationStart.name}} to {{trip.locationEnd.name}}</strong></p>
             <p class="card-text">{{trip.description}}</p>
             <p class="card-text">{{trip.dateStart | date}} - {{trip.dateEnd | date}}</p>
-            <button href="#" class="btn btn-primary">See Details</button>
+            <button href="#" class="btn btn-primary" [routerLink]="['../trip/'+trip.id]">See Details</button>
           </div>
         </div>
       </div>
@@ -28,7 +32,13 @@
     <!-- Button to create new trip -->
     <div class="row">
       <div class="col-sm-12 d-flex justify-content-center pb-5">
-        <button class="btn btn-primary">Create Trip</button>
+        <button class="btn btn-primary" (click)="showTripForms()">Create Trip</button>
+      </div>
+    </div>
+
+    <div *ngIf="createTripForm" class="row">
+      <div class="col-sm-12 col-md-10 offset-md-1 pb-5 text-center">
+        <app-trip-form></app-trip-form>
       </div>
     </div>
 
@@ -47,15 +57,24 @@
     </div>
     <!-- Loop over trips user is part of -->
     <div class="row">
+      <div *ngIf="tripsMemberOf.length == 0" class="col-sm-12 text-center p-4">
+        <h3>Search for a trip below and add your next adventure</h3>
+      </div>
       <div *ngFor="let trip of tripsMemberOf" class="col-sm-12">
         <div  class="card my-3 mx-1 card-bg" >
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h3 class="card-title">{{trip.name}}</h3>
-            <p class="card-text"><strong>{{trip.locationStart.name}} to {{trip.locationEnd.name}}</strong></p>
-            <p class="card-text">{{trip.description}}</p>
-            <p class="card-text">{{trip.dateStart | date}} - {{trip.dateEnd | date}}</p>
-            <button href="#" class="btn btn-primary">See Details</button>
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="https://images.unsplash.com/photo-1519992599773-1e1d4029929d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2673&q=80" class="card-img-top" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h3 class="card-title">{{trip.name}}</h3>
+                <p class="card-text"><strong>{{trip.locationStart.name}} to {{trip.locationEnd.name}}</strong></p>
+                <p class="card-text">{{trip.description}}</p>
+                <p class="card-text">{{trip.dateStart | date}} - {{trip.dateEnd | date}}</p>
+                <button href="#" class="btn btn-primary" [routerLink]="['../trip/'+trip.id]">See Details</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

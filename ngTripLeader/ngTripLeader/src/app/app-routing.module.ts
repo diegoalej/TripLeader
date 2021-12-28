@@ -6,6 +6,7 @@ import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { TripsComponent } from './components/trips/trips.component';
 import { ExtraOptions } from '@angular/router';
+import { TripDetailComponent } from './components/trip-detail/trip-detail.component';
 
 const routerOptions: ExtraOptions = {
   anchorScrolling: 'enabled',
@@ -21,7 +22,8 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: CreateUserComponent}
    ] },
-   { path: 'trips', component: TripsComponent}
+   { path: 'trips', component: TripsComponent},
+   { path: 'trip/:id', component: TripDetailComponent}
 
 ];
 
