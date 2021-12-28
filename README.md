@@ -1,4 +1,4 @@
-# SandBar Project
+# TripLeader App
 This application is intended to be used as a tool to plan single- and multi-day outings in the outdoors or any other occasion with a focus on logistics, meals, and expenses. It is intended to be expanded upon once basic functionality is established. 
 
 ## Project Description
