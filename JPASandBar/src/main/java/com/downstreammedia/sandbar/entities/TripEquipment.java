@@ -11,13 +11,24 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Getter
+@Setter
+@Accessors(chain=true)
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="trip_equipment")
 public class TripEquipment {
 	
-	/*********METHODS*********/
+	/*********FIELDS*********/
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,47 +48,6 @@ public class TripEquipment {
 	private Equipment equipment;
 	
 	/*********METHODS*********/
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public Trip getTrip() {
-		return trip;
-	}
-
-	public void setTrip(Trip trip) {
-		this.trip = trip;
-	}
-
-	public Equipment getEquipment() {
-		return equipment;
-	}
-
-	public void setEquipment(Equipment equipment) {
-		this.equipment = equipment;
-	}
-
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(amount, equipment, id);
@@ -110,19 +80,6 @@ public class TripEquipment {
 		builder.append(equipment);
 		builder.append("]");
 		return builder.toString();
-	}
-
-	public TripEquipment(int id, boolean active, int amount, Trip trip, Equipment equipment) {
-		super();
-		this.id = id;
-		this.active = active;
-		this.amount = amount;
-		this.trip = trip;
-		this.equipment = equipment;
-	}
-
-	public TripEquipment() {
-		super();
 	}
 
 }
