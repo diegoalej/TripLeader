@@ -59,10 +59,6 @@ public class Trip {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "trip")
-	private Set<MealDay> mealSchedule;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "trip")
 	private List<TripEquipment> gearlist;
 	
 	@JsonIgnore
@@ -155,13 +151,6 @@ public class Trip {
 		this.locationEnd = locationEnd;
 	}
 
-	public Set<MealDay> getMealSchedule() {
-		return mealSchedule;
-	}
-
-	public void setMealSchedule(Set<MealDay> mealSchedule) {
-		this.mealSchedule = mealSchedule;
-	}
 
 	public List<TripEquipment> getGearlist() {
 		return gearlist;
@@ -228,8 +217,6 @@ public class Trip {
 		builder.append(locationStart);
 		builder.append(", locationEnd=");
 		builder.append(locationEnd);
-		builder.append(", mealSchedule=");
-		builder.append(mealSchedule);
 		builder.append(", gearlist=");
 		builder.append(gearlist);
 		builder.append(", categories=");
@@ -242,7 +229,7 @@ public class Trip {
 
 	public Trip(int id, String name, String description, LocalDateTime dateStart, LocalDateTime dateEnd,
 			Set<User> members, User creator, Set<Expense> expenses, Location locationStart, Location locationEnd,
-			Set<MealDay> mealSchedule, List<TripEquipment> gearlist, Set<Category> categories,
+		    List<TripEquipment> gearlist, Set<Category> categories,
 			Set<UserEquipment> userGear) {
 		super();
 		this.id = id;
@@ -255,7 +242,6 @@ public class Trip {
 		this.expenses = expenses;
 		this.locationStart = locationStart;
 		this.locationEnd = locationEnd;
-		this.mealSchedule = mealSchedule;
 		this.gearlist = gearlist;
 		this.categories = categories;
 		this.userGear = userGear;

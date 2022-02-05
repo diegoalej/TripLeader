@@ -64,10 +64,6 @@ public class User {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "creator")
-	private List<Meal> meals;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "creator")
 	private Set<UserEquipment> equipment;
 	
 	/*********METHODS*********/
@@ -168,14 +164,6 @@ public class User {
 		this.expenses = expenses;
 	}
 
-	public List<Meal> getMeals() {
-		return meals;
-	}
-
-	public void setMeals(List<Meal> meals) {
-		this.meals = meals;
-	}
-
 	public Set<UserEquipment> getEquipment() {
 		return equipment;
 	}
@@ -228,8 +216,6 @@ public class User {
 		builder.append(trips);
 		builder.append(", expenses=");
 		builder.append(expenses);
-		builder.append(", meals=");
-		builder.append(meals);
 		builder.append(", equipment=");
 		builder.append(equipment);
 		builder.append("]");
@@ -238,7 +224,7 @@ public class User {
 
 	public User(int id, String username, String password, String email, String role, boolean active, String imageUrl,
 			LocalDateTime dateUpdated, LocalDateTime dateStart, List<Trip> createdTrips, Set<Trip> trips,
-			Set<Expense> expenses, List<Meal> meals, Set<UserEquipment> equipment) {
+			Set<Expense> expenses, Set<UserEquipment> equipment) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -252,7 +238,6 @@ public class User {
 		this.createdTrips = createdTrips;
 		this.trips = trips;
 		this.expenses = expenses;
-		this.meals = meals;
 		this.equipment = equipment;
 	}
 
