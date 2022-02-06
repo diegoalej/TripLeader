@@ -3,7 +3,6 @@ package com.downstreammedia.sandbar.services;
 import java.util.List;
 
 import com.downstreammedia.sandbar.entities.Trip;
-import com.downstreammedia.sandbar.entities.User;
 
 public interface TripService {
 	

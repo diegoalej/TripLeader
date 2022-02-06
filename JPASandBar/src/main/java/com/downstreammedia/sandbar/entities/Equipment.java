@@ -9,6 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+
+@Getter
+@Setter
+@Accessors(chain=true)
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Equipment {
 	
@@ -24,32 +36,6 @@ public class Equipment {
 	
 	
 	/*********METHODS*********/
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	} 
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(description, id, name);
@@ -78,17 +64,6 @@ public class Equipment {
 		builder.append(description);
 		builder.append("]");
 		return builder.toString();
-	}
-
-	public Equipment(int id, String name, String description) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-	}
-
-	public Equipment() {
-		super();
 	}
 	
 }

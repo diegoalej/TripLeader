@@ -16,8 +16,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Getter
+@Setter
+@Accessors(chain=true)
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Trip {
 	
@@ -59,10 +70,6 @@ public class Trip {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "trip")
-	private Set<MealDay> mealSchedule;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "trip")
 	private List<TripEquipment> gearlist;
 	
 	@JsonIgnore
@@ -74,119 +81,6 @@ public class Trip {
 	private Set<UserEquipment> userGear;
 	
 	/*********METHODS*********/
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public LocalDateTime getDateStart() {
-		return dateStart;
-	}
-
-	public void setDateStart(LocalDateTime dateStart) {
-		this.dateStart = dateStart;
-	}
-
-	public LocalDateTime getDateEnd() {
-		return dateEnd;
-	}
-
-	public void setDateEnd(LocalDateTime dateEnd) {
-		this.dateEnd = dateEnd;
-	}
-
-	public Set<User> getMembers() {
-		return members;
-	}
-
-	public void setMembers(Set<User> members) {
-		this.members = members;
-	}
-
-	public User getCreator() {
-		return creator;
-	}
-
-	public void setCreator(User creator) {
-		this.creator = creator;
-	}
-
-	public Set<Expense> getExpenses() {
-		return expenses;
-	}
-
-	public void setExpenses(Set<Expense> expenses) {
-		this.expenses = expenses;
-	}
-
-	public Location getLocationStart() {
-		return locationStart;
-	}
-
-	public void setLocationStart(Location locationStart) {
-		this.locationStart = locationStart;
-	}
-
-	public Location getLocationEnd() {
-		return locationEnd;
-	}
-
-	public void setLocationEnd(Location locationEnd) {
-		this.locationEnd = locationEnd;
-	}
-
-	public Set<MealDay> getMealSchedule() {
-		return mealSchedule;
-	}
-
-	public void setMealSchedule(Set<MealDay> mealSchedule) {
-		this.mealSchedule = mealSchedule;
-	}
-
-	public List<TripEquipment> getGearlist() {
-		return gearlist;
-	}
-
-	public void setGearlist(List<TripEquipment> gearlist) {
-		this.gearlist = gearlist;
-	}
-
-	public Set<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(Set<Category> categories) {
-		this.categories = categories;
-	}
-
-	public Set<UserEquipment> getUserGear() {
-		return userGear;
-	}
-
-	public void setUserGear(Set<UserEquipment> userGear) {
-		this.userGear = userGear;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(dateEnd, dateStart, id, locationEnd, locationStart);
@@ -228,8 +122,6 @@ public class Trip {
 		builder.append(locationStart);
 		builder.append(", locationEnd=");
 		builder.append(locationEnd);
-		builder.append(", mealSchedule=");
-		builder.append(mealSchedule);
 		builder.append(", gearlist=");
 		builder.append(gearlist);
 		builder.append(", categories=");
@@ -238,31 +130,6 @@ public class Trip {
 		builder.append(userGear);
 		builder.append("]");
 		return builder.toString();
-	}
-
-	public Trip(int id, String name, String description, LocalDateTime dateStart, LocalDateTime dateEnd,
-			Set<User> members, User creator, Set<Expense> expenses, Location locationStart, Location locationEnd,
-			Set<MealDay> mealSchedule, List<TripEquipment> gearlist, Set<Category> categories,
-			Set<UserEquipment> userGear) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.dateStart = dateStart;
-		this.dateEnd = dateEnd;
-		this.members = members;
-		this.creator = creator;
-		this.expenses = expenses;
-		this.locationStart = locationStart;
-		this.locationEnd = locationEnd;
-		this.mealSchedule = mealSchedule;
-		this.gearlist = gearlist;
-		this.categories = categories;
-		this.userGear = userGear;
-	}
-
-	public Trip() {
-		super();
 	}
 		
 }

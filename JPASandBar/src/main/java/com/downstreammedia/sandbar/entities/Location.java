@@ -7,6 +7,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+
+@Getter
+@Setter
+@Accessors(chain=true)
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Location {
 	
@@ -31,72 +43,6 @@ public class Location {
 	private String longitude;
 
 	/*********METHODS*********/
-	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public int getZip() {
-		return zip;
-	}
-
-	public void setZip(int zip) {
-		this.zip = zip;
-	}
-
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-
-	public String getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, latitude, longitude, name);
@@ -137,25 +83,5 @@ public class Location {
 		builder.append("]");
 		return builder.toString();
 	}
-
-	public Location(int id, String name, String description, String address, String city, int zip, String latitude,
-			String longitude) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.address = address;
-		this.city = city;
-		this.zip = zip;
-		this.latitude = latitude;
-		this.longitude = longitude;
-	}
-
-	public Location() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	
 }
 	

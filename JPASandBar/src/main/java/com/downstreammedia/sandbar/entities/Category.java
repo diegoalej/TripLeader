@@ -9,8 +9,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Getter
+@Setter
+@Accessors(chain=true)
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Category {
 	
@@ -33,47 +44,6 @@ public class Category {
 	
 	
 	/*********METHODS*********/
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public Trip getTrip() {
-		return trip;
-	}
-
-	public void setTrip(Trip trip) {
-		this.trip = trip;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(description, id, name);
@@ -107,18 +77,4 @@ public class Category {
 		builder.append("]");
 		return builder.toString();
 	}
-
-	public Category(int id, String name, String description, boolean active, Trip trip) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.active = active;
-		this.trip = trip;
-	}
-
-	public Category() {
-		super();
-	}
-
 }
