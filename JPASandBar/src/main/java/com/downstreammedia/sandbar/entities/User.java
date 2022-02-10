@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -61,7 +62,7 @@ public class User {
 	private List<Trip> createdTrips;
 	
 	@JsonIgnore
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "user_trip", 
 		joinColumns = @JoinColumn(name = "trip_id"), 
 		inverseJoinColumns = @JoinColumn(name = "user_id"))

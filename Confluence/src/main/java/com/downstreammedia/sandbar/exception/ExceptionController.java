@@ -77,7 +77,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
 		
 		RestErrorList errorList = new RestErrorList(HttpStatus.NOT_FOUND, new ErrorMessage(ex.getMessage(), ex.getMessage()));
 		ResponseWrapper responseWrapper = new ResponseWrapper(null, singletonMap("status", HttpStatus.NOT_FOUND), errorList);
-		return ResponseEntity.ok(responseWrapper);
+		return new ResponseEntity<ResponseWrapper>(responseWrapper, HttpStatus.NOT_FOUND);
 	}
 
 	/**
@@ -91,9 +91,9 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(ResourceNotUpdatedException.class)
 	public ResponseEntity<ResponseWrapper> resourceNotUpdatedHandler(ResourceNotFoundException ex, HttpServletRequest request) {
 		
-		RestErrorList errorList = new RestErrorList(HttpStatus.NOT_ACCEPTABLE, new ErrorMessage(ex.getMessage(), ex.getMessage()));
-		ResponseWrapper responseWrapper = new ResponseWrapper(null, singletonMap("status", HttpStatus.NOT_ACCEPTABLE), errorList);
-		return ResponseEntity.ok(responseWrapper);
+		RestErrorList errorList = new RestErrorList(HttpStatus.CONFLICT, new ErrorMessage(ex.getMessage(), ex.getMessage()));
+		ResponseWrapper responseWrapper = new ResponseWrapper(null, singletonMap("status", HttpStatus.CONFLICT), errorList);
+		return new ResponseEntity<ResponseWrapper>(responseWrapper, HttpStatus.CONFLICT);
 	}
 
 	/**
@@ -107,9 +107,9 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(ResourceNotDeletedException.class)
 	public ResponseEntity<ResponseWrapper> resourceNotDeletedHandler(ResourceNotDeletedException ex, HttpServletRequest request) {
 		
-		RestErrorList errorList = new RestErrorList(HttpStatus.NOT_FOUND, new ErrorMessage(ex.getMessage(), ex.getMessage()));
-		ResponseWrapper responseWrapper = new ResponseWrapper(null, singletonMap("status", HttpStatus.NOT_FOUND), errorList);
-		return ResponseEntity.ok(responseWrapper);
+		RestErrorList errorList = new RestErrorList(HttpStatus.BAD_REQUEST, new ErrorMessage(ex.getMessage(), ex.getMessage()));
+		ResponseWrapper responseWrapper = new ResponseWrapper(null, singletonMap("status", HttpStatus.BAD_REQUEST), errorList);
+		return new ResponseEntity<ResponseWrapper>(responseWrapper, HttpStatus.BAD_REQUEST);
 	}
 	
 }
