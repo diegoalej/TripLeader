@@ -4,13 +4,17 @@ import static java.util.Collections.singletonMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.util.WebUtils;
 
 import com.downstreammedia.sandbar.model.utils.ErrorMessage;
 import com.downstreammedia.sandbar.model.utils.ResponseWrapper;
@@ -31,20 +35,26 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
 
     /**
      * handleException - Handles all the Exception recieving a request, responseWrapper.
-     *@param request
-     *@param responseWrapper
-     *@return ResponseEntity<ResponseWrapper>
+	 * @param ex the exception
+	 * @param body the body for the response
+	 * @param headers the headers for the response
+	 * @param status the response status
+	 * @param request the current request
+     * @return ResponseEntity<ResponseWrapper>
      * @user diegoalej
      * @since Feb 2, 2022 
      */
-	@ExceptionHandler(value = { Exception.class })
-    public @ResponseBody ResponseEntity<ResponseWrapper> handleAPIException(HttpServletRequest request,
-            ResponseWrapper responseWrapper){
-		
-		RestErrorList errorList = new RestErrorList(HttpStatus.NOT_ACCEPTABLE, new ErrorMessage("message","message2"));
-        responseWrapper = new ResponseWrapper(null, singletonMap("status", HttpStatus.NOT_ACCEPTABLE), errorList);
-        return ResponseEntity.ok(responseWrapper);
-    }
+	@Override
+	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers,
+			HttpStatus status, WebRequest request) {
+
+		if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
+			request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
+		}
+		RestErrorList errorList = new RestErrorList(HttpStatus.NOT_ACCEPTABLE, new ErrorMessage(ex.getMessage(), ex.getMessage()));
+        ResponseWrapper responseWrapper = new ResponseWrapper(null, singletonMap("status", HttpStatus.NOT_ACCEPTABLE), errorList);
+		return new ResponseEntity<>(responseWrapper, headers, status);
+	}
     
 	/**
 	 * handleIOException - Handles the Authentication Exceptions of the application. 
