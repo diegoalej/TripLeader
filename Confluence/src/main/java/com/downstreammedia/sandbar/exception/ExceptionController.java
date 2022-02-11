@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -34,7 +33,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
 
 
     /**
-     * handleException - Handles all the Exception recieving a request, responseWrapper.
+     * handleExceptionInternal - Override for customizing error body for all exceptions.
 	 * @param ex the exception
 	 * @param body the body for the response
 	 * @param headers the headers for the response
