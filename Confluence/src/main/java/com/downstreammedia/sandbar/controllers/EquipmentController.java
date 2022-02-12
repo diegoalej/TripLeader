@@ -3,8 +3,6 @@ package com.downstreammedia.sandbar.controllers;
 import java.security.Principal;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.downstreammedia.sandbar.entities.Equipment;
-import com.downstreammedia.sandbar.entities.Trip;
 import com.downstreammedia.sandbar.exception.ResourceNotDeletedException;
 import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
 import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
@@ -84,7 +81,6 @@ public class EquipmentController {
 	public ResponseEntity<Equipment> updateExistingEquipment(
 			@RequestBody Equipment equipment, 
 			@PathVariable int id, 
-			HttpServletResponse response,
 			Principal principal
 			){
 		Equipment editEquip = equipmentServ.updateEquipment(id, equipment, principal.getName());
@@ -99,7 +95,6 @@ public class EquipmentController {
 	@DeleteMapping("equipment/{id}")
 	public  ResponseEntity<Object> deleteEquipment(
 			@PathVariable int id, 
-			HttpServletResponse response,
 			Principal principal
 			){
 		boolean deleted = false;

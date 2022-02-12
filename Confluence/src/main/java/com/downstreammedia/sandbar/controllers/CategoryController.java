@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.downstreammedia.sandbar.entities.Category;
+import com.downstreammedia.sandbar.exception.ResourceNotDeletedException;
+import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
+import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import com.downstreammedia.sandbar.services.CategoryService;
 
 @RestController
@@ -28,43 +33,40 @@ public class CategoryController {
 	CategoryService catServ;
 	
 	@GetMapping("category")
-	private List<Category> getAllCategories(HttpServletResponse response){
+	private ResponseEntity<List<Category>> getAllCategories(HttpServletResponse response){
 		List<Category> category = catServ.findAllCategories();
 		if (category.size() > 0) {
-			return category;
+			return new ResponseEntity<List<Category>>(category, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(0, "No Category found");
 		}
 	}
 	
 	@GetMapping("category/id/{id}")
-	public Category getCategoryWithId(@PathVariable Integer id, HttpServletResponse response){
+	public ResponseEntity<Category> getCategoryWithId(@PathVariable Integer id, HttpServletResponse response){
 		Category category = catServ.findCategoryById(id);
 		if (category != null) {
-			return category;
+			return new ResponseEntity<Category>(category, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "Category does not exist with that id");
 		}
 	}
 
 	@GetMapping("category/trip/{id}")
-	public List<Category> getCategoryWithTripId(@PathVariable int id, HttpServletResponse response){
+	public ResponseEntity<List<Category>> getCategoryWithTripId(@PathVariable int id, HttpServletResponse response){
 		List<Category> category = catServ.findCategoryByTripId(id);
 		if (category != null) {
-			return category;
+			return new ResponseEntity<List<Category>>(category, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "Trip does not have any categories assigned");
 		}
 	}
 	
 	@PostMapping("category/{id}")
-	public Category createNewCategory (
+	public ResponseEntity<Category> createNewCategory (
 			@RequestBody Category category, 
 			@PathVariable int id,
 			HttpServletResponse response,
@@ -72,46 +74,43 @@ public class CategoryController {
 			){
 		Category newCategory = catServ.createCategory(category, principal.getName(), id);
 		if (newCategory != null) {
-			return newCategory;
+			return new ResponseEntity<Category>(newCategory, HttpStatus.CREATED);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotUpdatedException(id, "Category could not be created");
 		}
 	}
 	
 	@PutMapping("category/{id}")
-	public Category updateExistingCategory(
+	public ResponseEntity<Category> updateExistingCategory(
 			@RequestBody Category category, 
 			@PathVariable int id, 
 			HttpServletResponse response,
 			Principal principal
 			){
-		Category editLocation = catServ.updateCategory(id, category, principal.getName());
-		if (editLocation != null) {
-			return editLocation;
+		Category categoryExists = catServ.findCategoryById(id);
+		if(categoryExists != null) {
+			Category editCategory = catServ.updateCategory(id, category, principal.getName());
+			if (editCategory != null) {
+				return new ResponseEntity<Category>(editCategory, HttpStatus.OK);
+			}
+			else {
+				throw new ResourceNotUpdatedException(id, "Category could not be updated");
+			}
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "Category does not exist in database");
 		}
 	}
 	
 	@DeleteMapping("category/{id}")
-	public void deleteCategory(
-			@PathVariable int id, 
-			HttpServletResponse response,
-			Principal principal
-			){
+	public ResponseEntity<Category> deleteCategory(@PathVariable int id, Principal principal){
 		boolean deleted = false;
-		try {
-			deleted = catServ.deleteCategory(id, principal.getName());
-			if (deleted == true) {
-				response.setStatus(204);
-			}
-		} catch (Exception e) {			
-			response.setStatus(404);
-		}
+		deleted = catServ.deleteCategory(id, principal.getName());
+		if (deleted == true) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}		
+		throw new ResourceNotDeletedException(id, "Category could not be deleted");
 	}
 	
 }
