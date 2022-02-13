@@ -3,9 +3,9 @@ package com.downstreammedia.sandbar.controllers;
 import java.security.Principal;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.downstreammedia.sandbar.entities.UserEquipment;
+import com.downstreammedia.sandbar.exception.ResourceNotDeletedException;
+import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
+import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import com.downstreammedia.sandbar.services.UserEquipmentService;
 
 @RestController
@@ -28,97 +31,87 @@ public class UserEquipmentController {
 	UserEquipmentService ueServ;
 	
 	@GetMapping("userequipment")
-	List<UserEquipment> getAllUserEquipment(HttpServletResponse response){
+	ResponseEntity<List<UserEquipment>> getAllUserEquipment(){
 		List<UserEquipment> userequipment = ueServ.findAllUserEquipment();
 		if(userequipment.size() > 0) {
-			return userequipment;
+			return new ResponseEntity<List<UserEquipment>>(userequipment, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(0, "No User Equipment found");
 		}
 	}
 	
 	@GetMapping("userequipment/creator/{id}")
-	List<UserEquipment> findUserEquipmentByCreatorId(@PathVariable Integer id, HttpServletResponse response) {
+	ResponseEntity<List<UserEquipment>> findUserEquipmentByCreatorId(@PathVariable Integer id) {
 		List<UserEquipment> userequipment = ueServ.findUserEquipmentByUserId(id);
 		if(userequipment.size() > 0) {
-			return userequipment;
+			return new ResponseEntity<List<UserEquipment>>(userequipment, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "No User Equipment found with that user id");
 		}
 	}
 
 	@GetMapping("userequipment/trip/{id}")
-	List<UserEquipment> findUserEquipmentByTripId(@PathVariable Integer id, HttpServletResponse response) {
+	ResponseEntity<List<UserEquipment>> findUserEquipmentByTripId(@PathVariable Integer id) {
 		List<UserEquipment> userequipment = ueServ.findUserEquipmentByTripId(id);
 		if(userequipment.size() > 0) {
-			return userequipment;
+			return new ResponseEntity<List<UserEquipment>>(userequipment, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(0, "No User Equipment found with that trip id");
 		}
 	}
 
 	@GetMapping("userequipment/id/{id}")
-	UserEquipment findUserEquipmentById(@PathVariable Integer id, HttpServletResponse response) {
+	ResponseEntity<UserEquipment> findUserEquipmentById(@PathVariable Integer id) {
 		UserEquipment userequipment = ueServ.findUserEquipmentById(id);
 		if(userequipment != null) {
-			return userequipment;
+			return new ResponseEntity<UserEquipment>(userequipment, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "No Trip Equipment found with that id");
 		}
 	}
 
 	@PostMapping("userequipment/trip/{tripId}")
-	UserEquipment createUserEquipment(@RequestBody UserEquipment userequipment,
+	ResponseEntity<UserEquipment> createUserEquipment(@RequestBody UserEquipment userequipment,
 						@PathVariable Integer tripId, 
-						HttpServletResponse response,
-						Principal principal
-						) {
+						Principal principal) {
 		UserEquipment newUserEquipment = ueServ.createUserEquipment(userequipment, principal.getName(), tripId);
 		if(newUserEquipment != null) {
-			return newUserEquipment;
+			return new ResponseEntity<UserEquipment>(newUserEquipment, HttpStatus.CREATED);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotUpdatedException(0, "User Equipment could not be created");
 		}
 	}
 	
 	@PutMapping("userequipment/{id}")
-	UserEquipment updateUserEquipment(@PathVariable Integer id,
+	ResponseEntity<UserEquipment> updateUserEquipment(@PathVariable Integer id,
 							Principal principal, 
-							HttpServletResponse response,
 							@RequestBody UserEquipment userequipment) {
-		UserEquipment editUserEquipment = ueServ.updateUserEquipment(id, userequipment, principal.getName());
-		if(editUserEquipment != null) {
-			return editUserEquipment;
+		UserEquipment ueExists = ueServ.findUserEquipmentById(id);
+		if(ueExists != null) {
+			UserEquipment editUserEquipment = ueServ.updateUserEquipment(id, userequipment, principal.getName());
+			if(editUserEquipment != null) {
+				return new ResponseEntity<UserEquipment>(editUserEquipment, HttpStatus.OK);
+			}
+			else {
+				throw new ResourceNotUpdatedException(id, "User Equipment could not be updated");
+			}			
 		}
-		else {
-			response.setStatus(404);
-			return null;
-		}
+		throw new ResourceNotFoundException(id, "User Equipment does not exist in db");
 	}
 	
 	@DeleteMapping("userequipment/{id}")
-	public void deleteUserEquipment(@PathVariable Integer id,
-							Principal principal,
-							HttpServletResponse response) {
+	public ResponseEntity<Object> deleteUserEquipment(@PathVariable Integer id,Principal principal) {
 		boolean deleted = false;
-		try {
 			deleted = ueServ.deleteUserEquipment(id, principal.getName());
 			if(deleted == true) {
-				response.setStatus(204);
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
-		} catch (Exception e) {
-			response.setStatus(404);
-		}
+			throw new ResourceNotDeletedException(id, "User Equipment could not be deleted");
 	}
 
 }
