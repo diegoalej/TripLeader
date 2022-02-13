@@ -6,8 +6,6 @@ import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import java.security.Principal;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +23,7 @@ import com.downstreammedia.sandbar.services.UserService;
 
 @RestController
 @RequestMapping("api")
-@CrossOrigin({ "*", "http://localhost:4200" })//Angular local port 4220
+@CrossOrigin({ "*", "http://localhost:4200" })//Angular local port 
 public class UserController {
 	
 	@Autowired
@@ -55,13 +52,10 @@ public class UserController {
 	}
 	
 	
-	//Once authentication is added this can be properly restricted to user and admin
 	@PutMapping("users/{id}")
-	public ResponseEntity<User> updateExistingUser(
-			@RequestBody User user, 
-			@PathVariable int id, 
-			Principal principal
-			){
+	public ResponseEntity<User> updateExistingUser( @RequestBody User user, 
+													@PathVariable int id, 
+													Principal principal){
 		User userExists = userServ.findUserById(id);
 		if(userExists != null) {
 			User editUser = userServ.updateUser(id, user, principal.getName() );
@@ -81,19 +75,14 @@ public class UserController {
 	
 	//Should delete trips, gear, and expenses
 	@DeleteMapping("users/{id}")
-	public ResponseEntity<Object> deleteUser(
-			@PathVariable Integer id, 
-			Principal principal
-			){
-		boolean result = false;
-			result = userServ.deleteUser(id, principal.getName());
-			
+	public ResponseEntity<Object> deleteUser(@PathVariable Integer id, 
+											 Principal principal){
+			boolean result = false;
+			result = userServ.deleteUser(id, principal.getName());	
 			if (result == true) {
-				return new ResponseEntity<>(HttpStatus.OK);
-			}else {
-				throw new ResourceNotDeletedException(id, "User could not be deleted");
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
+			throw new ResourceNotDeletedException(id, "User could not be deleted");
 	}
 	
-
 }

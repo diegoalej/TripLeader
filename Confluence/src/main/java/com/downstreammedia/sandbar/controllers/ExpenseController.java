@@ -4,9 +4,9 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.downstreammedia.sandbar.entities.Expense;
+import com.downstreammedia.sandbar.exception.ResourceNotDeletedException;
+import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
+import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import com.downstreammedia.sandbar.services.ExpenseService;
 
 @RestController
 @RequestMapping("api")
-@CrossOrigin({"*", "http://localhost:4220"})//Angular local port 4220
+@CrossOrigin({"*", "http://localhost:4220"})//Angular local port 
 public class ExpenseController {
 
 	
@@ -31,97 +34,87 @@ public class ExpenseController {
 
 	
 	@GetMapping("expenses")
-	List<Expense> getAllExpenses(HttpServletResponse response){
+	ResponseEntity<List<Expense>> getAllExpenses(){
 		List<Expense> expenses = exServ.findAll();
 		if(expenses.size() > 0) {
-			return expenses;
+			return new ResponseEntity<List<Expense>>(expenses, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(0, "No Expenses found");
 		}
 	}
 	
 	@GetMapping("expenses/creator/{id}")
-	Set<Expense> findExpenseByCreatorId(@PathVariable Integer id, HttpServletResponse response) {
+	ResponseEntity<Set<Expense>> findExpenseByCreatorId(@PathVariable Integer id) {
 		Set<Expense> expense = exServ.findExpenseByCreatorId(id);
 		if(expense.size() > 0) {
-			return expense;
+			return new ResponseEntity<Set<Expense>>(expense, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "Could not find expense with that user id");
 		}
 	}
 
 	@GetMapping("expenses/trip/{id}")
-	Set<Expense> findExpenseByTripId(@PathVariable Integer id, HttpServletResponse response) {
+	ResponseEntity<Set<Expense>> findExpenseByTripId(@PathVariable Integer id) {
 		Set<Expense> expense = exServ.findExpenseByTripId(id);
 		if(expense.size() > 0) {
-			return expense;
+			return new ResponseEntity<Set<Expense>>(expense, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "Could not find expense with that trip id");
 		}
 	}
 
 	@GetMapping("expenses/id/{id}")
-	Expense findExpenseById(@PathVariable Integer id, HttpServletResponse response) {
+	ResponseEntity<Expense> findExpenseById(@PathVariable Integer id) {
 		Expense expense = exServ.findExpenseById(id);
 		if(expense != null) {
-			return expense;
+			return new ResponseEntity<Expense>(expense, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "Could not find expense with that id");
 		}
 	}
 
 	@PostMapping("expenses/trip/{tripId}")
-	Expense createExpense(@RequestBody Expense expense,
+	ResponseEntity<Expense> createExpense(@RequestBody Expense expense,
 						@PathVariable Integer tripId, 
-						HttpServletResponse response,
-						Principal principal
-						) {
+						Principal principal) {
 		Expense newExpense = exServ.createExpense(expense, principal.getName(), tripId);
 		if(newExpense != null) {
-			return newExpense;
+			return new ResponseEntity<Expense>(expense, HttpStatus.CREATED);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotUpdatedException(0, "Could not create expense");
 		}
 	}
 	
 	@PutMapping("expenses/{id}")
-	Expense updateExpense(@PathVariable Integer id,
+	ResponseEntity<Expense> updateExpense(@PathVariable Integer id,
 							Principal principal, 
-							HttpServletResponse response,
 							@RequestBody Expense expense) {
-		Expense editExpense = exServ.updateExpense(expense, principal.getName(), id);
-		if(editExpense != null) {
-			return editExpense;
+		Expense expenseExists = exServ.findExpenseById(id);
+		if(expenseExists!=null) {			
+			Expense editExpense = exServ.updateExpense(expense, principal.getName(), id);
+			if(editExpense != null) {
+				return new ResponseEntity<Expense>(editExpense, HttpStatus.OK);
+			}
+			else {
+				throw new ResourceNotUpdatedException(id, "Expense could not be updated");
+			}
 		}
-		else {
-			response.setStatus(404);
-			return null;
-		}
+		throw new ResourceNotFoundException(id, "Expense does not exist in database");
 	}
 	
 	@DeleteMapping("expense/{id}")
-	public void deleteExpense(@PathVariable Integer id,
-							Principal principal,
-							HttpServletResponse response) {
+	public ResponseEntity<Object> deleteExpense(@PathVariable Integer id,Principal principal) {
 		boolean deleted = false;
-		try {
-			deleted = exServ.deleteExpense(id, principal.getName());
-			if(deleted == true) {
-				response.setStatus(204);
-			}
-		} catch (Exception e) {
-			response.setStatus(404);
+		deleted = exServ.deleteExpense(id, principal.getName());
+		if(deleted == true) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
+		throw new ResourceNotDeletedException(id, "Expense could not be deleted");	
 	}
 	
 }

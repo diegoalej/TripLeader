@@ -1,7 +1,6 @@
 package com.downstreammedia.sandbar.services;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -82,35 +81,18 @@ public class TripServiceImpl implements TripService {
 	public Trip addTripMember(int tripId, int userId, String username) {
 		Optional<Trip> oldTrip = tripRepo.findById(tripId);
 		Optional<User> oldUser = userRepo.findById(userId);
-		User editor = userRepo.findByUsername(username);
 		User user = null;
 		Set<User> members = null;
-		Set<Trip> userTrips = null;
 		Trip managedTrip = null;
-		if (oldTrip.isPresent() && editor != null) {
+		if (oldTrip.isPresent() && oldUser.isPresent()) {
 			user = oldUser.get();
-			userTrips = user.getTrips();
 			managedTrip = oldTrip.get();
 			members = managedTrip.getMembers();
 			members.add(user);
-			
-			managedTrip.setId(tripId);
 			managedTrip.setMembers(members);
-			
-			if(userTrips != null) {				
-				userTrips = user.getTrips();
-				userTrips.add(managedTrip);
-				user.setTrips(userTrips);
-			}
-			else {
-				userTrips = new HashSet<Trip>();
-				userTrips.add(managedTrip);
-				user.setTrips(userTrips);
-			}
-			if (editor != null) {
-				userRepo.saveAndFlush(user);
-				return tripRepo.saveAndFlush(managedTrip);
-			}			
+
+			return tripRepo.saveAndFlush(managedTrip);
+						
 		}
 		return null;
 	}
@@ -143,23 +125,21 @@ public class TripServiceImpl implements TripService {
 
 	@Override
 	public Trip updateTripMember(int tripId, int userId, String username) {
-		Optional<Trip> trip = tripRepo.findById(tripId);
-		Optional<User> user = userRepo.findById(userId);
+		Optional<Trip> oldTrip = tripRepo.findById(tripId);
+		Optional<User> oldUser = userRepo.findById(userId);
+		User user = null;
+		Set<User> members = null;
 		Trip managedTrip = null;
-		User managedUser = null;
-		if ((trip!= null && user.isPresent()) &&
-			userRepo.findByUsername(username).getRole().equals("admin") || user.get().getUsername().equals(username)) {
-			managedTrip = trip.get();
-			managedUser = user.get();
-			Set<User> tripMembers = trip.get().getMembers();
-			Set<Trip> userTrips = user.get().getTrips();
-			userTrips.remove(managedTrip);
-			tripMembers.remove(managedUser);
-			managedUser.setTrips(userTrips);
-			managedTrip.setMembers(tripMembers);
-			userRepo.saveAndFlush(managedUser);
+		if (oldTrip.isPresent() && oldUser.isPresent()) {
+			user = oldUser.get();
+			managedTrip = oldTrip.get();
+			members = managedTrip.getMembers();
+			members.remove(user);
+			managedTrip.setMembers(members);
+
 			return tripRepo.saveAndFlush(managedTrip);
-		}	
+						
+		}
 		return null;
 	}
 

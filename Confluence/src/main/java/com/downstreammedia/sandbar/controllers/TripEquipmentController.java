@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.downstreammedia.sandbar.entities.TripEquipment;
+import com.downstreammedia.sandbar.exception.ResourceNotDeletedException;
+import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
+import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import com.downstreammedia.sandbar.services.TripEquipmentService;
 
 @RestController
@@ -28,86 +33,80 @@ public class TripEquipmentController {
 	TripEquipmentService teServ;
 	
 	@GetMapping("tripequipment")
-	List<TripEquipment> getAllTripEquipment(HttpServletResponse response){
+	ResponseEntity<List<TripEquipment>> getAllTripEquipment(){
 		List<TripEquipment> tripequipment = teServ.findAllTripEquipment();
 		if(tripequipment.size() > 0) {
-			return tripequipment;
+			return new ResponseEntity<List<TripEquipment>>(tripequipment, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(0, "No Trip Equipment found");
 		}
 	}
 	
 
 	@GetMapping("tripequipment/trip/{id}")
-	List<TripEquipment> findTripEquipmentByTripId(@PathVariable Integer id, HttpServletResponse response) {
+	ResponseEntity<List<TripEquipment>> findTripEquipmentByTripId(@PathVariable Integer id) {
 		List<TripEquipment> tripequipment = teServ.findTripEquipmentByTripId(id);
 		if(tripequipment.size() > 0) {
-			return tripequipment;
+			return new ResponseEntity<List<TripEquipment>>(tripequipment, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "No Trip Equipment found for trip with that id");
 		}
 	}
 
 	@GetMapping("tripequipment/id/{id}")
-	TripEquipment findTripEquipmentById(@PathVariable Integer id, HttpServletResponse response) {
+	ResponseEntity<TripEquipment> findTripEquipmentById(@PathVariable Integer id, HttpServletResponse response) {
 		TripEquipment tripequipment = teServ.findUserEquipmentById(id);
 		if(tripequipment != null) {
-			return tripequipment;
+			return new ResponseEntity<TripEquipment>(tripequipment, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "No Trip Equipment found with that id");
 		}
 	}
 
 	@PostMapping("tripequipment/trip/{tripId}")
-	TripEquipment createTripEquipment(@RequestBody TripEquipment tripequipment,
+	ResponseEntity<TripEquipment> createTripEquipment(@RequestBody TripEquipment tripequipment,
 						@PathVariable Integer tripId, 
-						HttpServletResponse response,
-						Principal principal
-						) {
+						Principal principal) {
 		TripEquipment newTripEquipment = teServ.createTripEquipment(tripequipment, principal.getName(), tripId);
 		if(newTripEquipment != null) {
-			return newTripEquipment;
+			return new ResponseEntity<TripEquipment>(newTripEquipment, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotUpdatedException(tripId, "Trip Equipment could not be created under that trip Id");
 		}
 	}
 	
 	@PutMapping("tripequipment/{id}")
-	TripEquipment updateTripEquipment(@PathVariable Integer id,
+	ResponseEntity<TripEquipment> updateTripEquipment(@PathVariable Integer id,
 							Principal principal, 
-							HttpServletResponse response,
 							@RequestBody TripEquipment tripequipment) {
-		TripEquipment editTripEquipment = teServ.updateTripEquipment(id, tripequipment, principal.getName());
-		if(editTripEquipment != null) {
-			return editTripEquipment;
+		TripEquipment teExists = teServ.findUserEquipmentById(id);
+		if(teExists != null) {
+			TripEquipment editTripEquipment = teServ.updateTripEquipment(id, tripequipment, principal.getName());
+			if(editTripEquipment != null) {
+				return new ResponseEntity<TripEquipment> (editTripEquipment, HttpStatus.OK);
+			}
+			else {
+				throw new ResourceNotUpdatedException(id, "TripEquipment could not be updated");
+			}			
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "TripEquipment does not exist in db");
 		}
+		
 	}
 	
 	@DeleteMapping("tripequipment/{id}")
-	public void deleteTripEquipment(@PathVariable Integer id,
-							Principal principal,
-							HttpServletResponse response) {
+	public ResponseEntity<Object> deleteTripEquipment(@PathVariable Integer id, Principal principal) {
 		boolean deleted = false;
-		try {
-			deleted = teServ.deleteTripEquipment(id, principal.getName());
-			if(deleted == true) {
-				response.setStatus(204);
-			}
-		} catch (Exception e) {
-			response.setStatus(404);
+		deleted = teServ.deleteTripEquipment(id, principal.getName());
+		if(deleted == true) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
+		throw new ResourceNotDeletedException(id, "TripEquipment could not be deleted");
 	}
 
 

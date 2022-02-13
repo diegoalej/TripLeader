@@ -3,9 +3,9 @@ package com.downstreammedia.sandbar.controllers;
 import java.security.Principal;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.downstreammedia.sandbar.entities.Equipment;
+import com.downstreammedia.sandbar.exception.ResourceNotDeletedException;
+import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
+import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import com.downstreammedia.sandbar.services.EquipmentService;
 
 @RestController
@@ -28,89 +31,78 @@ public class EquipmentController {
 	private EquipmentService equipmentServ;
 	
 	@GetMapping("equipment")
-	private List<Equipment> getAllEquipment(HttpServletResponse response){
+	private ResponseEntity<List<Equipment>> getAllEquipment(){
 		List<Equipment> equipment = equipmentServ.findAllEquipment();
 		if (equipment.size() > 0) {
-			return equipment;
+			return new ResponseEntity<List<Equipment>>(equipment, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(0, "No equipment found");
 		}
 	}
 	
 	@GetMapping("equipment/id/{id}")
-	public Equipment getEquipmentWithId(@PathVariable Integer id, HttpServletResponse response){
+	public ResponseEntity<Equipment> getEquipmentWithId(@PathVariable Integer id){
 		Equipment equipment = equipmentServ.findEquipmentById(id);
 		if (equipment != null) {
-			return equipment;
+			return new ResponseEntity<Equipment>(equipment, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "Equipment does not exist in database");
 		}
 	}
 
 	@GetMapping("equipment/{name}")
-	public Equipment getEquipmentWithName(@PathVariable String name, HttpServletResponse response){
+	public ResponseEntity<Equipment> getEquipmentWithName(@PathVariable String name){
 		Equipment equipment = equipmentServ.findEquipmentByName(name);
 		if (equipment != null) {
-			return equipment;
+			return new ResponseEntity<Equipment>(equipment, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(0, "Equipment does not exist in database");
 		}
 	}
 	
 	@PostMapping("equipment")
-	public Equipment createNewEquipment(
+	public ResponseEntity<Equipment> createNewEquipment(
 			@RequestBody Equipment equipment, 
-			HttpServletResponse response,
 			Principal principal
 			){
 		Equipment newEquipment = equipmentServ.createEquipment(equipment, principal.getName());
 		if (newEquipment != null) {
-			return newEquipment;
+			return new ResponseEntity<Equipment>(newEquipment, HttpStatus.CREATED);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotUpdatedException(0, "Equipment could not be created");
 		}
 	}
 	
 	@PutMapping("equipment/{id}")
-	public Equipment updateExistingEquipment(
+	public ResponseEntity<Equipment> updateExistingEquipment(
 			@RequestBody Equipment equipment, 
 			@PathVariable int id, 
-			HttpServletResponse response,
 			Principal principal
 			){
-		Equipment editLocation = equipmentServ.updateEquipment(id, equipment, principal.getName());
-		if (editLocation != null) {
-			return editLocation;
+		Equipment editEquip = equipmentServ.updateEquipment(id, equipment, principal.getName());
+		if (editEquip != null) {
+			return new ResponseEntity<Equipment>(editEquip, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotUpdatedException(0, "Equipment could not be updated");
 		}
 	}
 	
 	@DeleteMapping("equipment/{id}")
-	public void deleteEquipment(
+	public  ResponseEntity<Object> deleteEquipment(
 			@PathVariable int id, 
-			HttpServletResponse response,
 			Principal principal
 			){
 		boolean deleted = false;
-		try {
 			deleted = equipmentServ.deleteEquipment(id, principal.getName());
 			if (deleted == true) {
-				response.setStatus(204);
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);		
 			}
-		} catch (Exception e) {			
-			response.setStatus(404);
-		}
+			throw new ResourceNotDeletedException(id, "Equipment could not be deleted");
 	}
 
 }
