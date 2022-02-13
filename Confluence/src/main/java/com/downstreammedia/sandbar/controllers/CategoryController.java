@@ -33,7 +33,7 @@ public class CategoryController {
 	CategoryService catServ;
 	
 	@GetMapping("category")
-	private ResponseEntity<List<Category>> getAllCategories(HttpServletResponse response){
+	private ResponseEntity<List<Category>> getAllCategories(){
 		List<Category> category = catServ.findAllCategories();
 		if (category.size() > 0) {
 			return new ResponseEntity<List<Category>>(category, HttpStatus.OK);
@@ -44,7 +44,7 @@ public class CategoryController {
 	}
 	
 	@GetMapping("category/id/{id}")
-	public ResponseEntity<Category> getCategoryWithId(@PathVariable Integer id, HttpServletResponse response){
+	public ResponseEntity<Category> getCategoryWithId(@PathVariable Integer id){
 		Category category = catServ.findCategoryById(id);
 		if (category != null) {
 			return new ResponseEntity<Category>(category, HttpStatus.OK);
@@ -55,7 +55,7 @@ public class CategoryController {
 	}
 
 	@GetMapping("category/trip/{id}")
-	public ResponseEntity<List<Category>> getCategoryWithTripId(@PathVariable int id, HttpServletResponse response){
+	public ResponseEntity<List<Category>> getCategoryWithTripId(@PathVariable int id){
 		List<Category> category = catServ.findCategoryByTripId(id);
 		if (category != null) {
 			return new ResponseEntity<List<Category>>(category, HttpStatus.OK);
@@ -69,7 +69,6 @@ public class CategoryController {
 	public ResponseEntity<Category> createNewCategory (
 			@RequestBody Category category, 
 			@PathVariable int id,
-			HttpServletResponse response,
 			Principal principal
 			){
 		Category newCategory = catServ.createCategory(category, principal.getName(), id);

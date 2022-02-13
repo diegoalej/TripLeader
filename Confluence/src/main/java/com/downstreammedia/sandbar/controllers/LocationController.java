@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.downstreammedia.sandbar.entities.Location;
+import com.downstreammedia.sandbar.exception.ResourceNotDeletedException;
+import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
+import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import com.downstreammedia.sandbar.services.LocationService;
 
 @RestController
@@ -28,95 +33,74 @@ public class LocationController {
 	private LocationService locationServ;
 	
 	@GetMapping("locations")
-	private List<Location> getAllLocations(HttpServletResponse response){
+	private ResponseEntity<List<Location>> getAllLocations(){
 		List<Location> locations = locationServ.findAllLocations();
 		if (locations.size() > 0) {
-			return locations;
+			return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(0, "No locations found");
 		}
 	}
 	
 	@GetMapping("locations/id/{id}")
-	public Location getLocationWithId(@PathVariable Integer id, HttpServletResponse response){
+	public ResponseEntity<Location> getLocationWithId(@PathVariable Integer id, HttpServletResponse response){ 
 		Location location = locationServ.findLocationById(id);
 		if (location != null) {
-			return location;
+			return new ResponseEntity<Location>(location, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(id, "User could not be found with that id");
 		}
 	}
 
 	@GetMapping("locations/{name}")
-	public List<Location> getLocationWithName(@PathVariable String name, HttpServletResponse response){
+	public ResponseEntity<List<Location>> getLocationWithName(@PathVariable String name){
 		List <Location> location = locationServ.findLocationByName(name);
 		if (location != null) {
-			return location;
+			return new ResponseEntity<List<Location>>(location, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(0, "User could not be found with name " + name);
 		}
 	}
 	
 	@PostMapping("locations")
-	public Location createNewLocation(
-			@RequestBody Location location, 
-			HttpServletResponse response,
-			Principal principal
-			){
+	public  ResponseEntity<Location> createNewLocation(@RequestBody Location location, Principal principal){
 		Location newLocation = locationServ.createLocation(location, principal.getName());
 		if (newLocation != null) {
-			return newLocation;
+			return  new ResponseEntity<Location>(location, HttpStatus.CREATED);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotFoundException(location.getId(), "location could not be found with that id");
 		}
 	}
 	
 	@PutMapping("locations/{id}")
-	public Location updateExistingLocation(
+	public ResponseEntity<Location> updateExistingLocation(
 			@RequestBody Location location, 
 			@PathVariable int id, 
-			HttpServletResponse response,
 			Principal principal
 			){
 		Location editLocation = locationServ.updateLocation(id, location, principal.getName());
 		if (editLocation != null) {
-			return editLocation;
+			return new ResponseEntity<Location>(editLocation, HttpStatus.OK);
 		}
 		else {
-			response.setStatus(404);
-			return null;
+			throw new ResourceNotUpdatedException(id, "Location could not be updated");
 		}
 	}
 	
 	@DeleteMapping("locations/{id}")
-	public void deleteLocation(
-			@PathVariable int id, 
-			HttpServletResponse response,
-			Principal principal
-			){
+	public ResponseEntity<Location> deleteLocation(@PathVariable int id, Principal principal){
 		boolean deleted = false;
-//		Location loc = locationServ.findLocationById(id);
-//		if(loc.getReviews().size() > 0) {
-//			for (Review review : loc.getReviews()) {
-//				revSvc.deleteReview(review.getId(), principal.getName());
-//			}
-//		}
-		try {
 			deleted = locationServ.deleteLocation(id, principal.getName());
 			if (deleted == true) {
-				response.setStatus(204);
+				return new ResponseEntity<Location>(HttpStatus.NO_CONTENT);
 			}
-		} catch (Exception e) {			
-			response.setStatus(404);
-		}
-	}
+			else {				
+				throw new ResourceNotDeletedException(id, "Location could not be deleted");
+			}
+	}	
 
 }
