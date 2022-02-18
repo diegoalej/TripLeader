@@ -24,6 +24,11 @@ import lombok.experimental.Accessors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * This class is  one of the main classes and is used to map the user entity
+ * 
+ * @author Diego Hoyos
+ */
 @Getter
 @Setter
 @Accessors(chain=true)
@@ -57,10 +62,12 @@ public class User {
 	@Column(name="date_start")
 	private LocalDateTime dateStart;
 	
+	//Relationship to created trips
 	@JsonIgnore
 	@OneToMany(mappedBy = "creator")
 	private List<Trip> createdTrips;
 	
+	//Relationship to trips member of
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "user_trip", 
@@ -68,10 +75,12 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<Trip> trips;
 	
+	//Relationship to expenses
 	@JsonIgnore	
 	@OneToMany(mappedBy = "creator")
 	private Set<Expense> expenses;
-
+	
+	//Relationship to equipment
 	@JsonIgnore
 	@OneToMany(mappedBy = "creator")
 	private Set<UserEquipment> equipment;

@@ -20,6 +20,11 @@ import lombok.experimental.Accessors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * This class is used to map the user equipment entity
+ * 
+ * @author Diego Hoyos
+ */
 @Getter
 @Setter
 @Accessors(chain=true)
@@ -43,11 +48,13 @@ public class UserEquipment {
 	@JoinColumn(name = "equipment_id")
 	private Equipment equipment;
 	
+	//Relationship to user creator
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User creator;
 	
+	//Relationship to trip
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="trip_id")

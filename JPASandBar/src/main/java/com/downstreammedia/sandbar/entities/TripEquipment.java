@@ -19,6 +19,11 @@ import lombok.experimental.Accessors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * This class is used to map the trip equipment entity
+ * 
+ * @author Diego Hoyos
+ */
 @Getter
 @Setter
 @Accessors(chain=true)
@@ -38,11 +43,13 @@ public class TripEquipment {
 	
 	private int amount;
 	
+	//Relationship to trip
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="trip_id")
 	private Trip trip;
 	
+	//Relationship to equipment
 	@OneToOne
 	@JoinColumn(name="equipment_id")
 	private Equipment equipment;
