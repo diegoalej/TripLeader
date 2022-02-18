@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 
 /**
- * Response Wrapper
- * @author diegoalej
+ * Response Wrapper class for exception messages
+ * @author Diego Hoyos
  * @version
  * @since Feb 2, 2022
  */

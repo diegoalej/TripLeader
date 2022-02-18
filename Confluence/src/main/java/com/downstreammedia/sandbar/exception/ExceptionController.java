@@ -19,13 +19,12 @@ import com.downstreammedia.sandbar.model.utils.ResponseWrapper;
 import com.downstreammedia.sandbar.model.utils.RestErrorList;
 
 /**
+ *Global exception configuration class
  *
  * @author diegoalej
  * @version
  * @since Feb 2, 2022
  */
-
-
 @RestControllerAdvice
 public class ExceptionController extends ResponseEntityExceptionHandler {
 

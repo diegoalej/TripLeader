@@ -1,7 +1,6 @@
 package com.downstreammedia.sandbar.controllers;
 
 import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

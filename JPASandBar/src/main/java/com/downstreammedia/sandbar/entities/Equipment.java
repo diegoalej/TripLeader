@@ -15,7 +15,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-
+/**
+ * This class is used to map the  equipment entity
+ * 
+ * @author Diego Hoyos
+ */
 @Getter
 @Setter
 @Accessors(chain=true)

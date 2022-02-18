@@ -21,6 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.downstreammedia.sandbar.entities.User;
 import com.downstreammedia.sandbar.services.UserService;
 
+/**
+ * Class is REST controller for User 
+ * 
+ * @author Diego Hoyos
+ */
 @RestController
 @RequestMapping("api")
 @CrossOrigin({ "*", "http://localhost:4200" })//Angular local port 
@@ -29,7 +34,12 @@ public class UserController {
 	@Autowired
 	private UserService userServ;
 
-	
+	/**
+	 * Endpoint returns all users or null
+	 * 
+	 * @return - a list of all users
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("users")
 	public ResponseEntity<List<User>> showAllUsers(){
 		List<User> users = userServ.findAllUsers();
@@ -41,6 +51,13 @@ public class UserController {
 		}
 	}
 	
+	/**
+	 * Endpoint returns user with specific id value
+	 * 
+	 * @param id - user to be found
+	 * @return - a user object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("users/{id}")
 	public ResponseEntity<User> findUserById(@PathVariable Integer id) {
 		User user = userServ.findUserById(id);
@@ -51,7 +68,16 @@ public class UserController {
 		}
 	}
 	
-	
+	/**
+	 * Endpoint edits existing user 
+	 * 
+	 * @param id - user to be updated
+	 * @param user - edited user object
+	 * @param username - user performing the edit
+	 * @return - a user object or null
+	 * @throws - ResourceNotUpdatedException
+	 * @throws - ResourceNotFoundException
+	 */
 	@PutMapping("users/{id}")
 	public ResponseEntity<User> updateExistingUser( @RequestBody User user, 
 													@PathVariable int id, 
@@ -73,7 +99,14 @@ public class UserController {
 	}
 	
 	
-	//Should delete trips, gear, and expenses
+	/**
+	 * Endpoint deletes user with specific id value
+	 * 
+	 * @param id - user to be deleted
+	 * @param username - user performing the delete
+	 * @return - boolean with result
+	 * @throws - ResourceNotDeletedException
+	 */
 	@DeleteMapping("users/{id}")
 	public ResponseEntity<Object> deleteUser(@PathVariable Integer id, 
 											 Principal principal){

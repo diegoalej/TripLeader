@@ -14,6 +14,12 @@ import com.downstreammedia.sandbar.repositories.ExpenseRepository;
 import com.downstreammedia.sandbar.repositories.TripRepository;
 import com.downstreammedia.sandbar.repositories.UserRepository;
 
+/**
+ * Class implements ExpenseService and defines business 
+ * logic for manipulating Expense entity
+ * 
+ * @author Diego Hoyos
+ */
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
 	
@@ -25,12 +31,23 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Autowired
 	TripRepository tripRepo;
-
+	
+	/**
+	 * Method returns all Expense or null
+	 * 
+	 * @return - a list of all Expenses
+	 */
 	@Override
 	public List<Expense> findAll() {
 		return exRepo.findAll();
 	}
-
+	
+	/**
+	 * Method returns Expense with specific id value
+	 * 
+	 * @param id - Expense to be found
+	 * @return - a Expense object
+	 */
 	@Override
 	public Expense findExpenseById(int id) {
 		Optional<Expense> expense = exRepo.findById(id);
@@ -41,7 +58,13 @@ public class ExpenseServiceImpl implements ExpenseService {
 			return null;
 		}
 	}
-
+	
+	/**
+	 * Method returns Expense with specific creator id value
+	 * 
+	 * @param id - user who created expense to be found
+	 * @return - a Expense object
+	 */
 	@Override
 	public Set<Expense> findExpenseByCreatorId(int id) {
 		Set<Expense> expense = exRepo.findByCreator_Id(id);
@@ -52,7 +75,13 @@ public class ExpenseServiceImpl implements ExpenseService {
 				return null;
 			}
 	}
-
+	
+	/**
+	 * Method returns user with specific trip id value
+	 * 
+	 * @param id - trip expense belongs to
+	 * @return - a Expense object
+	 */
 	@Override
 	public Set<Expense> findExpenseByTripId(int id) {
 		Set<Expense> expense = exRepo.findByTrip_Id(id);
@@ -63,7 +92,15 @@ public class ExpenseServiceImpl implements ExpenseService {
 				return null;
 			}
 	}
-
+	
+	/**
+	 * Method creates a new Expense 
+	 * 
+	 * @param expense - Expense object to be created
+	 * @param username - user creating Expense
+	 * @param id - Trip Expense belongs to
+	 * @return - created Expense object or null
+	 */
 	@Override
 	public Expense createExpense(Expense expense, String username, int id) {
 		User user = userRepo.findByUsername(username);
@@ -75,7 +112,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 			if(newExpense != null) {
 			return newExpense;
 			}
-	
 			else {
 			return null;
 			}
@@ -84,7 +120,15 @@ public class ExpenseServiceImpl implements ExpenseService {
 			return null;
 		}
 	}	
-
+	
+	/**
+	 * Method edits existing Expense 
+	 * 
+	 * @param id - Expense to be updated
+	 * @param expense - edited Expense object
+	 * @param username - user performing the edit
+	 * @return - a Expense object or null
+	 */
 	@Override
 	public Expense updateExpense(Expense expense, String username, int id) {
 		Optional<Expense> oldExpense = exRepo.findById(id);
@@ -106,7 +150,14 @@ public class ExpenseServiceImpl implements ExpenseService {
 		}
 		return managedExpense;
 	}
-
+	
+	/**
+	 * Method deletes Expense with specific id value
+	 * 
+	 * @param id - Expense to be deleted
+	 * @param username - user performing the delete
+	 * @return - boolean with result
+	 */
 	@Override
 	public boolean deleteExpense(int id, String username) {
 		boolean answer = false;

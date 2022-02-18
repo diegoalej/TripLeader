@@ -17,6 +17,11 @@ import lombok.experimental.Accessors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * This class is used to map the category entity
+ * 
+ * @author Diego Hoyos
+ */
 @Getter
 @Setter
 @Accessors(chain=true)
@@ -37,6 +42,7 @@ public class Category {
 	
 	private boolean active; 
 	
+	//Relationship to trip
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="trip_id")

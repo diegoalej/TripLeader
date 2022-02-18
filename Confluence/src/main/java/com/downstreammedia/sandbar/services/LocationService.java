@@ -4,7 +4,11 @@ import java.util.List;
 
 import com.downstreammedia.sandbar.entities.Location;
 
-
+/**
+ * Interface defines methods to manipulate Location entity
+ * 
+ * @author Diego Hoyos
+ */
 public interface LocationService {
 	
 	List<Location> findAllLocations();

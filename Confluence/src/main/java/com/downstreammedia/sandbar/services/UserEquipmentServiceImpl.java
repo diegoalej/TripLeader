@@ -13,6 +13,12 @@ import com.downstreammedia.sandbar.repositories.TripRepository;
 import com.downstreammedia.sandbar.repositories.UserEquipmentRepository;
 import com.downstreammedia.sandbar.repositories.UserRepository;
 
+/**
+ * Class implements UserEquipmentService and defines 
+ * business logic for manipulating UserEquipment entity
+ * 
+ * @author Diego Hoyos
+ */
 @Service
 public class UserEquipmentServiceImpl implements UserEquipmentService {
 
@@ -25,11 +31,22 @@ public class UserEquipmentServiceImpl implements UserEquipmentService {
 	@Autowired
 	TripRepository tripRepo;
 	
+	/**
+	 * Method returns all of a users equipment or null
+	 * 
+	 * @return - a list of all UserEquipment
+	 */
 	@Override
 	public List<UserEquipment> findAllUserEquipment() {
 		return ueRepo.findAll();
 	}
-
+	
+	/**
+	 * Method returns UserEquipment with specific id value
+	 * 
+	 * @param id - UserEquipment to be found
+	 * @return - a UserEquipment object
+	 */
 	@Override
 	public UserEquipment findUserEquipmentById(int id) {
 		Optional<UserEquipment> equipment = ueRepo.findById(id);
@@ -40,7 +57,13 @@ public class UserEquipmentServiceImpl implements UserEquipmentService {
 			return null;
 		}
 	}
-
+	
+	/**
+	 * Method returns UserEquipment with specific user id value
+	 * 
+	 * @param id - user id 
+	 * @return - a list of equipment or null
+	 */
 	@Override
 	public List<UserEquipment> findUserEquipmentByUserId(int id) {
 		List<UserEquipment> equipment = ueRepo.findByCreator_Id(id);
@@ -51,7 +74,13 @@ public class UserEquipmentServiceImpl implements UserEquipmentService {
 				return null;
 			}
 	}
-
+	
+	/**
+	 * Method returns UserEquipment with specific trip id value
+	 * 
+	 * @param id - trip id 
+	 * @return - a list of equipment or null
+	 */
 	@Override
 	public List<UserEquipment> findUserEquipmentByTripId(int id) {
 		List<UserEquipment> equipment = ueRepo.findByTrip_Id(id);
@@ -62,7 +91,15 @@ public class UserEquipmentServiceImpl implements UserEquipmentService {
 				return null;
 			}
 	}
-
+	
+	/**
+	 * Method creates a new UserEquipment 
+	 * 
+	 * @param equipment - UserEquipment object to be created
+	 * @param username - creator of UserEquipment
+	 * @param id - trip id to create equipment under
+	 * @return - created UserEquipment object or null
+	 */
 	@Override
 	public UserEquipment createUserEquipment(UserEquipment equipment, String username, int id) {
 		User user = userRepo.findByUsername(username);
@@ -84,7 +121,15 @@ public class UserEquipmentServiceImpl implements UserEquipmentService {
 			return null;
 		}
 	}	
-
+	
+	/**
+	 * Method edits existing UserEquipment 
+	 * 
+	 * @param id - UserEquipment to be updated
+	 * @param equipment - edited UserEquipment object
+	 * @param username - user performing the edit
+	 * @return - a user object or null
+	 */
 	@Override
 	public UserEquipment updateUserEquipment(int id, UserEquipment equipment, String username) {
 		Optional<UserEquipment> oldEquipment = ueRepo.findById(id);
@@ -104,7 +149,14 @@ public class UserEquipmentServiceImpl implements UserEquipmentService {
 		}
 		return managedEquipment;
 	}
-
+	
+	/**
+	 * Method deletes UserEquipment with specific id value
+	 * 
+	 * @param id - UserEquipment to be deleted
+	 * @param username - user performing the delete
+	 * @return - boolean with result
+	 */
 	@Override
 	public boolean deleteUserEquipment(int id, String username) {
 		boolean answer = false;

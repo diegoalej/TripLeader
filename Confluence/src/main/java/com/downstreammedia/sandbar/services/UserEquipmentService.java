@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.downstreammedia.sandbar.entities.UserEquipment;
 
+/**
+ * Interface defines methods to manipulate UserEquipment entity
+ * 
+ * @author Diego Hoyos
+ */
 public interface UserEquipmentService {
 	
 	List<UserEquipment> findAllUserEquipment();

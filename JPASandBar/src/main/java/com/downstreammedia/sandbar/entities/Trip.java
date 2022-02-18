@@ -26,6 +26,12 @@ import lombok.experimental.Accessors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * This class is one of the main ones and is used to map the trip entity
+ * This entity has many relationships with other entities
+ * 
+ * @author Diego Hoyos
+ */
 @Getter
 @Setter
 @Accessors(chain=true)
@@ -50,37 +56,44 @@ public class Trip {
 	@Column(name="date_end")
 	private LocalDateTime dateEnd;
 	
-	//@JsonIgnore
+	//Relationship with users who are part of trip
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "user_trip", 
 			joinColumns = @JoinColumn(name = "user_id"), 
 			inverseJoinColumns = @JoinColumn(name = "trip_id"))
 	private Set<User> members;
 	
+	//Relationship with user who created trip
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User creator;
 	
+	//Relationship with expenses
 	@JsonIgnore
 	@OneToMany(mappedBy = "trip")
 	private Set<Expense> expenses;
 	
+	//Relationship with location 
 	@OneToOne
 	@JoinColumn(name = "startloc_id")
 	private Location locationStart;
-
+	
+	//Relationship with location 
 	@OneToOne
 	@JoinColumn(name = "endloc_id")
 	private Location locationEnd;
 	
+	//Relationship with trip equipment
 	@JsonIgnore
 	@OneToMany(mappedBy = "trip")
 	private List<TripEquipment> gearlist;
 	
+	//Relationship with categories
 	@JsonIgnore
 	@OneToMany(mappedBy = "trip")
 	private Set<Category> categories;
 	
+	//Relationship with user gear
 	@JsonIgnore
 	@OneToMany(mappedBy = "trip")
 	private Set<UserEquipment> userGear;

@@ -8,7 +8,7 @@ import static java.util.Arrays.asList;
 
 /**
  * Error list
- * @author diegoalej
+ * @author Diego Hoyos
  * @version
  * @since Feb 2, 2022
  */

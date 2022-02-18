@@ -12,6 +12,12 @@ import com.downstreammedia.sandbar.repositories.CategoryRepository;
 import com.downstreammedia.sandbar.repositories.TripRepository;
 import com.downstreammedia.sandbar.repositories.UserRepository;
 
+/**
+ * Class implements CategoryService and defines business logic
+ * for manipulating Category entity
+ * 
+ * @author Diego Hoyos
+ */
 @Service 
 public class CategoryServiceImpl implements CategoryService {
 	
@@ -24,11 +30,22 @@ public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	TripRepository tripRepo;
 	
+	/**
+	 * Method returns all Category or null
+	 * 
+	 * @return - a list of all Category
+	 */
 	@Override
 	public List<Category> findAllCategories() {
 		return catRepo.findAll();
 	}
 	
+	/**
+	 * Method returns Category with specific id value
+	 * 
+	 * @param id - Category to be found
+	 * @return - a Category object
+	 */
 	@Override
 	public Category findCategoryById(int id) {
 		Optional<Category> category = catRepo.findById(id);
@@ -40,6 +57,13 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 	}
 	
+	/**
+	 * Method returns Category with specific id value
+	 * 
+	 * @param id - Category to be found
+	 * @return - a Category object or null
+	 */
+	@Override
 	public List<Category> findCategoryByTripId(int id) {
 		List<Category> category = catRepo.findByTrip_Id(id);
 		if(category != null) {
@@ -50,6 +74,14 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 	}
 	
+	/**
+	 * Method edits existing Category 
+	 * 
+	 * @param id - Category to be updated
+	 * @param user - edited Category object
+	 * @param username - user performing the edit
+	 * @return - a Category object or null
+	 */
 	@Override
 	public Category updateCategory(int id, Category trip, String username) {
 		Optional<Category> oldCategory = catRepo.findById(id);
@@ -67,6 +99,13 @@ public class CategoryServiceImpl implements CategoryService {
 		return null;
 	}
 	
+	/**
+	 * Method creates a Category 
+	 * 
+	 * @param category - Category object to be created
+	 * @param username - user performing the edit
+	 * @return - a Category object or null
+	 */
 	@Override
 	public Category createCategory(Category category, String username, int id) {
 		Category newCategory = null;
@@ -78,6 +117,13 @@ public class CategoryServiceImpl implements CategoryService {
 		return newCategory;			
 	}
 	
+	/**
+	 * Method deletes Category with specific id value
+	 * 
+	 * @param id - Category to be deleted
+	 * @param username - user performing the delete
+	 * @return - boolean with result
+	 */
 	@Override
 	public boolean deleteCategory(int id, String username) {
 		boolean answer = false;
