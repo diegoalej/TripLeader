@@ -10,6 +10,12 @@ import com.downstreammedia.sandbar.entities.Equipment;
 import com.downstreammedia.sandbar.repositories.EquipmentRepository;
 import com.downstreammedia.sandbar.repositories.UserRepository;
 
+/**
+ * Class implements EquipmentService and defines business logic
+ * for manipulating Equipment entity
+ * 
+ * @author Diego Hoyos
+ */
 @Service
 public class EquipmentServiceImpl implements EquipmentService {
 	
@@ -19,11 +25,22 @@ public class EquipmentServiceImpl implements EquipmentService {
 	@Autowired
 	UserRepository userRepo;
 	
+	/**
+	 * Method returns all Equipment or null
+	 * 
+	 * @return - a list of all Equipment
+	 */
 	@Override
 	public List<Equipment> findAllEquipment() {
 		return equipmentRepo.findAll();
 	}
 	
+	/**
+	 * Method returns Equipment with specific id value
+	 * 
+	 * @param id - Equipment to be found
+	 * @return - a Equipment object
+	 */
 	@Override
 	public Equipment findEquipmentById(int id) {
 		Optional<Equipment> equipment = equipmentRepo.findById(id);
@@ -35,6 +52,12 @@ public class EquipmentServiceImpl implements EquipmentService {
 		}
 	}
 	
+	/**
+	 * Method returns Equipment with specific name
+	 * 
+	 * @param name - string of equipment name to be found
+	 * @return - a Equipment object or null
+	 */
 	public Equipment findEquipmentByName(String name) {
 		Equipment equipment = equipmentRepo.findByName(name);
 		if(equipment != null) {
@@ -45,6 +68,14 @@ public class EquipmentServiceImpl implements EquipmentService {
 		}
 	}
 	
+	/**
+	 * Method edits existing Equipment 
+	 * 
+	 * @param id - Equipment to be updated
+	 * @param equipment - edited Equipment object
+	 * @param username - user performing the edit
+	 * @return - a Equipment object or null
+	 */
 	@Override
 	public Equipment updateEquipment(int id, Equipment equipment, String username) {
 		Optional<Equipment> oldLocation = equipmentRepo.findById(id);
@@ -61,6 +92,13 @@ public class EquipmentServiceImpl implements EquipmentService {
 		return null;
 	}
 	
+	/**
+	 * Method creates Equipment instance
+	 * 
+	 * @param equipment - Equipment object to be created
+	 * @param username - user performing the edit
+	 * @return - a Equipment object or null
+	 */
 	@Override
 	public Equipment createEquipment(Equipment equipment, String username) {
 		Equipment newEquipment = null;
@@ -70,6 +108,13 @@ public class EquipmentServiceImpl implements EquipmentService {
 		return newEquipment;			
 	}
 	
+	/**
+	 * Method deletes Equipment with specific id value
+	 * 
+	 * @param id - Equipment to be deleted
+	 * @param username - user performing the delete
+	 * @return - boolean with result
+	 */
 	@Override
 	public boolean deleteEquipment(int id, String username) {
 		boolean answer = false;

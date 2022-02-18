@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.downstreammedia.sandbar.entities.Trip;
 
+/**
+ * Interface defines methods to manipulate Trip entity
+ * 
+ * @author Diego Hoyos
+ */
 public interface TripService {
 	
 

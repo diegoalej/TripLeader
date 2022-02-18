@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.downstreammedia.sandbar.entities.User;
 
+/**
+ * Interface defines methods to manipulate user entity
+ * 
+ * @author Diego Hoyos
+ */
 public interface UserService {
 	
 	List<User> findAllUsers();

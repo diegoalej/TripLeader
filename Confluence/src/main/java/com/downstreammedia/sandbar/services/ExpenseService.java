@@ -5,6 +5,11 @@ import java.util.Set;
 
 import com.downstreammedia.sandbar.entities.Expense;
 
+/**
+ * Interface defines methods to manipulate Expense entity
+ * 
+ * @author Diego Hoyos
+ */
 public interface ExpenseService {
 	
 	List<Expense> findAll();

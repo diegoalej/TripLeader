@@ -25,7 +25,7 @@ public class ConfluenceApplication {
 	}
 	
 	  /**
-	   * returns password encoder bean
+	   * Returns password encoder bean
 	   * 
 	   * @return a new password encoder
 	   */

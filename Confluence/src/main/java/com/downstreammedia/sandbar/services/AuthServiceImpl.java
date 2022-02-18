@@ -9,7 +9,12 @@ import org.springframework.stereotype.Service;
 import com.downstreammedia.sandbar.entities.User;
 import com.downstreammedia.sandbar.repositories.UserRepository;
 
-
+/**
+ * Class implements AuthService and defines business logic
+ * for registering new users
+ * 
+ * @author Diego Hoyos
+ */
 @Service
 public class AuthServiceImpl implements AuthService {
 	
@@ -19,7 +24,12 @@ public class AuthServiceImpl implements AuthService {
 	@Autowired
 	private UserRepository repo;
 
-	
+	/**
+	 * Method creates and registers a user
+	 * and saves password as hash
+	 * 
+	 * @return - a list of all users
+	 */
 	@Override
 	public User register(User user) {
 		String encoded = encoder.encode(user.getPassword());

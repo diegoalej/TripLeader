@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.downstreammedia.sandbar.entities.TripEquipment;
 
+/**
+ * Interface defines methods to manipulate TripEquipment entity
+ * 
+ * @author Diego Hoyos
+ */
 public interface TripEquipmentService {
 	
 	List<TripEquipment> findAllTripEquipment();

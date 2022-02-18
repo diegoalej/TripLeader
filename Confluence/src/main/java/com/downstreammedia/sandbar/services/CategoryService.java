@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.downstreammedia.sandbar.entities.Category;
 
+/**
+ * Interface defines methods to manipulate Category entity
+ * 
+ * @author Diego Hoyos
+ */
 public interface CategoryService {
 	
 	List<Category> findAllCategories();
