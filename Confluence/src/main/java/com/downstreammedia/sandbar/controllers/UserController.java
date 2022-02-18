@@ -103,7 +103,7 @@ public class UserController {
 	 * Endpoint deletes user with specific id value
 	 * 
 	 * @param id - user to be deleted
-	 * @param username - user performing the delete
+	 * @param principal - user performing the delete
 	 * @return - boolean with result
 	 * @throws - ResourceNotDeletedException
 	 */

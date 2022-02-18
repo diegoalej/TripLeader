@@ -24,6 +24,11 @@ import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
 import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import com.downstreammedia.sandbar.services.TripEquipmentService;
 
+/**
+ * Class is REST controller for TripEquipment 
+ * 
+ * @author Diego Hoyos
+ */
 @RestController
 @RequestMapping("api")
 @CrossOrigin({"*", "http://localhost:4220"})//Angular local port 4220
@@ -32,6 +37,12 @@ public class TripEquipmentController {
 	@Autowired
 	TripEquipmentService teServ;
 	
+	/**
+	 * Endpoint returns all TripEquipment or null
+	 * 
+	 * @return - a list of all TripEquipment
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("tripequipment")
 	ResponseEntity<List<TripEquipment>> getAllTripEquipment(){
 		List<TripEquipment> tripequipment = teServ.findAllTripEquipment();
@@ -43,7 +54,13 @@ public class TripEquipmentController {
 		}
 	}
 	
-
+	/**
+	 * Endpoint returns TripEquipment with specific trip id value
+	 * 
+	 * @param id - trip id equipment belongs to
+	 * @return - a user object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("tripequipment/trip/{id}")
 	ResponseEntity<List<TripEquipment>> findTripEquipmentByTripId(@PathVariable Integer id) {
 		List<TripEquipment> tripequipment = teServ.findTripEquipmentByTripId(id);
@@ -54,7 +71,14 @@ public class TripEquipmentController {
 			throw new ResourceNotFoundException(id, "No Trip Equipment found for trip with that id");
 		}
 	}
-
+	
+	/**
+	 * Endpoint returns TripEquipment with specific id value
+	 * 
+	 * @param id - TripEquipment to be found
+	 * @return - a TripEquipment object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("tripequipment/id/{id}")
 	ResponseEntity<TripEquipment> findTripEquipmentById(@PathVariable Integer id, HttpServletResponse response) {
 		TripEquipment tripequipment = teServ.findUserEquipmentById(id);
@@ -65,7 +89,16 @@ public class TripEquipmentController {
 			throw new ResourceNotFoundException(id, "No Trip Equipment found with that id");
 		}
 	}
-
+	
+	/**
+	 * Endpoint creates new TripEquipment
+	 * 
+	 * @param tripequipment - tripequipment to be found
+	 * @param tripId - Trip equipment will belong to
+	 * @param principal - user making the edit
+	 * @return - a user object
+	 * @throws - ResourceNotFoundException
+	 */
 	@PostMapping("tripequipment/trip/{tripId}")
 	ResponseEntity<TripEquipment> createTripEquipment(@RequestBody TripEquipment tripequipment,
 						@PathVariable Integer tripId, 
@@ -79,6 +112,16 @@ public class TripEquipmentController {
 		}
 	}
 	
+	/**
+	 * Endpoint edits existing TripEquipment 
+	 * 
+	 * @param id - TripEquipment to be updated
+	 * @param tripequipment - edited TripEquipment object
+	 * @param principal - user performing the edit
+	 * @return - a user object or null
+	 * @throws - ResourceNotUpdatedException
+	 * @throws - ResourceNotFoundException
+	 */
 	@PutMapping("tripequipment/{id}")
 	ResponseEntity<TripEquipment> updateTripEquipment(@PathVariable Integer id,
 							Principal principal, 
@@ -99,6 +142,14 @@ public class TripEquipmentController {
 		
 	}
 	
+	/**
+	 * Endpoint deletes TripEquipment with specific id value
+	 * 
+	 * @param id - TripEquipment to be deleted
+	 * @param principal - user performing the delete
+	 * @return - boolean with result
+	 * @throws - ResourceNotDeletedException
+	 */
 	@DeleteMapping("tripequipment/{id}")
 	public ResponseEntity<Object> deleteTripEquipment(@PathVariable Integer id, Principal principal) {
 		boolean deleted = false;

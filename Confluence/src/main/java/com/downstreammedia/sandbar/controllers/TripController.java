@@ -24,6 +24,11 @@ import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
 import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import com.downstreammedia.sandbar.services.TripService;
 
+/**
+ * Class is REST controller for Trip entity
+ * 
+ * @author Diego Hoyos
+ */
 @RestController
 @RequestMapping("api")
 @CrossOrigin({ "*", "http://localhost:4200" })//Angular local port 
@@ -32,7 +37,12 @@ public class TripController {
 	@Autowired
 	private TripService tripServ;
 	
-	
+	/**
+	 * Endpoint returns all Trips or null
+	 * 
+	 * @return - a list of all Trips
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("trips")
 	private ResponseEntity<List<Trip>> getAllTrips(){
 		List<Trip> trips = tripServ.findAllTrips();
@@ -44,7 +54,13 @@ public class TripController {
 		}
 	}
 	
-	
+	/**
+	 * Endpoint returns Trip with specific id value
+	 * 
+	 * @param id - Trip to be found
+	 * @return - a Trip object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("trips/id/{id}")
 	public ResponseEntity<Trip> getTripWithId(@PathVariable Integer id){
 		Trip trip = tripServ.findTripById(id);
@@ -55,9 +71,15 @@ public class TripController {
 			throw new ResourceNotFoundException(id, "Trip does not exist in database");
 		}
 	}
-
 	
-	
+	/**
+	 * Endpoint creates new Trip
+	 * 
+	 * @param trip - Trip object to be created
+	 * @param principal - user creating trip
+	 * @return - a Trip object
+	 * @throws - ResourceNotFoundException
+	 */
 	@PostMapping("trips")
 	public ResponseEntity<Trip> createNewTrip (@RequestBody Trip trip, 
 											   Principal principal){
@@ -70,7 +92,16 @@ public class TripController {
 		}
 	}
 	
-	
+	/**
+	 * Endpoint edits existing Trip 
+	 * 
+	 * @param id - Trip to be updated
+	 * @param trip - edited Trip object
+	 * @param principal - user performing the edit
+	 * @return - a Trip object or null
+	 * @throws - ResourceNotUpdatedException
+	 * @throws - ResourceNotFoundException
+	 */
 	@PutMapping("trips/{id}")
 	public ResponseEntity<Trip> updateExistingTrip(
 			@RequestBody Trip trip, 
@@ -92,7 +123,16 @@ public class TripController {
 		}
 		
 	}
-
+	
+	/**
+	 * Endpoint adds user to trip
+	 * 
+	 * @param userId - user to be added
+	 * @param tripId - Trip user will be added to
+	 * @param principal - User making edit
+	 * @return - a user object
+	 * @throws - ResourceNotFoundException
+	 */
 	@PutMapping("trips/member/{tripId}/{userId}")
 	public ResponseEntity<Trip> addTripMember(
 			@PathVariable int userId, 
@@ -114,7 +154,16 @@ public class TripController {
 		}
 		
 	}
-
+	
+	/**
+	 * Endpoint deletes user from trip
+	 * 
+	 * @param userId - user to be deleted
+	 * @param tripId - Trip user will be deleted from
+	 * @param principal - User making edit
+	 * @return - a user object
+	 * @throws - ResourceNotFoundException
+	 */
 	@PutMapping("trips/member/update/{tripId}/{userId}")
 	public ResponseEntity<Trip> updatedTripMember(
 			@PathVariable int userId, 
@@ -137,6 +186,14 @@ public class TripController {
 		
 	}
 	
+	/**
+	 * Endpoint deletes Trip with specific id value
+	 * 
+	 * @param id - Trip to be deleted
+	 * @param principal - user performing the delete
+	 * @return - boolean with result
+	 * @throws - ResourceNotDeletedException
+	 */
 	@DeleteMapping("trips/{id}")
 	public ResponseEntity<Object> deleteTrip(	@PathVariable int id, 
 												HttpServletResponse response,
@@ -149,8 +206,15 @@ public class TripController {
 			throw new ResourceNotDeletedException(id, "User could not be deleted");
 	}
 	
+	/**
+	 * Endpoint returns TripEquipment with specific creator id value
+	 * 
+	 * @param id - creator id of trips
+	 * @return - a Trip object list
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("trips/creator/{id}")
-	public ResponseEntity<List<Trip>> getTripsCreatedWithCreatorId(@PathVariable int id, HttpServletResponse response){
+	public ResponseEntity<List<Trip>> getTripsCreatedWithCreatorId(@PathVariable int id){
 		List<Trip> trip = tripServ.findTripByCreatorId(id);
 		if (trip != null && trip.size() > 0) {
 			return new ResponseEntity<List<Trip>>(trip, HttpStatus.OK);
@@ -159,7 +223,14 @@ public class TripController {
 			throw new ResourceNotFoundException(id, "User does not have any created trips");
 		}
 	}
-
+	
+	/**
+	 * Endpoint returns Trip list with specific member id value
+	 * 
+	 * @param id - Member id who is part of trip
+	 * @return - a Trip list object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("trips/member/{id}")
 	public ResponseEntity<List<Trip>> getTripsMemberOfByCreatorId(@PathVariable int id, HttpServletResponse response){
 		List<Trip> trip = tripServ.findTripByMemberId(id);

@@ -23,6 +23,11 @@ import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
 import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import com.downstreammedia.sandbar.services.ExpenseService;
 
+/**
+ * Class is REST controller for Expense 
+ * 
+ * @author Diego Hoyos
+ */
 @RestController
 @RequestMapping("api")
 @CrossOrigin({"*", "http://localhost:4220"})//Angular local port 
@@ -32,7 +37,12 @@ public class ExpenseController {
 	@Autowired
 	ExpenseService exServ;
 
-	
+	/**
+	 * Endpoint returns all Expenses or null
+	 * 
+	 * @return - a list of all Expense
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("expenses")
 	ResponseEntity<List<Expense>> getAllExpenses(){
 		List<Expense> expenses = exServ.findAll();
@@ -44,6 +54,13 @@ public class ExpenseController {
 		}
 	}
 	
+	/**
+	 * Endpoint returns Expense with specific creator id value
+	 * 
+	 * @param id - creator id owner of expenses
+	 * @return - a Expense object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("expenses/creator/{id}")
 	ResponseEntity<Set<Expense>> findExpenseByCreatorId(@PathVariable Integer id) {
 		Set<Expense> expense = exServ.findExpenseByCreatorId(id);
@@ -54,7 +71,14 @@ public class ExpenseController {
 			throw new ResourceNotFoundException(id, "Could not find expense with that user id");
 		}
 	}
-
+	
+	/**
+	 * Endpoint returns Expense with specific trip id value
+	 * 
+	 * @param id - Trip id for expense to be found
+	 * @return - a Expense object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("expenses/trip/{id}")
 	ResponseEntity<Set<Expense>> findExpenseByTripId(@PathVariable Integer id) {
 		Set<Expense> expense = exServ.findExpenseByTripId(id);
@@ -65,7 +89,14 @@ public class ExpenseController {
 			throw new ResourceNotFoundException(id, "Could not find expense with that trip id");
 		}
 	}
-
+	
+	/**
+	 * Endpoint returns Expense with specific  id value
+	 * 
+	 * @param id - Expense id to be found
+	 * @return - a Expense object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("expenses/id/{id}")
 	ResponseEntity<Expense> findExpenseById(@PathVariable Integer id) {
 		Expense expense = exServ.findExpenseById(id);
@@ -76,7 +107,16 @@ public class ExpenseController {
 			throw new ResourceNotFoundException(id, "Could not find expense with that id");
 		}
 	}
-
+	
+	/**
+	 * Endpoint creates new Expense
+	 * 
+	 * @param expense - Expense object to be created
+	 * @param tripId - Trip expense will be added to
+	 * @param principal - Owner of expense
+	 * @return - a Expense object
+	 * @throws - ResourceNotFoundException
+	 */
 	@PostMapping("expenses/trip/{tripId}")
 	ResponseEntity<Expense> createExpense(@RequestBody Expense expense,
 						@PathVariable Integer tripId, 
@@ -90,6 +130,16 @@ public class ExpenseController {
 		}
 	}
 	
+	/**
+	 * Endpoint edits existing Expense 
+	 * 
+	 * @param id - Expense to be updated
+	 * @param expense - edited Expense object
+	 * @param principal - user performing the edit
+	 * @return - a Expense object or null
+	 * @throws - ResourceNotUpdatedException
+	 * @throws - ResourceNotFoundException
+	 */
 	@PutMapping("expenses/{id}")
 	ResponseEntity<Expense> updateExpense(@PathVariable Integer id,
 							Principal principal, 
@@ -107,6 +157,14 @@ public class ExpenseController {
 		throw new ResourceNotFoundException(id, "Expense does not exist in database");
 	}
 	
+	/**
+	 * Endpoint deletes Expense with specific id value
+	 * 
+	 * @param id - Expense to be deleted
+	 * @param principal - user performing the delete
+	 * @return - boolean with result
+	 * @throws - ResourceNotDeletedException
+	 */
 	@DeleteMapping("expense/{id}")
 	public ResponseEntity<Object> deleteExpense(@PathVariable Integer id,Principal principal) {
 		boolean deleted = false;

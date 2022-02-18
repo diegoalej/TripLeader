@@ -24,6 +24,11 @@ import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
 import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import com.downstreammedia.sandbar.services.LocationService;
 
+/**
+ * Class is REST controller for Location 
+ * 
+ * @author Diego Hoyos
+ */
 @RestController
 @RequestMapping ("api")
 @CrossOrigin({"*", "http://localhost:4220"}) // Angular local port
@@ -32,6 +37,12 @@ public class LocationController {
 	@Autowired
 	private LocationService locationServ;
 	
+	/**
+	 * Endpoint returns all Locations or null
+	 * 
+	 * @return - a list of all Locations
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("locations")
 	private ResponseEntity<List<Location>> getAllLocations(){
 		List<Location> locations = locationServ.findAllLocations();
@@ -43,6 +54,13 @@ public class LocationController {
 		}
 	}
 	
+	/**
+	 * Endpoint returns Location with specific trip id value
+	 * 
+	 * @param id - Location id to be found
+	 * @return - a Location object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("locations/id/{id}")
 	public ResponseEntity<Location> getLocationWithId(@PathVariable Integer id, HttpServletResponse response){ 
 		Location location = locationServ.findLocationById(id);
@@ -53,7 +71,14 @@ public class LocationController {
 			throw new ResourceNotFoundException(id, "User could not be found with that id");
 		}
 	}
-
+	
+	/**
+	 * Endpoint returns Location with specific name value
+	 * 
+	 * @param name - Location name to be found
+	 * @return - a Location object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("locations/{name}")
 	public ResponseEntity<List<Location>> getLocationWithName(@PathVariable String name){
 		List <Location> location = locationServ.findLocationByName(name);
@@ -65,6 +90,14 @@ public class LocationController {
 		}
 	}
 	
+	/**
+	 * Endpoint creates new Location
+	 * 
+	 * @param location - Location object to be created
+	 * @param principal - user making the edit
+	 * @return - a Location object
+	 * @throws - ResourceNotFoundException
+	 */
 	@PostMapping("locations")
 	public  ResponseEntity<Location> createNewLocation(@RequestBody Location location, Principal principal){
 		Location newLocation = locationServ.createLocation(location, principal.getName());
@@ -76,6 +109,16 @@ public class LocationController {
 		}
 	}
 	
+	/**
+	 * Endpoint edits existing Location 
+	 * 
+	 * @param id - Location to be updated
+	 * @param location - edited Location object
+	 * @param principal - user performing the edit
+	 * @return - a Location object or null
+	 * @throws - ResourceNotUpdatedException
+	 * @throws - ResourceNotFoundException
+	 */
 	@PutMapping("locations/{id}")
 	public ResponseEntity<Location> updateExistingLocation(
 			@RequestBody Location location, 
@@ -91,6 +134,14 @@ public class LocationController {
 		}
 	}
 	
+	/**
+	 * Endpoint deletes Location with specific id value
+	 * 
+	 * @param id - Location to be deleted
+	 * @param principal - user performing the delete
+	 * @return - boolean with result
+	 * @throws - ResourceNotDeletedException
+	 */
 	@DeleteMapping("locations/{id}")
 	public ResponseEntity<Location> deleteLocation(@PathVariable int id, Principal principal){
 		boolean deleted = false;

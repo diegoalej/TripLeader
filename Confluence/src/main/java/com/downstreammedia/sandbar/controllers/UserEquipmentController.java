@@ -156,7 +156,7 @@ public class UserEquipmentController {
 	 * Endpoint deletes UserEquipment with specific id value
 	 * 
 	 * @param id - UserEquipment to be deleted
-	 * @param username - user performing the delete
+	 * @param principal - user performing the delete
 	 * @return - boolean with result
 	 * @throws - ResourceNotDeletedException
 	 */
