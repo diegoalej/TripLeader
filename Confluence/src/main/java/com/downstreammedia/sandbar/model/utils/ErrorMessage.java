@@ -2,7 +2,7 @@ package com.downstreammedia.sandbar.model.utils;
 
 /**
  * Error message class
- * @author diegoalej
+ * @author Diego Hoyos
  * @version 1.0
  * @since Feb 2, 2022
  */

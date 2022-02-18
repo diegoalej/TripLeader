@@ -1,5 +1,11 @@
 package com.downstreammedia.sandbar.exception;
 
+/**
+ * Custom exception class for resources not able to update
+ * 
+ * @author Diego Hoyos
+ * 
+ */
 public class ResourceNotUpdatedException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 

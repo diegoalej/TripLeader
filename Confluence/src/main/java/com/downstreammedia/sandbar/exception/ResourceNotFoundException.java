@@ -1,5 +1,11 @@
 package com.downstreammedia.sandbar.exception;
 
+/**
+ * Custom exception class for resources not found in db
+ * 
+ * @author Diego Hoyos
+ * 
+ */
 public class ResourceNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 

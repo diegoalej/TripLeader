@@ -22,6 +22,11 @@ import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
 import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import com.downstreammedia.sandbar.services.UserEquipmentService;
 
+/**
+ * Class is REST controller for User Equipment
+ * 
+ * @author Diego Hoyos
+ */
 @RestController
 @RequestMapping("api")
 @CrossOrigin({"*", "http://localhost:4220"})//Angular local port 4220
@@ -30,6 +35,11 @@ public class UserEquipmentController {
 	@Autowired
 	UserEquipmentService ueServ;
 	
+	/**
+	 * Endpoint returns all of a users equipment or null
+	 * 
+	 * @return - a list of all UserEquipment
+	 */
 	@GetMapping("userequipment")
 	ResponseEntity<List<UserEquipment>> getAllUserEquipment(){
 		List<UserEquipment> userequipment = ueServ.findAllUserEquipment();
@@ -41,6 +51,12 @@ public class UserEquipmentController {
 		}
 	}
 	
+	/**
+	 * Endpoint returns UserEquipment with specific user id value
+	 * 
+	 * @param id - user id 
+	 * @return - a list of equipment or null
+	 */
 	@GetMapping("userequipment/creator/{id}")
 	ResponseEntity<List<UserEquipment>> findUserEquipmentByCreatorId(@PathVariable Integer id) {
 		List<UserEquipment> userequipment = ueServ.findUserEquipmentByUserId(id);
@@ -51,7 +67,14 @@ public class UserEquipmentController {
 			throw new ResourceNotFoundException(id, "No User Equipment found with that user id");
 		}
 	}
-
+	
+	/**
+	 * Endpoint returns UserEquipment with specific trip id value
+	 * 
+	 * @param id - trip id 
+	 * @return - a list of equipment or null
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("userequipment/trip/{id}")
 	ResponseEntity<List<UserEquipment>> findUserEquipmentByTripId(@PathVariable Integer id) {
 		List<UserEquipment> userequipment = ueServ.findUserEquipmentByTripId(id);
@@ -62,7 +85,14 @@ public class UserEquipmentController {
 			throw new ResourceNotFoundException(0, "No User Equipment found with that trip id");
 		}
 	}
-
+	
+	/**
+	 * Method returns UserEquipment with specific id value
+	 * 
+	 * @param id - UserEquipment to be found
+	 * @return - a UserEquipment object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("userequipment/id/{id}")
 	ResponseEntity<UserEquipment> findUserEquipmentById(@PathVariable Integer id) {
 		UserEquipment userequipment = ueServ.findUserEquipmentById(id);
@@ -73,7 +103,16 @@ public class UserEquipmentController {
 			throw new ResourceNotFoundException(id, "No Trip Equipment found with that id");
 		}
 	}
-
+	
+	/**
+	 * Method creates a new UserEquipment 
+	 * 
+	 * @param userequipment - UserEquipment object to be created
+	 * @param principal - creator of UserEquipment
+	 * @param tripId - trip id to create equipment under
+	 * @return - created UserEquipment object or null
+	 * @throws - ResourceNotUpdatedException
+	 */
 	@PostMapping("userequipment/trip/{tripId}")
 	ResponseEntity<UserEquipment> createUserEquipment(@RequestBody UserEquipment userequipment,
 						@PathVariable Integer tripId, 
@@ -87,6 +126,15 @@ public class UserEquipmentController {
 		}
 	}
 	
+	/**
+	 * Endpoint edits existing UserEquipment 
+	 * 
+	 * @param id - UserEquipment to be updated
+	 * @param equipment - edited UserEquipment object
+	 * @param username - user performing the edit
+	 * @return - a user object or null
+	 * @throws - ResourceNotUpdatedException and ResourceNotFoundException
+	 */
 	@PutMapping("userequipment/{id}")
 	ResponseEntity<UserEquipment> updateUserEquipment(@PathVariable Integer id,
 							Principal principal, 
@@ -104,6 +152,14 @@ public class UserEquipmentController {
 		throw new ResourceNotFoundException(id, "User Equipment does not exist in db");
 	}
 	
+	/**
+	 * Endpoint deletes UserEquipment with specific id value
+	 * 
+	 * @param id - UserEquipment to be deleted
+	 * @param username - user performing the delete
+	 * @return - boolean with result
+	 * @throws - ResourceNotDeletedException
+	 */
 	@DeleteMapping("userequipment/{id}")
 	public ResponseEntity<Object> deleteUserEquipment(@PathVariable Integer id,Principal principal) {
 		boolean deleted = false;

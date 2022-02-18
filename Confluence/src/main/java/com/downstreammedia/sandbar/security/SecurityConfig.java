@@ -12,6 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Class configures spring security security details
+ * 
+ * @author Diego Hoyos
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -22,6 +27,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      @Autowired
      private DataSource dataSource;
 	
+ 	/**
+ 	 * Method establishes endpoints to authenticate
+ 	 * and type of security to follow
+ 	 * 
+ 	 * @return - a list of all users
+ 	 */
 	 @Override
 	 protected void configure(HttpSecurity http) throws Exception {
 		 http
@@ -42,15 +53,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	 }
 	
-		@Override
-		public void configure(AuthenticationManagerBuilder auth) throws Exception {
-			String userQuery = "SELECT username, password, active FROM User WHERE username=?";
-	        String authQuery = "SELECT username, role FROM User WHERE username=?";
-	        auth
-		        .jdbcAuthentication()
-		        .dataSource(dataSource)
-		        .usersByUsernameQuery(userQuery)
-		        .authoritiesByUsernameQuery(authQuery)
-		        .passwordEncoder(encoder);
-		}
+ 	/**
+ 	 * Method establishes configuration for 
+ 	 * authenticating users at login
+ 	 * 
+ 	 * @return - a list of all users
+ 	 */
+	@Override
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		String userQuery = "SELECT username, password, active FROM User WHERE username=?";
+        String authQuery = "SELECT username, role FROM User WHERE username=?";
+        auth
+	        .jdbcAuthentication()
+	        .dataSource(dataSource)
+	        .usersByUsernameQuery(userQuery)
+	        .authoritiesByUsernameQuery(authQuery)
+	        .passwordEncoder(encoder);
+	}
 }
