@@ -22,6 +22,11 @@ import com.downstreammedia.sandbar.exception.ResourceNotFoundException;
 import com.downstreammedia.sandbar.exception.ResourceNotUpdatedException;
 import com.downstreammedia.sandbar.services.EquipmentService;
 
+/**
+ * Class is REST controller for Equipment 
+ * 
+ * @author Diego Hoyos
+ */
 @RestController
 @RequestMapping("api")
 @CrossOrigin({ "*", "http://localhost:4220" })//Angular local port 4220
@@ -30,6 +35,12 @@ public class EquipmentController {
 	@Autowired
 	private EquipmentService equipmentServ;
 	
+	/**
+	 * Endpoint returns all Equipment or null
+	 * 
+	 * @return - a list of all Equipment
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("equipment")
 	private ResponseEntity<List<Equipment>> getAllEquipment(){
 		List<Equipment> equipment = equipmentServ.findAllEquipment();
@@ -41,6 +52,13 @@ public class EquipmentController {
 		}
 	}
 	
+	/**
+	 * Endpoint returns Equipment with specific id value
+	 * 
+	 * @param id - Equipment id to be found
+	 * @return - a Equipment object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("equipment/id/{id}")
 	public ResponseEntity<Equipment> getEquipmentWithId(@PathVariable Integer id){
 		Equipment equipment = equipmentServ.findEquipmentById(id);
@@ -51,7 +69,14 @@ public class EquipmentController {
 			throw new ResourceNotFoundException(id, "Equipment does not exist in database");
 		}
 	}
-
+	
+	/**
+	 * Endpoint returns Equipment with specific name value
+	 * 
+	 * @param name - Equipment name to be found
+	 * @return - a Equipment object
+	 * @throws - ResourceNotFoundException
+	 */
 	@GetMapping("equipment/{name}")
 	public ResponseEntity<Equipment> getEquipmentWithName(@PathVariable String name){
 		Equipment equipment = equipmentServ.findEquipmentByName(name);
@@ -63,6 +88,14 @@ public class EquipmentController {
 		}
 	}
 	
+	/**
+	 * Endpoint creates new Equipment
+	 * 
+	 * @param equipment - Equipment object to be created
+	 * @param principal - user making the edit
+	 * @return - a Equipment object
+	 * @throws - ResourceNotFoundException
+	 */
 	@PostMapping("equipment")
 	public ResponseEntity<Equipment> createNewEquipment(
 			@RequestBody Equipment equipment, 
@@ -77,6 +110,16 @@ public class EquipmentController {
 		}
 	}
 	
+	/**
+	 * Endpoint edits existing Equipment 
+	 * 
+	 * @param id - Equipment to be updated
+	 * @param equipment - edited Equipment object
+	 * @param principal - user performing the edit
+	 * @return - a Equipment object or null
+	 * @throws - ResourceNotUpdatedException
+	 * @throws - ResourceNotFoundException
+	 */
 	@PutMapping("equipment/{id}")
 	public ResponseEntity<Equipment> updateExistingEquipment(
 			@RequestBody Equipment equipment, 
@@ -92,6 +135,14 @@ public class EquipmentController {
 		}
 	}
 	
+	/**
+	 * Endpoint deletes Equipment with specific id value
+	 * 
+	 * @param id - Equipment to be deleted
+	 * @param principal - user performing the delete
+	 * @return - boolean with result
+	 * @throws - ResourceNotDeletedException
+	 */
 	@DeleteMapping("equipment/{id}")
 	public  ResponseEntity<Object> deleteEquipment(
 			@PathVariable int id, 
