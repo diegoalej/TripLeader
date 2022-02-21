@@ -52,7 +52,7 @@ public class TripTest {
 		assertEquals("firstUser", trip.getCreator().getUsername());
 		assertEquals(1, trip.getExpenses().size());		
 		assertEquals(0, trip.getMembers().size());	
-		assertEquals(2, trip.getCategories().size());
+		assertEquals(3, trip.getCategories().size());
 		
 	}
 }
