@@ -78,7 +78,7 @@ public class UserController {
 	 * @throws - ResourceNotUpdatedException
 	 * @throws - ResourceNotFoundException
 	 */
-	@PutMapping("users/{id}")
+	@PutMapping(value ="users/{id}", consumes="application/json")
 	public ResponseEntity<User> updateExistingUser( @RequestBody User user, 
 													@PathVariable int id, 
 													Principal principal){

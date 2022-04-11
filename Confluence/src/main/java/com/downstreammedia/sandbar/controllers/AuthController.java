@@ -37,7 +37,7 @@ public class AuthController {
 	 * @return - Created user object
 	 * @throws - ResourceNotUpdatedException
 	 */
-	@RequestMapping(path = "/register", method = RequestMethod.POST)
+	@RequestMapping(path = "/register", method = RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<User> register(
 			@RequestBody User user) {
 	    if (user == null) {

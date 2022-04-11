@@ -80,7 +80,7 @@ public class TripController {
 	 * @return - a Trip object
 	 * @throws - ResourceNotFoundException
 	 */
-	@PostMapping("trips")
+	@PostMapping(value ="trips", consumes="application/json")
 	public ResponseEntity<Trip> createNewTrip (@RequestBody Trip trip, 
 											   Principal principal){
 		Trip newTrip = tripServ.createTrip(trip, principal.getName());
@@ -102,7 +102,7 @@ public class TripController {
 	 * @throws - ResourceNotUpdatedException
 	 * @throws - ResourceNotFoundException
 	 */
-	@PutMapping("trips/{id}")
+	@PutMapping(value ="trips/{id}", consumes="application/json")
 	public ResponseEntity<Trip> updateExistingTrip(
 			@RequestBody Trip trip, 
 			@PathVariable int id, 

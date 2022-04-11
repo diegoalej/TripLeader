@@ -98,7 +98,7 @@ public class LocationController {
 	 * @return - a Location object
 	 * @throws - ResourceNotFoundException
 	 */
-	@PostMapping("locations")
+	@PostMapping(value ="locations", consumes="application/json")
 	public  ResponseEntity<Location> createNewLocation(@RequestBody Location location, Principal principal){
 		Location newLocation = locationServ.createLocation(location, principal.getName());
 		if (newLocation != null) {
@@ -119,7 +119,7 @@ public class LocationController {
 	 * @throws - ResourceNotUpdatedException
 	 * @throws - ResourceNotFoundException
 	 */
-	@PutMapping("locations/{id}")
+	@PutMapping(value ="locations/{id}", consumes="application/json")
 	public ResponseEntity<Location> updateExistingLocation(
 			@RequestBody Location location, 
 			@PathVariable int id, 
