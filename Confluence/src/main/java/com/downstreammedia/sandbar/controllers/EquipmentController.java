@@ -77,7 +77,7 @@ public class EquipmentController {
 	 * @return - a Equipment object
 	 * @throws - ResourceNotFoundException
 	 */
-	@GetMapping("equipment/{name}")
+	@GetMapping(value ="equipment/{name}")
 	public ResponseEntity<Equipment> getEquipmentWithName(@PathVariable String name){
 		Equipment equipment = equipmentServ.findEquipmentByName(name);
 		if (equipment != null) {
@@ -96,7 +96,7 @@ public class EquipmentController {
 	 * @return - a Equipment object
 	 * @throws - ResourceNotFoundException
 	 */
-	@PostMapping("equipment")
+	@PostMapping(value ="equipment", consumes="application/json")
 	public ResponseEntity<Equipment> createNewEquipment(
 			@RequestBody Equipment equipment, 
 			Principal principal
@@ -120,7 +120,7 @@ public class EquipmentController {
 	 * @throws - ResourceNotUpdatedException
 	 * @throws - ResourceNotFoundException
 	 */
-	@PutMapping("equipment/{id}")
+	@PutMapping(value ="equipment/{id}", consumes="application/json")
 	public ResponseEntity<Equipment> updateExistingEquipment(
 			@RequestBody Equipment equipment, 
 			@PathVariable int id, 

@@ -99,7 +99,7 @@ public class TripEquipmentController {
 	 * @return - a user object
 	 * @throws - ResourceNotFoundException
 	 */
-	@PostMapping("tripequipment/trip/{tripId}")
+	@PostMapping(value ="tripequipment/trip/{tripId}", consumes="application/json")
 	ResponseEntity<TripEquipment> createTripEquipment(@RequestBody TripEquipment tripequipment,
 						@PathVariable Integer tripId, 
 						Principal principal) {
@@ -122,7 +122,7 @@ public class TripEquipmentController {
 	 * @throws - ResourceNotUpdatedException
 	 * @throws - ResourceNotFoundException
 	 */
-	@PutMapping("tripequipment/{id}")
+	@PutMapping(value ="tripequipment/{id}", consumes="application/json")
 	ResponseEntity<TripEquipment> updateTripEquipment(@PathVariable Integer id,
 							Principal principal, 
 							@RequestBody TripEquipment tripequipment) {

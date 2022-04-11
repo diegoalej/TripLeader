@@ -117,7 +117,7 @@ public class ExpenseController {
 	 * @return - a Expense object
 	 * @throws - ResourceNotFoundException
 	 */
-	@PostMapping("expenses/trip/{tripId}")
+	@PostMapping(value="expenses/trip/{tripId}", consumes="application/json")
 	ResponseEntity<Expense> createExpense(@RequestBody Expense expense,
 						@PathVariable Integer tripId, 
 						Principal principal) {
@@ -140,7 +140,7 @@ public class ExpenseController {
 	 * @throws - ResourceNotUpdatedException
 	 * @throws - ResourceNotFoundException
 	 */
-	@PutMapping("expenses/{id}")
+	@PutMapping(value ="expenses/{id}", consumes="application/json")
 	ResponseEntity<Expense> updateExpense(@PathVariable Integer id,
 							Principal principal, 
 							@RequestBody Expense expense) {

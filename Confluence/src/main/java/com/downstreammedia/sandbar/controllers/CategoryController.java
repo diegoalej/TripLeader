@@ -96,7 +96,7 @@ public class CategoryController {
 	 * @return - a Category object
 	 * @throws - ResourceNotFoundException
 	 */
-	@PostMapping("category/{id}")
+	@PostMapping(value = "category/{id}", consumes="application/json")
 	public ResponseEntity<Category> createNewCategory (
 			@RequestBody Category category, 
 			@PathVariable int id,
@@ -121,7 +121,7 @@ public class CategoryController {
 	 * @throws - ResourceNotUpdatedException
 	 * @throws - ResourceNotFoundException
 	 */
-	@PutMapping("category/{id}")
+	@PutMapping(value = "category/{id}", consumes="application.json")
 	public ResponseEntity<Category> updateExistingCategory(
 			@RequestBody Category category, 
 			@PathVariable int id, 
